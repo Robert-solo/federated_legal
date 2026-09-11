@@ -37,6 +37,7 @@ tmp/
 
 # Paper render outputs and local reference library
 papers/ref_fig/
+papers/references/
 papers/ipm/**/*.pdf
 papers/ipm/**/*.png
 papers/ipm/**/*.tiff
@@ -50,6 +51,7 @@ papers/ipm/**/*.fls
 papers/ipm/**/*.out
 papers/ipm/**/*.spl
 papers/ipm/**/*.synctex.gz
+papers/ipm/**/*.docx
 
 # OS/editor files
 .DS_Store
