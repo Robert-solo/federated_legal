@@ -1,0 +1,5 @@
+client_id,top_jurisdiction,top_jurisdiction_count,top_jurisdiction_share,num_jurisdictions
+client_0,federal_circuit_5,44,0.2,10
+client_1,us_supreme_court,215,0.5070754716981132,10
+client_2,federal_circuit_10,34,0.2677165354330709,10
+client_3,us_federal,200,0.6872852233676976,10

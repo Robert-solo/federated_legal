@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FLEN expert conflict annotation",
+  "type": "object",
+  "required": [
+    "item_id",
+    "target_jurisdiction",
+    "task",
+    "admissible_authorities",
+    "annotator_a_state",
+    "annotator_b_state",
+    "adjudicated_state",
+    "adjudication_status"
+  ],
+  "properties": {
+    "item_id": {"type": "string"},
+    "target_jurisdiction": {"type": "string"},
+    "task": {"type": "string"},
+    "admissible_authorities": {"type": "array", "items": {"type": "string"}},
+    "annotator_a_state": {"enum": ["transferable", "authority_local", "unsupported", "unresolved"]},
+    "annotator_b_state": {"enum": ["transferable", "authority_local", "unsupported", "unresolved"]},
+    "adjudicated_state": {"enum": ["transferable", "authority_local", "unsupported", "unresolved"]},
+    "adjudication_status": {"enum": ["agreement", "adjudicated"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "rationale_category": {"type": "string"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,458 @@
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+\pdfminorversion=7
+
+\usepackage[letterpaper,total={6.2in,8.6in}]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,multirow}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage[colorlinks,citecolor=blue,urlcolor=blue,linkcolor=blue]{hyperref}
+\graphicspath{{figures/}{../../outputs/experiment_analysis/e1_flen_screening/}}
+\setlength{\emergencystretch}{2em}
+
+\journal{Information Processing \& Management}
+\bibliographystyle{elsarticle-harv}
+
+\newcommand{\client}{\mathcal{K}}
+\newcommand{\dataset}{\mathcal{D}}
+\newcommand{\loss}{\mathcal{L}}
+\newcommand{\graph}{\mathcal{G}}
+\newcommand{\rules}{\mathcal{R}}
+\newcommand{\jsd}{\mathrm{JSD}}
+\newcommand{\KL}{\mathrm{KL}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{FLEN: A Conflict-Aware Federated Framework for Cross-Jurisdiction Legal Language Modeling}
+
+\author[inst1]{Robert J.}
+\address[inst1]{Independent Research Project}
+
+\begin{abstract}
+Legal institutions often cannot centralize raw case records, yet their local corpora also differ in authority hierarchy, citation practice, procedure, language, and task distribution. Standard federated learning treats client divergence primarily as optimization noise, which is unsafe when disagreement reflects legally valid jurisdiction-specific rules. We introduce the Federated Legal Expertise Network (FLEN), a data-local framework that combines parameter-efficient legal adaptation, jurisdiction descriptors, operational conflict diagnostics, and typed multi-agent deliberation. FLEN measures divergence only on task-compatible probes and uses it within authority-compatible transfer cohorts. Its local residual is retained only when a client-training holdout shows no accuracy decrease and no loss increase. A twenty-round CaseHOLD screening evaluates eight Flower/PEFT variants over three matched seeds, four clients, 1,200 training records, and 240 validation records. Conflict-only aggregation reaches $35.42\%\pm3.56$ accuracy versus $33.89\%\pm5.75$ for its $\lambda=0$ control. Unguarded personalization reduces accuracy by 8.19 points relative to its paired shared branch, whereas gating removes this collapse; guarded FLEN reaches $35.56\%\pm3.94$. However, its $+1.67$-point paired effect over $\lambda=0$ has a 95\% Student-$t$ interval of $-4.80$ to $+8.13$, and worst-client accuracy does not improve. The automatic proxy calibration and heuristic CaseHOLD partitions support runtime, mechanism, and safeguard evidence only---not legal-conflict validity, privacy, or cross-jurisdiction generalization.
+\end{abstract}
+
+\begin{keyword}
+Federated learning \sep legal large language models \sep judicial reasoning \sep privacy-aware machine learning \sep cross-jurisdiction transfer \sep multi-agent systems \sep citation consistency
+\end{keyword}
+
+\end{frontmatter}
+
+% Elsevier submission highlights for upload form or newer elsarticle templates:
+% Provisional highlights; do not submit until the corresponding release gates pass:
+% 1. FLEN specifies authority-scoped transfer eligibility for data-local federated legal adaptation.
+% 2. CaseHOLD screening confirms mechanism execution but not FLEN superiority or legal-conflict validity.
+% 3. Authentic jurisdiction, privacy, and multi-agent claims remain gated by E2 Track C, E5, and E6.
+
+\section{Introduction}
+
+Legal information processing increasingly depends on models that connect facts, statutes, precedents, citations, and procedural context. Large language models (LLMs) are therefore attractive for legal judgement prediction, contract review, legal question answering, case retrieval, and statutory interpretation. Yet the dominant development pattern remains centralized: case documents, annotations, citations, and reasoning traces are collected into one training environment. This assumption is poorly matched to judicial practice because courts, law firms, public agencies, and legal research institutions may be unable to pool records containing personal information, confidential filings, sealed evidence, or jurisdiction-restricted data.
+
+The technical challenge is that data locality and jurisdictional heterogeneity interact. Legal corpora are not merely statistically non-IID; they encode different sources of authority, procedural norms, citation conventions, languages, tasks, and decision structures. A model trained on pooled or indiscriminately averaged data can therefore learn majority-jurisdiction shortcuts or transfer a rule beyond its authority boundary. Conventional federated learning keeps raw data local while aggregating client updates \citep{mcmahan2017communication,kairouz2021advances}, but a single global objective does not distinguish task mismatch, statistical drift, model error, and legally legitimate disagreement. That distinction is the central technical problem studied here.
+
+This paper studies cross-jurisdiction legal language modeling as a federated information-processing problem. The target is not only a task prediction or generated legal answer, but also an output whose authorities, reasoning status, and disclosure path can be audited. We propose the Federated Legal Expertise Network (FLEN), in which each institution performs parameter-efficient local adaptation and retains jurisdiction-specific knowledge, while the server transfers only information judged compatible with a specified target task and authority context. A typed multi-agent workflow then separates issue parsing, jurisdiction alignment, argument and counterargument generation, citation verification, conflict detection, policy auditing, and final synthesis.
+
+The paper makes three methodological contributions and one scoped empirical contribution. First, it defines the comparability conditions under which cross-client legal outputs may be contrasted without conflating task, language, and jurisdiction. Second, it operationalizes citation, reasoning, verdict, and rule-alignment diagnostics and uses them in target-compatible aggregation with safeguards for jurisdiction-specific variation. Third, it specifies a typed deliberation protocol with explicit memory scopes, verification gates, abstention conditions, and a threat-model boundary. Fourth, it reports an accepted twenty-round CaseHOLD screening with target-conditioned aggregation, component ablations, communication accounting, and residual-safeguard diagnostics. This screening supports executability, mechanism activation, and failure-mode mitigation; comparative superiority, legal-conflict validity, privacy, and cross-jurisdiction transfer remain unestablished.
+
+The validation agenda is organized around three research questions. \textbf{RQ1} asks whether the proposed conflict scores agree with expert judgements of transferable, incompatible, and unresolved legal disagreement. \textbf{RQ2} asks whether target-compatible aggregation improves per-jurisdiction and worst-jurisdiction utility over FedAvg, personalized, clustered, and fairness-aware federated baselines without suppressing minority jurisdictions. \textbf{RQ3} asks whether the deliberation and privacy controls improve citation validity and risk--coverage trade-offs under a fully specified threat model. These questions define the evidence required for a complete submission; the current artifact does not yet answer them. ECtHR-A/B as distributed by LexGLUE carry a common supranational authority label but no explicit respondent-state field in the downloaded artifact. They can therefore support an ECHR multilabel study, but not the proposed country-holdout claim unless respondent-state metadata is recovered from a verified source. MultiEURLEX provides explicit language and CELEX identifiers and can support cross-language transfer under a common EU authority; it likewise cannot establish independent-jurisdiction rule transfer.
+
+\subsection{Legal-theoretical motivation}
+
+Cross-jurisdiction legal reasoning differs from ordinary domain adaptation because disagreement can be normatively legitimate. Legal-pluralist scholarship shows that multiple legal orders may govern related social facts, while the operation and authority of those orders cannot be reduced to a single universal hierarchy \citep{griffiths1986legal,merry1988legal}. A statutory article, precedent, treaty provision, and contractual clause may concern related facts yet derive force from different institutions. Precedent hierarchy further determines whether a citation is binding, persuasive, or irrelevant within a target jurisdiction, and legally acceptable reasoning may therefore differ even when surface facts are similar.
+
+These properties imply that legal heterogeneity is not merely a sampling artifact. Forcing all clients toward a single average can erase legitimate legal diversity, yet treating every difference as protected diversity can preserve model error or unsupported authority. The aggregation problem is therefore conditional: transfer shared representations only when task and authority scopes are comparable, preserve jurisdiction-specific components when they are not, and abstain when the available evidence cannot resolve the distinction. This requirement motivates the comparability gate, conflict diagnostics, and target-conditioned aggregation developed below.
+
+\section{Related Work}
+
+\subsection{Legal language models and legal benchmarks}
+Legal natural language processing has moved from task-specific encoders toward domain-adapted transformer and LLM systems. Legal-BERT showed that legal-domain pretraining improves downstream legal understanding tasks \citep{chalkidis2020legalbert}, while long-document models such as Lawformer target the long-context structure of legal cases \citep{xiao2021lawformer}. More recent legal LLMs and legal assistants, including SaulLM, Lawyer-LLaMA, and ChatLaw, adapt instruction-following or role-specialized models to legal tasks and legal corpora \citep{colombo2024saullm,huang2023lawyerllama,cui2023chatlaw}. Benchmark suites such as LexGLUE, CaseHOLD, ECtHR, CUAD, CAIL, LeCaRD, and LawBench support evaluation across legal classification, case retrieval, contract review, and judgement prediction \citep{chalkidis2022lexglue,zheng2021casehold,chalkidis2019ecthr,hendrycks2021cuad,xiao2018cail,ma2021lecard,fei2023lawbench}. Recent work on cross-jurisdiction legal case summarization further shows that legal summarization systems face transfer barriers across legal systems, and rule-understanding benchmarks such as CLEAR highlight that LLMs must distinguish confusing legal provisions rather than only retrieve surface-similar statutes \citep{tyss2024beyond,xu2025clear}. These resources establish the empirical base for legal AI, but they are normally used in centralized settings. Our framework instead treats each corpus or institution as a potentially private jurisdictional client.
+
+\subsection{Federated learning under heterogeneous clients}
+
+Federated averaging introduced communication-efficient decentralized model training without sharing raw data \citep{mcmahan2017communication}. FedProx, SCAFFOLD, and FedNova address heterogeneous optimization dynamics \citep{li2020fedprox,karimireddy2020scaffold,wang2020fednova}, while clustered and personalized methods retain multiple client optima rather than forcing one global model \citep{sattler2021clustered,li2021ditto}. Flower provides a flexible orchestration framework \citep{beutel2020flower}, and recent work studies federated LLM fine-tuning and heterogeneous low-rank adaptations \citep{Wang2024FLoRAFF,Wu2026ASO,Cheng2025TowardFL}. These lines are the closest algorithmic comparators for FLEN: a legal-conflict method must outperform generic clustering or personalization on matched tasks and must report worst-jurisdiction behavior, not only a global average.
+
+\subsection{Parameter-efficient, private, and multi-agent legal reasoning}
+
+Full fine-tuning of legal LLMs is expensive and communication-heavy. LoRA reduces adaptation to low-rank matrices and makes federated exchange more feasible \citep{hu2022lora}. Differential privacy and secure aggregation provide distinct statistical and cryptographic protections \citep{abadi2016deep,bonawitz2017practical}, but neither follows automatically from federated training. Legal NLP work has studied differentially private language modeling, and recent cross-jurisdiction legal sentiment analysis combines federation with differential privacy \citep{yin2022privacy,xu2025crossjurisdiction}. Conversely, communicated federated LLM updates can leak client-exclusive information \citep{Hu2025SimpleYE}. These findings motivate an explicit threat model and attack evaluation; adapter exchange or a sanitization label alone is not a privacy guarantee. Multi-agent systems provide a separate inference-time abstraction. LangGraph coordinates stateful workflows \citep{langgraph2024}, and legal applications benefit from separating argument generation, citation checking, contradiction detection, and final synthesis because LLMs can produce plausible but unsupported authorities \citep{dahl2024large}.
+
+\subsection{Distinction from adjacent systems}
+
+Federated legal NLP is an emerging area rather than an empty baseline space. FEDLEGAL provides naturally partitioned court-level benchmarks and shows that real non-IID legal data are harder than heuristic splits \citep{Zhang2023FEDLEGALTF}; FedJudge combines parameter-efficient legal LLM adaptation with federated and continual-learning components \citep{Yue2023FedJudgeFL}. FLEN's proposed distinction is narrower than claiming to be the first federated legal LLM: it treats authority-scoped conflict as an object that must be validated, routed, or cause abstention. This distinction remains a design hypothesis until comparison against FEDLEGAL/FedJudge-style training, clustered and personalized FL, and non-conflict legal-agent workflows is completed. Table~\ref{tab:novelty-comparison} therefore reports mechanism scope rather than empirical superiority.
+
+\input{tables/novelty_comparison_table}
+
+
+\section{Motivation}
+\subsection{Why federated learning is needed beyond multi-agent collaboration}
+A natural objection is that the proposed system might be implemented as a conventional multi-agent legal workflow rather than as a federated learning framework. Modern LLM agents can already coordinate specialized roles through routing, debate, tool use, and task decomposition. In a legal setting, institutional agents representing courts, firms, or agencies could exchange arguments, retrieved authorities, and intermediate reasoning traces without sharing raw case files.
+
+This view conflates two different forms of collaboration. Multi-agent systems primarily organize inference-time reasoning: they decide how agents divide a query, challenge one another, verify citations, and synthesize a final answer. Federated learning addresses training-time collaboration under data-sharing constraints: it enables institutions to improve shared representations or adapters from distributed private experience. Thus, agent collaboration governs how legal expertise is used in a particular case, whereas federated learning governs how such expertise is accumulated across cases and institutions.
+
+The distinction is consequential in judicial applications. Institutional expertise is not limited to explicit rules or arguments that can be transmitted in a prompt. It also reflects long-run exposure to local case distributions, procedural habits, evidentiary preferences, citation practices, and jurisdiction-specific interpretation patterns. These signals are often tacit and statistical. A purely multi-agent system may support consultation among already competent agents, but it does not provide a principled mechanism for forming or updating competence from private institutional data.
+
+FLEN therefore combines the two paradigms rather than treating them as substitutes. Federated learning provides a data-local training substrate through which institutional adapters can be updated without pooling raw records; separate mechanisms are still required for formal privacy. Multi-agent deliberation provides the inference-time mechanism through which local outputs are selected, challenged, verified, and synthesized for a legal query. The goal is not merely to let legal agents communicate, but to specify when institutional knowledge may be transferred, when it must remain jurisdiction-specific, and when the system should abstain.
+
+
+
+\section{Methodology}
+
+\subsection{Problem formulation}
+
+Let $\client=\{1,\ldots,K\}$ denote participating legal institutions. Client $k$ owns a private legal dataset $\dataset_k=\{(x_i,y_i,c_i,j_i)\}_{i=1}^{n_k}$, where $x_i$ is a case or legal query, $y_i$ is the task label or target answer, $c_i$ denotes citation metadata, and $j_i$ denotes jurisdictional metadata. Raw samples in $\dataset_k$ never leave client $k$. A global legal model with parameters $w$ is adapted through local parameter-efficient updates $\Delta_k$, such as LoRA adapters. The standard federated objective is
+\begin{equation}
+    \min_w \sum_{k=1}^{K} p_k \loss_k(w), \quad p_k=\frac{n_k}{\sum_{\ell=1}^{K} n_\ell}.
+\end{equation}
+
+When supervision is available, local adaptation may include task-specific legal consistency terms:
+\begin{equation}
+    \loss^{\mathrm{client}}_k =
+    \loss^{\mathrm{task}}_k
+    + \beta_{\mathrm{cit}}\loss^{\mathrm{citation}}_k
+    + \beta_{\mathrm{align}}\loss^{\mathrm{alignment}}_k
+    + \beta_{\mathrm{debate}}\loss^{\mathrm{debate}}_k .
+\end{equation}
+Here, $\loss^{\mathrm{citation}}_k$ is enabled only for examples with gold or independently verified authorities, $\loss^{\mathrm{alignment}}_k$ requires an audited cross-jurisdiction rule mapping, and $\loss^{\mathrm{debate}}_k$ requires labelled argument--counterargument data. The corresponding coefficient is set to zero when its supervision is absent. This prevents an unobserved inference-time property from being presented as a trained objective.
+
+We further define a cross-client legal conflict score for comparable query $q$ and client pair $(i,j)$:
+\begin{equation}
+    D_{\mathrm{conflict}}(i,j;q) =
+    \omega_{\mathrm{cit}}D_{\mathrm{cit}}(i,j;q)
+    + \omega_{\mathrm{rea}}D_{\mathrm{rea}}(i,j;q)
+    + \omega_{\mathrm{ver}}D_{\mathrm{ver}}(i,j;q)
+    + \omega_{\mathrm{rule}}D_{\mathrm{rule}}(i,j;q),
+\end{equation}
+where $D_{\mathrm{cit}}$ measures citation divergence, $D_{\mathrm{rea}}$ measures reasoning-chain contradiction, $D_{\mathrm{ver}}$ measures incompatible verdict distributions under comparable facts, and $D_{\mathrm{rule}}$ measures rule-alignment distance.
+The coefficients satisfy $\omega_x\geq 0$ and $\sum_x \omega_x=1$.
+
+\subsection{Comparability gate and probe construction}
+
+Conflict is meaningful only when two client outputs address the same legal issue in a compatible output and authority space. At round $t$, the server therefore uses a probe set $\mathcal{P}_t$ that is disjoint from all client training, validation, and test records. A probe may be a licensed public case, an expert-authored hypothetical, or a fact pattern sanitized before federation; its provenance, target task, target jurisdiction, language, label ontology, and admissible authority scope must be recorded. Evaluation examples are never reused as aggregation probes.
+
+For clients $i$ and $j$ and probe $q$, let $a_{ij}(q)\in\{0,1\}$ be a comparability indicator. It equals one when both clients address a compatible task and their outputs can be interpreted under the same target jurisdiction or a validated authority mapping. Differences with $a_{ij}(q)=0$ are not penalized; they remain jurisdiction-specific. This gate separates potentially harmful inconsistency from task mismatch or legally legitimate scope differences.
+
+Passing comparability does not imply that every disagreement should be penalized. Each comparable pair is assigned one of four routing states using a classifier calibrated on expert labels: \textsc{Transferable} evidence may enter the shared cohort; \textsc{AuthorityLocal} evidence is valid only in its original authority scope and remains local; \textsc{Unsupported} evidence may be downweighted or rejected; and \textsc{Unresolved} evidence triggers conservative weighting or abstention. Authority eligibility is frozen from audited metadata before training, whereas model-dependent unsupported and unresolved probabilities may be updated on disjoint probes. This separation prevents majority agreement from being used as a surrogate for legal correctness.
+
+\subsection{Operational legal conflict functions}
+
+For a comparable probe $q$ evaluated locally by clients $i$ and $j$, client $k$ returns a minimized tuple
+\begin{equation}
+    s_k(q) = \left(C_k(q),\, \rho_k(q),\, \bm{r}_k(q),\, \bm{\pi}_k(q),\, \rules_k(q)\right),
+\end{equation}
+where $C_k(q)$ is a canonicalized authority set, $\rho_k(q)$ is a disclosed reasoning summary, $\bm{r}_k(q)$ is its embedding, $\bm{\pi}_k(q)$ is the predicted verdict distribution, and $\rules_k(q)$ is a typed set of applicable rule identifiers with authority levels. Data minimization reduces exposure but does not prove that the tuple is free of reconstructable client information; Section~\ref{sec:privacy-boundary} states the required threat model.
+
+\paragraph{Citation conflict.}
+Let $C_i$ and $C_j$ be normalized citation sets after statute/article/case canonicalization into the target authority space. For a comparable pair with at least one citation, citation conflict is the Jaccard distance:
+\begin{equation}
+    D_{\mathrm{cit}}(i,j;q) =
+    1 - \dfrac{|C_i(q) \cap C_j(q)|}{|C_i(q) \cup C_j(q)|}.
+\end{equation}
+If both sets are empty, citation conflict is marked unavailable rather than zero, so omission is not rewarded. If the cited authorities belong to different valid jurisdictional scopes, $a_{ij}(q)=0$ unless an audited mapping projects them into a common target authority space. A soft graph-overlap score may be reported as a secondary diagnostic, but it must be validated separately from exact citation identity.
+
+\paragraph{Reasoning conflict.}
+Each minimized reasoning summary is encoded as $\bm{r}_k(q) \in \mathbb{R}^{d}$. A legal natural-language-inference classifier $g_{\mathrm{NLI}}$ produces a directional contradiction probability from paired summaries. We symmetrize that score:
+\begin{equation}
+    D_{\mathrm{rea}}(i,j;q) =
+    \eta \frac{1 - \cos(\bm{r}_i(q),\bm{r}_j(q))}{2}
+    + \frac{1-\eta}{2}\left[
+    g_{\mathrm{NLI}}(\rho_i(q),\rho_j(q))
+    + g_{\mathrm{NLI}}(\rho_j(q),\rho_i(q))\right],
+\end{equation}
+where $\eta\in[0,1]$ trades geometric dissimilarity against explicit contradiction evidence. If no validated legal NLI model is available, the embedding term must be reported alone and the limitation disclosed.
+
+\paragraph{Verdict conflict.}
+For verdict distributions $\bm{\pi}_i(q)$ and $\bm{\pi}_j(q)$ over the same label space or an audited common ontology, we use Jensen--Shannon divergence with base-2 logarithms, which bounds the score in $[0,1]$:
+\begin{equation}
+    D_{\mathrm{ver}}(i,j;q) =
+    \jsd(\bm{\pi}_i(q),\bm{\pi}_j(q))
+    = \frac{1}{2}\KL(\bm{\pi}_i \| \bm{m})
+    + \frac{1}{2}\KL(\bm{\pi}_j \| \bm{m}),
+    \quad \bm{m}=\frac{\bm{\pi}_i+\bm{\pi}_j}{2}.
+\end{equation}
+Before evaluation, zero entries are replaced by a fixed $\epsilon$ and renormalized. Unlike label disagreement, this score retains uncertainty in close or indeterminate cases.
+
+\paragraph{Rule-alignment distance.}
+We represent applicable legal authorities as a typed rule graph $\graph_k=(\rules_k,E_k)$ with nodes for statutes, precedents, clauses, or treaty provisions and typed edges for hierarchy, exception, citation, or implementation relations. Let $M_{ij}(q)$ be a one-to-one node matching audited for the target jurisdiction. Node mismatch is
+\begin{equation}
+    D_{\mathrm{node}}(i,j;q) =
+    1 - \frac{2}{|\rules_i(q)|+|\rules_j(q)|}
+    \sum_{(u,v)\in M_{ij}(q)}
+    \operatorname{sim}_{\mathrm{rule}}(u,v),
+\end{equation}
+where $\operatorname{sim}_{\mathrm{rule}}(u,v)=\mathbb{I}_{\mathrm{auth}}(u,v)\max\{0,\cos(\bm{e}_u,\bm{e}_v)\}$ combines semantic similarity with authority compatibility. Let $D_{\mathrm{edge}}$ be the fraction of mapped typed edges whose relation or direction is not preserved. The complete rule distance is $D_{\mathrm{rule}}=(1-\zeta)D_{\mathrm{node}}+\zeta D_{\mathrm{edge}}$, with $\zeta$ calibrated on expert annotations. Probes without an admissible rule mapping are excluded from this component and reported separately.
+
+Let $\mathcal{E}_t=\{(i,j,q):q\in\mathcal{P}_t,\,i<j,\,a_{ij}(q)=1\}$ be the valid comparison set after removing unavailable components. The per-round server score is
+\begin{equation}
+    \overline{D}_{x}^{(t)} =
+    \frac{1}{|\mathcal{E}_{t,x}|}
+    \sum_{(i,j,q)\in\mathcal{E}_{t,x}} D_{x}(i,j;q),
+    \quad x \in \{\mathrm{cit},\mathrm{rea},\mathrm{ver},\mathrm{rule}\}.
+\end{equation}
+Each component reports its own denominator $|\mathcal{E}_{t,x}|$ and confidence interval. The four weights $\omega_x$ and all decision thresholds are calibrated on a held-out, expert-labelled conflict set rather than on the task test data.
+When a conflict component is unavailable, its weight is removed and the remaining available component weights are renormalized for that pair; unavailable evidence is never imputed as agreement. Calibration reports class-conditional AUROC/AUPRC, expected calibration error, coverage, and abstention frequency. The probe-development, calibration, and final evaluation sets are immutable and mutually disjoint so that conflict thresholds cannot be tuned on reported task outcomes.
+
+\subsection{Federated legal LLM architecture}
+
+The system follows five layers: a federated judicial data layer, a local legal LLM training layer, a jurisdiction-aware representation layer, a conflict-aware aggregation layer, and a federated multi-agent reasoning layer. Figure~\ref{fig:framework} organizes these layers into a training-time federated loop and an inference-time verified reasoning path.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig1_flen_architecture.png}
+    \caption{Conceptual FLEN architecture. Institutions retain raw records and local retrieval state while exchanging configured adapter payloads and minimized probe summaries. The method applies comparability and authority checks before target-conditioned aggregation, retains guarded jurisdiction-local residuals, and gates inference outputs by citation, conflict, and policy status. The CaseHOLD screening validates the training-time path with automatic proxy metadata; formal privacy and inference-time legal validity require the additional protocols described below.}
+    \label{fig:framework}
+\end{figure}
+
+Each institution maintains local case corpora, citation graphs, legal knowledge bases, and reasoning trajectories. The design distinguishes jurisdiction, legal domain, language, institution type, and court level rather than treating them as interchangeable client labels. Non-IID simulation may vary topic or label concentration within a task; a cross-jurisdiction experiment additionally requires authentic jurisdiction metadata and a common task or audited output mapping.
+
+Each client adapts a legal-capable LLM using parameter-efficient training. The planned full configuration uses Qwen2.5-7B-Instruct with LoRA rank 16, scaling factor 32, dropout 0.05, and target modules \texttt{q\_proj} and \texttt{v\_proj}; the measured pilot instead uses Qwen2.5-0.5B-Instruct. Payload type is fixed within each controlled comparison. Gradients, adapters, and reasoning embeddings are not described as interchangeable privacy mechanisms.
+
+The two paths in Figure~\ref{fig:framework} clarify the complementary roles of federation and agent collaboration. The upper path accumulates jurisdiction-sensitive capability from distributed private experience and broadcasts the global adapter after conflict-aware weighting. The lower path applies that capability to a particular query: institutional outputs are converted into admissible typed messages, challenged through deliberation, and released only after citation and privacy verification. Consequently, the multi-agent layer does not replace federated learning, and the federated server does not directly synthesize an unverified judicial decision.
+
+\subsection{Jurisdiction-aware representation}
+
+Legal non-IID data cannot be represented only by label distributions. We attach a structured descriptor $z_k$ to each client containing jurisdiction, legal domain, language, institution type, court level, and authority hierarchy. In the full method, categorical fields are embedded and concatenated with a text encoding of the documented jurisdiction profile to form $e_k \in \mathbb{R}^{d}$. The descriptor conditions local training and target-jurisdiction routing:
+\begin{equation}
+    h_i = f_{\theta}(x_i, e_k, r_i),
+\end{equation}
+where $r_i$ denotes retrieved local legal context and $h_i$ is the case representation used for prediction or reasoning.
+The descriptor schema, encoder version, training objective, and missing-value policy must be frozen before evaluation. The current pilot records metadata but does not yet train or validate this representation; it therefore cannot support a jurisdiction-embedding claim.
+
+\subsection{Conflict-aware aggregation}
+
+Standard FedAvg updates a single global model by weighted averaging:
+\begin{equation}
+    w_{t+1}^{\mathrm{FedAvg}} = \sum_{k=1}^{K}p_k w_{t,k},
+    \quad p_k=\frac{n_k}{\sum_{\ell=1}^{K}n_\ell}.
+\end{equation}
+Unconditional conflict downweighting would suppress a legally valid minority client whenever it disagrees with a larger aligned group. FLEN therefore conditions transfer on a target jurisdiction $j$ and retains a jurisdiction-local residual. Let $\mathcal{E}_{t,k}^{(j)}$ contain valid comparisons involving client $k$ that passed the comparability gate for target $j$. The unresolved conflict exposure is
+\begin{equation}
+    \delta_{k\rightarrow j}^{(t)} =
+    \frac{1}{|\mathcal{E}_{t,k}^{(j)}|}
+    \sum_{(k,\ell,q)\in\mathcal{E}_{t,k}^{(j)}}
+    D_{\mathrm{conflict}}(k,\ell;q),
+\end{equation}
+with $\delta_{k\rightarrow j}^{(t)}=0$ when no comparison is admissible. Let $u_{k\rightarrow j}\in[0,1]$ be the frozen target-authority compatibility score and let $n_{\max}$ cap the influence of client size. The normalized base weight is
+\begin{equation}
+    b_{k\rightarrow j}=
+    \frac{u_{k\rightarrow j}\min(n_k,n_{\max})}
+    {\sum_{\ell\in\mathcal{G}_j}u_{\ell\rightarrow j}\min(n_\ell,n_{\max})}.
+\end{equation}
+Citation volume or agreement with a majority is not used as a reliability multiplier unless its calibration is independently validated. A conflict-sensitive candidate weight is
+\begin{equation}
+    \widehat{\alpha}_{k\rightarrow j}^{(t)} =
+    \frac{b_{k\rightarrow j}\exp(-\lambda \delta_{k\rightarrow j}^{(t)})}
+    {\sum_{\ell\in\mathcal{G}_j}b_{\ell\rightarrow j}
+    \exp(-\lambda \delta_{\ell\rightarrow j}^{(t)})},
+\end{equation}
+where $\mathcal{G}_j$ is the transfer-compatible cohort. To prevent a feedback loop that eliminates a minority jurisdiction, FLEN mixes this candidate with the base distribution using a diversity floor $\tau\in[0,1]$:
+\begin{equation}
+    \widetilde{\alpha}_{k\rightarrow j}^{(t)} =
+    (1-\tau)\widehat{\alpha}_{k\rightarrow j}^{(t)}
+    + \tau b_{k\rightarrow j}.
+\end{equation}
+For stability, deployed weights use a pre-specified exponential update
+\begin{equation}
+    \alpha_{k\rightarrow j}^{(t)}=
+    (1-\nu)\alpha_{k\rightarrow j}^{(t-1)}
+    +\nu\widetilde{\alpha}_{k\rightarrow j}^{(t)},
+\end{equation}
+followed by normalization within $\mathcal{G}_j$. The smoothing coefficient $\nu$, conflict coefficient $\lambda$, and diversity floor $\tau$ are selected on validation jurisdictions and frozen before held-out-jurisdiction testing. Their sensitivity and the resulting minimum client weight are reported.
+The target-conditioned shared adapter and the client model are
+\begin{equation}
+    \Delta_{t+1,j}^{\mathrm{shared}}=
+    \sum_{k\in\mathcal{G}_j}\alpha_{k\rightarrow j}^{(t)}
+    \Delta_{t,k}^{\mathrm{shared}},
+    \qquad
+    w_{t+1,k}=w_0+\Delta_{t+1,j_k}^{\mathrm{shared}}
+    +\Delta_{t,k}^{\mathrm{local}}.
+\end{equation}
+The implementation uses two LoRA branches with identical target modules. The shared branch is initialized from the target-cohort adapter, trained during the federated local phase, clipped, and uploaded. The local branch is initialized from the previous client checkpoint, optimized with the shared branch frozen, and never uploaded. A deterministic holdout drawn only from each client's training shard compares the candidate composition against the current shared branch; the residual is retained when it preserves holdout accuracy and loss, and otherwise the shared branch is used alone. The external validation and test sets never participate in this selection. At inference, a retained local branch is composed additively with the shared branch. This separation supports direct ablations against shared-only aggregation, unguarded residuals, and Ditto-style personalization. The main diagnostic variables are cohort construction, conflict strength, gate acceptance, per-jurisdiction utility, and negative transfer.
+Figure~\ref{fig:conflict-aggregation} illustrates the aggregation mechanism.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig2_operational_conflict_aggregation.pdf}
+    \caption{Target-conditioned legal-conflict routing. (a) Clients retain raw cases and evaluate disjoint probes using minimized tuples. (b) The comparability gate excludes task- or authority-incompatible pairs before citation, reasoning, verdict, and rule distances are combined. (c) Conflict exposure is used only within a target-compatible cohort, a diversity floor prevents elimination of minority clients, and the resulting shared adapter $\Delta_{t+1,j}^{\mathrm{shared}}$ is combined with a jurisdiction-local residual.}
+    \label{fig:conflict-aggregation}
+\end{figure}
+
+Figure~\ref{fig:conflict-aggregation} summarizes the implemented training-time mechanism: conflict measurement is separated from transfer eligibility, incomparable differences remain local, and only calibrated proxy conflict inside a target-compatible cohort affects shared transfer. The CaseHOLD screening tests this path with automatic verdict proxies; citation, reasoning, and rule-alignment components still require expert construct validation.
+
+\begin{algorithm}[t]
+\caption{Conflict-aware federated legal LoRA aggregation}
+\label{alg:aggregation}
+\DontPrintSemicolon
+\KwIn{Clients $\client$, target cohorts, probe set, rounds $T$, conflict weight $\lambda$, diversity floor $\tau$}
+\KwOut{Target-conditioned shared adapters and jurisdiction-local residuals}
+\For{$t=0$ \KwTo $T-1$}{
+    Server broadcasts target-cohort adapters, probe identifiers, and the frozen configuration\;
+    \ForEach{client $k$ in parallel}{
+        Client trains local adapter $\Delta_{t,k}$ on private $\dataset_k$ using $\loss^{\mathrm{client}}_k$\;
+        Client computes minimized citation, reasoning, verdict, and rule-alignment summaries on admissible probes\;
+        Client sends a configured update payload plus summaries under the declared threat model\;
+    }
+    Server computes $D_{\mathrm{cit}},D_{\mathrm{rea}},D_{\mathrm{ver}},D_{\mathrm{rule}}$\;
+    Server applies the comparability gate and computes target-conditioned exposure $\delta_{k\rightarrow j}^{(t)}$\;
+    Server forms diversity-floored weights and aggregates one shared adapter per target cohort\;
+    Server logs communication cost, client drift, aggregation stability, and privacy metrics\;
+}
+\end{algorithm}
+
+\subsection{Threat model and privacy boundary}
+\label{sec:privacy-boundary}
+
+FLEN's baseline guarantee is data locality: raw client records are not intentionally uploaded to the server. This is weaker than a formal privacy guarantee because adapters, gradients, verdict distributions, embeddings, summaries, and audit logs can leak membership, attributes, or text. The policy auditor and \texttt{privacy\_tag} record which controls were requested and whether a message passed schema checks; they do not themselves provide differential privacy or encryption.
+
+A privacy-preserving instantiation must specify the adversary, protected unit, adjacency relation, clipping norm, sampling rate, noise multiplier, accountant, and final $(\epsilon,\delta)$ after composition. Protection for model updates does not automatically cover disclosed probe summaries, so summary release requires a separate budget or a cryptographic computation. The evaluation must include membership inference, update reconstruction, and embedding-attribute or text-recovery attacks under the same protocol used for utility reporting.
+
+Secure aggregation also changes the conflict protocol. If the server observes each client's update or summary, it cannot claim that those values were hidden by secure aggregation. A compatible two-stage design first computes auditable weights from public probes and differentially private summaries, or through secure multiparty computation; clients then scale their updates by the published weights and securely aggregate only the weighted sum. Dropout handling, collusion threshold, and protocol overhead must be reported. These mechanisms are not implemented in the current pilot, so the measured results support data-local execution only.
+
+\subsection{Federated multi-agent legal reasoning}
+
+The multi-agent workflow is represented as a directed state graph $\graph_A=(V_A,E_A)$. Its state nodes are
+\begin{multline*}
+V_A = \{\textsc{Parse},\textsc{Align},\textsc{Local},\textsc{Argue},\textsc{Counter},\\
+\textsc{Verify},\textsc{Detect},\textsc{Audit},\textsc{Judge}\}.
+\end{multline*}
+A query moves through typed state transitions rather than unrestricted prompt exchange. A transmitted message has schema
+\begin{equation}
+    m = (\mathrm{case\_id}, \mathrm{sender}, \mathrm{jurisdiction},
+    \mathrm{issue\_ids}, C, \rho, \bm{r}, \bm{\pi}, \mathrm{privacy\_tag}),
+\end{equation}
+where $C$, $\rho$, $\bm{r}$, and $\bm{\pi}$ are the minimized summaries used by the conflict functions. The \texttt{privacy\_tag} records requested controls and realized budget identifiers. Messages containing raw case text or client-local retrieval content are not admissible on inter-client edges, but the admissible fields remain subject to the leakage analysis in Section~\ref{sec:privacy-boundary}.
+
+The system maintains three memory scopes. Short-term deliberation memory $M^{\mathrm{case}}$ stores the active issue decomposition, disclosed argument summaries, contradiction flags, and the judge decision for a single query. Jurisdiction memory $M^{\mathrm{jur}}_k$ stores locally maintained rule mappings, authority hierarchies, and alignment metadata for client $k$; only sanitized mappings can be shared. Citation memory $M^{\mathrm{cit}}$ stores canonical citation identifiers, validity results, and authority-level checks required for reproducible citation consistency evaluation. A reasoning trace log records admissible message transitions and verifier decisions for later audit.
+
+The argument and counterargument agents produce opposed issue-level analyses conditioned on the aligned jurisdiction state; task-specific labels may specialize these roles as prosecution/defence, claimant/respondent, or clause/support review. Before synthesis, the citation verifier rejects unsupported citations and incompatible authority claims. The conflict detector evaluates pairwise disclosed summaries and records unresolved conflicts. The judge receives verified arguments, verdict distributions, conflict scores, and policy-audit status, then emits a final output only when citation, authority, conflict, and privacy-policy gates are satisfied.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{fig3_privacy_preserving_deliberation.pdf}
+    \caption{Policy-gated data-local multi-agent deliberation. The workflow separates shared query state, client-local retrieval, and verification/decision/audit layers. A query is aligned with the target jurisdiction before institutions produce typed minimized messages. Argument and counterargument roles expose competing analyses, while citation, authority, conflict, and policy gates constrain admissible evidence. The figure specifies information flow; it does not imply formal privacy unless the protocol in Section~\ref{sec:privacy-boundary} is implemented.}
+    \label{fig:multi-agent}
+\end{figure}
+
+Figure~\ref{fig:multi-agent} makes the disclosure boundary explicit: private retrieval and jurisdiction memory remain client-local, whereas only schema-constrained messages enter shared deliberation. Case memory coordinates the active arguments, citation memory supports authority validation, and the reasoning trace records admissible transitions and gate outcomes. This separation allows the judge to synthesize institution-specific legal expertise without receiving unrestricted raw case content.
+
+\begin{algorithm}[t]
+\caption{Policy-gated data-local multi-agent judicial deliberation}
+\label{alg:deliberation}
+\DontPrintSemicolon
+\KwIn{Query $q$, target jurisdiction $j$, local memories $\{M^{\mathrm{jur}}_k\}$}
+\KwOut{Verified verdict $y^{*}$ with citations $C^{*}$ and audit record}
+\textsc{Parse} extracts issues and sanitized fact descriptors into $M^{\mathrm{case}}$\;
+\textsc{Align} retrieves rule mappings and authority levels from $M^{\mathrm{jur}}_j$\;
+\ForEach{participating client $k$}{
+    \textsc{Local} emits admissible message $m_k=(C_k,\rho_k,\bm{r}_k,\bm{\pi}_k,\mathrm{privacy\_tag}_k)$\;
+}
+\textsc{Argue} and \textsc{Counter} construct opposed issue-level summaries\;
+\textsc{Verify} canonicalizes citations and rejects invalid authority claims\;
+\textsc{Detect} computes $D_{\mathrm{cit}},D_{\mathrm{rea}},D_{\mathrm{ver}},D_{\mathrm{rule}}$\;
+\textsc{Audit} verifies sanitization and privacy-policy compliance\;
+\If{citation, authority, conflict-threshold, and privacy-policy checks pass}{
+    \textsc{Judge} aggregates verified summaries and outputs $(y^{*},C^{*})$\;
+}
+\Else{
+    Return an abstention with failed-check annotations\;
+}
+\end{algorithm}
+
+\section{Evaluation Status and Validation Protocol}
+\label{sec:experiments}
+
+\subsection{Evidence provenance}
+
+The repository separates measured outputs from layout-only material. The CaseHOLD Flower/PEFT logs contain the completed twenty-round screening reported below. The multi-dataset benchmark, conflict, transfer, privacy, and robustness CSV files under \texttt{experiment\_source\_data\_topconf} are synthetic figure templates and are not used as empirical evidence. Table~\ref{tab:experiment-configs} summarizes the implementation status of each experiment family.
+
+\input{tables/datasets_table}
+\input{tables/experiment_config_table}
+\input{tables/revision_experiment_protocol_table}
+
+\subsection{Controlled evaluation design}
+
+To make comparisons interpretable, the study keeps the backbone, tokenizer, LoRA targets, client partitions, local-step budget, communication rounds, and random seeds aligned across federated methods. The comparison set includes centralized training where legally permissible, local-only adaptation, FedAvg, FedProx, SCAFFOLD or FedNova, FedLoRA, clustered federated learning, Ditto-style personalization, and target-conditioned FLEN. Changes in task heads, local compute, or privacy settings are reported as separate settings rather than folded into a direct method comparison.
+
+\input{tables/baseline_metric_matrix}
+
+Each dataset retains its standard task metric. CaseHOLD uses five-way accuracy; ECtHR uses micro- and macro-$F_1$ for multilabel article prediction; CUAD uses span- or clause-level precision, recall, and $F_1$; and each selected CAIL task reports its task-specific accuracy or macro-$F_1$. Raw accuracies from heterogeneous tasks will not be averaged. Cross-dataset summaries use per-dataset ranks and standardized paired effects, while all primary claims remain dataset-specific.
+
+\paragraph{Citation consistency.}
+For an example with predicted canonical citation set $\widehat{C}$ and gold or independently verified authority set $C^{*}$, citation consistency is micro-averaged precision, recall, and $F_1$. Benchmarks without gold citations require a separately sampled expert-annotated subset; verifier-only labels are reported as automatic diagnostics and are not mixed with human gold overlap.
+
+\paragraph{Reasoning coherence and hallucination rate.}
+Reasoning coherence and hallucination are evaluated by legally trained reviewers who are blind to model identity. A concise annotation guide defines factual support, rule selection, application, and conclusion quality, while reviewers make a holistic legal assessment rather than scoring a long checklist. The study reports sample size, reviewer qualifications, adjudication, and inter-annotator agreement. NLI and citation-verifier outputs remain secondary diagnostics. Hallucination rate is the proportion of outputs containing an unsupported fact, non-existent authority, inapplicable authority, or unsupported rule transfer, with error categories reported for interpretation.
+
+\paragraph{Federated and privacy measures.}
+Communication reporting separates tensor payload, serialization, transport, secure-aggregation, and summary overhead. Client drift is the mean pairwise distance between aligned client updates, and aggregation stability is measured over the final pre-specified rounds. Privacy reporting includes the full $(\epsilon,\delta)$ accountant and clipping configuration together with membership-inference AUC, update-reconstruction similarity, and embedding leakage. Runs without those mechanisms are labelled data-local, not privacy-preserving.
+
+The main study uses five matched seeds, reports each run, and summarizes variation with the mean, standard deviation, and a 95\% Student-$t$ confidence interval. The present development screening has only three matched seeds and is underpowered. Where per-example predictions are available, paired permutation tests and effect sizes complement run-level intervals, with Holm correction for the declared comparison family. Mechanism analysis focuses on per-jurisdiction and worst-jurisdiction utility, negative transfer, client weights, conflict calibration, and risk--coverage behavior. Ablations use the same seeds and splits, and any extra local computation is reported explicitly.
+
+\subsection{Conflict construct validation}
+
+The four conflict components should first be compared with legal judgement on matched or expert-authored fact patterns tied to a target jurisdiction. Legally trained annotators independently label transferability, authority incompatibility, factual support, and unresolved cases while blind to model identity. Agreement, adjudication, calibration error, AUROC/AUPRC, and representative errors then show whether the conflict score captures the intended construct. Until this evidence is available, lower internal conflict is treated as a mechanism diagnostic rather than improved legal reasoning.
+
+\subsection{Measured CaseHOLD proxy screening}
+
+The matched screening uses Qwen2.5-0.5B-Instruct on LexGLUE CaseHOLD with seeds 41--43, four clients, 1,200 training records, 240 validation records, 24 disjoint aggregation probes, and twenty Flower rounds. All 24 runs completed the planned rounds and client evaluations without Flower failures. The target-conditioned logs record client predictions, conflict exposure, aggregation weights, local-residual decisions, and communication volume. The metadata-derived client labels are heuristic, with fallbacks partly correlated with the gold class; consequently this is a same-task non-IID optimization study rather than evidence of authentic cross-jurisdiction transfer. The calibration metadata identifies the experiment as an automatic proxy pilot.
+
+Table~\ref{tab:e1-flen-screening} reports eight controlled variants. Conflict-only aggregation reaches $35.42\%\pm3.56$ aggregate accuracy, compared with $33.89\%\pm5.75$ for its $\lambda=0$ control; the paired mean difference is $+1.53$ points, but its 95\% Student-$t$ interval ($-8.84$ to $+11.90$) crosses zero. The original unguarded $8+2$ shared/local schedule degrades aggregate accuracy by $8.61$ points relative to the target-cohort control. Paired client evaluation identifies the local residual as the failure source: unguarded personalized-minus-shared accuracy averages $-8.19$ points. The train-internal gate removes this collapse. Guarded FLEN reaches $35.56\%\pm3.94$, or $+1.67$ points over $\lambda=0$, while its paired residual contribution averages $+0.42$ points. Neither interval excludes zero, and guarded FLEN's mean worst-client accuracy is $1.67$ points below the control. These results support runtime correctness, mechanism activation, and the necessity of the residual safeguard; they do not support a significant effectiveness or worst-client improvement claim.
+
+All target-conditioned methods communicate $330.01$~MiB of logical model and probe payload per seed, compared with $330.00$~MiB for FedAvg/FedProx; the 0.01~MiB difference is the minimized probe-summary payload. These totals exclude serialization, transport, encryption, and secure-aggregation overhead. The reported update norm remains distance from the broadcast adapter rather than the pairwise client-drift metric required by the formal protocol.
+
+\input{tables/e1_flen_screening_table}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.96\textwidth]{e1_accuracy_convergence.pdf}
+    \caption{Twenty-round CaseHOLD proxy-screening convergence. Curves are means across seeds 41--43 and shaded regions are one standard deviation. Unguarded local residuals cause sustained degradation, whereas train-internal gating restores the aggregate trajectory. Client identifiers are heuristic partitions, not jurisdictions.}
+    \label{fig:e1-accuracy-convergence}
+\end{figure*}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.90\textwidth]{e1_final_accuracy.pdf}
+    \caption{Final aggregate and worst-client CaseHOLD accuracy. Bars report seed means and error bars report 95\% Student-$t$ intervals over three runs. Wide intervals and the absence of worst-client improvement prevent a superiority claim.}
+    \label{fig:e1-final-accuracy}
+\end{figure*}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.96\textwidth]{e1_conflict_diagnostics.pdf}
+    \caption{Proxy-conflict mechanism diagnostics. The left panel shows non-uniform gold-error-gated verdict exposure; the right panel shows the maximum absolute change from target-cohort base weights. The $\lambda=0$ controls retain their base weights, while conflict-enabled variants change client weights during training.}
+    \label{fig:e1-conflict-diagnostics}
+\end{figure*}
+
+\FloatBarrier
+
+\section{Discussion}
+
+The central design principle is that legal heterogeneity cannot be reduced to one optimization residual. Divergence may arise from sampling, task mismatch, model error, or legitimate authority-scoped disagreement. The revised FLEN formulation therefore uses a comparability gate, target-conditioned cohorts, jurisdiction-local residuals, and a diversity floor. These safeguards address a failure of unconditional conflict downweighting, which can otherwise suppress a legally valid minority jurisdiction. Whether the proposed diagnostics identify those categories accurately remains an empirical construct-validity question.
+
+The current evidence establishes that target-conditioned Flower/PEFT aggregation executes reproducibly, that conflict weighting changes client contributions, and that unguarded local residuals are a concrete failure mode mitigated by train-internal selection. The three-seed CaseHOLD screening does not demonstrate statistically reliable aggregate or worst-client gains, and its heuristic partitions cannot validate legal-conflict semantics or cross-jurisdiction transfer. It also provides no formal privacy or multi-agent evidence, so the corresponding claims remain outside the scope of the measured study.
+
+Three practical limitations remain. Proxy probes may not reflect expert legal disagreement, authority metadata may be incomplete, and differences between datasets can be mistaken for jurisdiction effects. The next evaluation therefore prioritizes expert conflict labels, authentic jurisdiction partitions, per-jurisdiction utility, and negative transfer. Privacy is evaluated separately because data locality alone does not quantify leakage from model updates.
+
+\section{Ethics, Governance, and Intended Use}
+
+FLEN is intended as a research framework for legal information processing and decision support, not as an autonomous adjudication system. Any institutional use requires a legally accountable human decision maker, access to the supporting authorities and uncertainty record, an appeal or override path, and documented responsibility for model and data governance. Abstention is preferable to transferring an unsupported rule or concealing unresolved jurisdictional conflict.
+
+The measured pilot uses a public benchmark and does not train on private court or client records. Future institutional studies must document legal basis, data licences, retention, access control, cross-border restrictions, and the treatment of sealed or personally identifiable information. Reasoning summaries and audit trails may themselves be sensitive and require minimization, purpose limitation, and deletion policies.
+
+Fairness evaluation must include minority jurisdictions and affected groups rather than only aggregate utility. The authority mapping and conflict benchmark should be created or audited by qualified legal experts from the represented jurisdictions, with disagreement and uncertainty retained in the annotations. Privacy and policy auditors support traceability but cannot replace legal oversight, independent security review, or empirical bias assessment.
+
+\section{Conclusion}
+
+This paper specifies FLEN, a data-local federated framework for cross-jurisdiction legal language modeling. Its key idea is to separate transfer eligibility from raw client disagreement: conflict diagnostics operate on comparable probes, shared adapters are target-conditioned, jurisdiction-local residuals are selected using training-only evidence, and typed deliberation can abstain when legal support is insufficient. The measured twenty-round CaseHOLD screening demonstrates executable target-conditioned Flower/PEFT aggregation, active conflict weighting, and the value of selecting local residuals against a train-internal control. It does not establish statistically reliable utility gains, legal-conflict construct validity, privacy protection, or cross-jurisdiction generalization. Those claims require expert-adjudicated calibration, five-seed evaluation on authentic jurisdictions, privacy experiments, and blinded legal evaluation of agent outputs.
+
+\section*{Data and code availability}
+The accompanying repository contains the manuscript source, experiment configurations, synthetic figure-layout templates, and the logs and summaries for the measured CaseHOLD Flower/PEFT studies. Synthetic templates are retained only for layout development and are not empirical results. The matched screening is traceable to \path{outputs/experiment_analysis/e1_flen_screening}, including run metadata, seed- and round-level metrics, paired effects, uncertainty intervals, and figures. Benchmark datasets remain subject to their original licences and access conditions. Future reported results include the resolved configuration, code and data versions, seeds, raw logs, per-example predictions, and the source runs used for each table or figure.
+
+
+\bibliography{custom}
+
+\end{document}

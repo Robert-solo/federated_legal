@@ -1,0 +1,8 @@
+framework: flower
+strategy: conflict_aware
+num_clients: 4
+num_rounds: 100
+local_epochs: 1
+client_fraction: 1.0
+min_available_clients: 4
+communication_payload: lora_adapters

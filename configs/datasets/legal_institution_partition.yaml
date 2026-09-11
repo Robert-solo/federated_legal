@@ -1,0 +1,74 @@
+raw_dir: data/raw
+processed_dir: data/processed
+partition_dir: data/partitions
+partition_strategy: institution_based
+dirichlet_alpha: 0.3
+seed: 42
+tokenizer:
+  name_or_path: null
+  backend: simple
+  max_length: 2048
+  add_special_tokens: true
+  save_text_tokens: false
+datasets:
+  - name: CAIL
+    split: train
+    raw_path: data/raw/CAIL/train.jsonl
+    text_fields: [fact, facts, case_text, text]
+    label_field: accusation
+    citation_fields: [relevant_articles, articles]
+    jurisdiction: chinese_civil_law
+    institution_id: court_cn_01
+    institution_type: court
+  - name: LexGLUE
+    split: train
+    raw_path: data/raw/LexGLUE/train.jsonl
+    text_fields: [text, context, question, answer]
+    label_field: label
+    citation_fields: [citations, article]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_01
+    institution_type: legal_research_institute
+  - name: CaseHOLD
+    split: train
+    raw_path: data/raw/CaseHOLD/train.jsonl
+    text_fields: [prompt, context, holding, text]
+    label_field: label
+    citation_fields: [citation, citations]
+    jurisdiction: us_common_law
+    institution_id: court_us_01
+    institution_type: court
+  - name: CUAD
+    split: train
+    raw_path: data/raw/CUAD/train.jsonl
+    text_fields: [text, clause, contract_text, question, answer]
+    label_field: clause_type
+    citation_fields: [section, clause_reference]
+    jurisdiction: contract_law
+    institution_id: firm_contract_01
+    institution_type: law_firm
+jurisdictions:
+  - client_id: court_cn_01
+    jurisdiction: chinese_civil_law
+    legal_tradition: civil_law
+    institution_type: court
+    dataset_names: [CAIL]
+    sample_weight: 1.0
+  - client_id: court_us_01
+    jurisdiction: us_common_law
+    legal_tradition: common_law
+    institution_type: court
+    dataset_names: [CaseHOLD]
+    sample_weight: 1.0
+  - client_id: institute_eu_01
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: firm_contract_01
+    jurisdiction: contract_law
+    legal_tradition: mixed_commercial
+    institution_type: law_firm
+    dataset_names: [CUAD]
+    sample_weight: 1.0

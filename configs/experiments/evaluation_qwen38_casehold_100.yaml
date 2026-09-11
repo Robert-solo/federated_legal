@@ -1,0 +1,69 @@
+name: evaluation_qwen38_casehold_100_nothinking_20260911
+seed: 401
+description: Evaluation config for the deterministic 100-example Qwen3.8-27B CaseHOLD API baseline.
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  partition_dir: data/partitions
+  partition_strategy: dirichlet
+  dirichlet_alpha: 0.3
+  seed: 401
+  datasets: []
+  tokenizer:
+    name_or_path: null
+    backend: simple
+    max_length: 2048
+    add_special_tokens: true
+    save_text_tokens: false
+  jurisdictions:
+    - client_id: court_us_01
+      jurisdiction: us_common_law
+      legal_tradition: common_law
+      institution_type: court
+      dataset_names: [CaseHOLD]
+      sample_weight: 1.0
+federated:
+  framework: flower
+  strategy: fedavg
+  num_clients: 1
+  num_rounds: 1
+  local_epochs: 1
+  client_fraction: 1.0
+  min_available_clients: 1
+  communication_payload: lora_adapters
+  checkpoint_dir: outputs/checkpoints
+  communication_log_dir: outputs/logs/communication
+model:
+  base_model: Qwen3.8-27B
+  model_family: custom
+  adaptation: lora
+  max_seq_length: 4096
+  lora:
+    rank: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: [q_proj, v_proj]
+conflict:
+  enabled: false
+  penalty_lambda: 0.0
+  citation_weight: 0.25
+  reasoning_weight: 0.25
+  verdict_weight: 0.25
+  rule_alignment_weight: 0.25
+  citation_weighted_aggregation: false
+  contradiction_penalty: false
+  visualization: false
+  log_dir: outputs/logs/aggregation
+privacy: {}
+agents: {}
+evaluation:
+  metrics:
+    - citation_accuracy
+    - legal_consistency
+    - hallucination_rate
+  output_dir: outputs/evaluation
+  predictions_path: outputs/api_baselines/qwen38_27b_casehold_100_nothinking_20260911/predictions.jsonl
+  communication_log_path: null
+  aggregation_log_path: null
+log_dir: outputs/logs
+figure_dir: outputs/figures

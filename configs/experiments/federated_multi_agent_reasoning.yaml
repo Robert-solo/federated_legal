@@ -1,0 +1,89 @@
+name: federated_multi_agent_reasoning
+seed: 301
+description: Federated multi-agent judicial debate with citation verification, conflict detection, and judge aggregation.
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  partition_dir: data/partitions
+  partition_strategy: jurisdiction_based
+  dirichlet_alpha: 0.3
+  seed: 301
+  datasets: []
+  tokenizer:
+    name_or_path: null
+    backend: simple
+    max_length: 2048
+    add_special_tokens: true
+    save_text_tokens: false
+  jurisdictions:
+    - client_id: court_cn_01
+      jurisdiction: chinese_civil_law
+      legal_tradition: civil_law
+      institution_type: court
+      dataset_names: [CAIL]
+      sample_weight: 1.0
+    - client_id: court_us_01
+      jurisdiction: us_common_law
+      legal_tradition: common_law
+      institution_type: court
+      dataset_names: [CaseHOLD]
+      sample_weight: 1.0
+    - client_id: institute_eu_01
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: legal_research_institute
+      dataset_names: [LexGLUE]
+      sample_weight: 1.0
+    - client_id: firm_contract_01
+      jurisdiction: contract_law
+      legal_tradition: mixed_commercial
+      institution_type: law_firm
+      dataset_names: [CUAD]
+      sample_weight: 1.0
+federated:
+  framework: flower
+  strategy: conflict_aware
+  num_clients: 4
+  num_rounds: 1
+  local_epochs: 1
+  client_fraction: 1.0
+  min_available_clients: 4
+  communication_payload: reasoning_embeddings
+  checkpoint_dir: outputs/checkpoints
+  communication_log_dir: outputs/logs/communication
+model:
+  base_model: Qwen/Qwen2.5-7B-Instruct
+  model_family: qwen2.5
+  adaptation: lora
+  max_seq_length: 4096
+  lora:
+    rank: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: [q_proj, v_proj]
+conflict:
+  enabled: true
+  penalty_lambda: 0.2
+  citation_weight: 0.25
+  reasoning_weight: 0.25
+  verdict_weight: 0.25
+  rule_alignment_weight: 0.25
+  citation_weighted_aggregation: true
+  contradiction_penalty: true
+  visualization: true
+  log_dir: outputs/logs/aggregation
+privacy:
+  differential_privacy: true
+  noise_multiplier: 0.8
+  secure_aggregation: true
+  gradient_compression: true
+  sanitize_legal_entities: true
+agents:
+  framework: langgraph
+  roles: [prosecutor, defense, citation, conflict, judge]
+  exchange_format: reasoning_embeddings
+evaluation:
+  metrics: [legal_accuracy, citation_consistency, reasoning_coherence, hallucination_rate, communication_cost, client_drift, cross_jurisdiction_generalization, privacy_leakage_risk, aggregation_stability]
+  output_dir: outputs/metrics
+log_dir: outputs/logs
+figure_dir: outputs/figures

@@ -1,0 +1,161 @@
+raw_dir: data/raw/public
+processed_dir: data/processed/public_legal_corpus
+partition_dir: data/partitions/public_legal_corpus
+partition_strategy: jurisdiction_based
+dirichlet_alpha: 0.3
+seed: 42
+tokenizer:
+  name_or_path: null
+  backend: simple
+  max_length: 2048
+  add_special_tokens: true
+  save_text_tokens: false
+datasets:
+  - name: CaseHOLD
+    task: case_hold
+    split: train
+    raw_path: data/raw/public/CaseHOLD/case_hold/train.jsonl
+    text_fields: [text, context]
+    label_field: label
+    citation_fields: [citations]
+    jurisdiction: us_common_law
+    institution_id: court_us_casehold
+    institution_type: court
+  - name: LexGLUE
+    task: scotus
+    split: train
+    raw_path: data/raw/public/LexGLUE/scotus/train.jsonl
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_supreme_court
+    institution_id: court_us_scotus
+    institution_type: court
+  - name: LexGLUE
+    task: ecthr_a
+    split: train
+    raw_path: data/raw/public/LexGLUE/ecthr_a/train.jsonl
+    text_fields: [text]
+    label_field: label
+    jurisdiction: european_human_rights
+    institution_id: court_eu_ecthr
+    institution_type: supranational_court
+  - name: LexGLUE
+    task: ecthr_b
+    split: train
+    raw_path: data/raw/public/LexGLUE/ecthr_b/train.jsonl
+    text_fields: [text]
+    label_field: label
+    jurisdiction: european_human_rights
+    institution_id: court_eu_ecthr
+    institution_type: supranational_court
+  - name: LexGLUE
+    task: eurlex
+    split: train
+    raw_path: data/raw/public/LexGLUE/eurlex/train.jsonl
+    text_fields: [text]
+    label_field: label
+    citation_fields: [citations]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_legislation
+    institution_type: legal_research_institute
+  - name: LexGLUE
+    task: ledgar
+    split: train
+    raw_path: data/raw/public/LexGLUE/ledgar/train.jsonl
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_contract_law
+    institution_id: firm_us_contract_ledgar
+    institution_type: law_firm
+  - name: LexGLUE
+    task: unfair_tos
+    split: train
+    raw_path: data/raw/public/LexGLUE/unfair_tos/train.jsonl
+    text_fields: [text]
+    label_field: label
+    jurisdiction: consumer_contract_law
+    institution_id: consumer_contract_lab
+    institution_type: legal_research_institute
+  - name: CUAD
+    task: cuad_contracts
+    split: train
+    raw_path: data/raw/public/CUAD/cuad_contracts/train.jsonl
+    text_fields: [contract_text, text]
+    label_field: label
+    jurisdiction: contract_law
+    institution_id: firm_contract_cuad
+    institution_type: law_firm
+  - name: CUAD
+    task: cuad_qa
+    split: train
+    raw_path: data/raw/public/CUAD/cuad_qa/train.jsonl
+    text_fields: [contract_text, question, answer]
+    label_field: answer
+    jurisdiction: contract_law
+    institution_id: firm_contract_cuad_qa
+    institution_type: law_firm
+  - name: CAIL
+    task: cail2018_exercise
+    split: exercise_contest_train
+    raw_path: data/raw/public/CAIL/cail2018/exercise_contest_train.jsonl
+    text_fields: [fact, text]
+    label_field: accusation
+    citation_fields: [relevant_articles]
+    jurisdiction: chinese_criminal_law
+    institution_id: court_cn_cail2018
+    institution_type: court
+jurisdictions:
+  - client_id: court_us_casehold
+    jurisdiction: us_common_law
+    legal_tradition: common_law
+    institution_type: court
+    dataset_names: [CaseHOLD]
+    sample_weight: 1.0
+  - client_id: court_us_scotus
+    jurisdiction: us_supreme_court
+    legal_tradition: common_law
+    institution_type: court
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: court_eu_ecthr
+    jurisdiction: european_human_rights
+    legal_tradition: civil_law_regulatory
+    institution_type: supranational_court
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: institute_eu_legislation
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: firm_us_contract_ledgar
+    jurisdiction: us_contract_law
+    legal_tradition: common_law_commercial
+    institution_type: law_firm
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: consumer_contract_lab
+    jurisdiction: consumer_contract_law
+    legal_tradition: mixed_commercial
+    institution_type: legal_research_institute
+    dataset_names: [LexGLUE]
+    sample_weight: 1.0
+  - client_id: firm_contract_cuad
+    jurisdiction: contract_law
+    legal_tradition: mixed_commercial
+    institution_type: law_firm
+    dataset_names: [CUAD]
+    sample_weight: 1.0
+  - client_id: firm_contract_cuad_qa
+    jurisdiction: contract_law
+    legal_tradition: mixed_commercial
+    institution_type: law_firm
+    dataset_names: [CUAD]
+    sample_weight: 1.0
+  - client_id: court_cn_cail2018
+    jurisdiction: chinese_criminal_law
+    legal_tradition: civil_law
+    institution_type: court
+    dataset_names: [CAIL]
+    sample_weight: 1.0

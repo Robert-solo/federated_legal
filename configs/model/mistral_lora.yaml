@@ -1,0 +1,14 @@
+base_model: mistralai/Mistral-7B-Instruct-v0.3
+tokenizer: null
+model_family: mistral
+adaptation: lora
+adapter_name: legal_adapter
+max_seq_length: 4096
+use_deepspeed: false
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj

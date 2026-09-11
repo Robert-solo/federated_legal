@@ -1,0 +1,34 @@
+experiment_id: E1_casehold_fedavg_20round_screening
+purpose: first real-training baseline in the E1 same-task screening matrix
+method: fedavg
+model: Qwen/Qwen2.5-0.5B-Instruct
+dataset: lex_glue/case_hold
+train_split: train
+eval_split: validation
+seeds: [41, 42, 43, 44, 45]
+num_clients: 4
+num_rounds: 20
+max_train_samples: 1200
+max_eval_samples: 240
+max_steps_per_client_round: 10
+partition_strategy: jurisdiction
+dirichlet_alpha: 0.3
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, v_proj]
+privacy:
+  differential_privacy: false
+  secure_aggregation: false
+conflict_aware_aggregation: false
+multi_agent_reasoning: false
+acceptance:
+  expected_training_events_per_seed: 80
+  expected_evaluation_events_per_seed: 80
+  expected_server_rounds_per_seed: 20
+  zero_failed_clients: true
+outputs:
+  runs: outputs/real_flower_peft/E1_casehold_fedavg_20r_seed*
+  acceptance: outputs/real_flower_peft/E1_casehold_fedavg_20r_seed*/acceptance.json
+  slurm_logs: outputs/slurm/ipm-e1-fedavg-s*.out

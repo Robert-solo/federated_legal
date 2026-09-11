@@ -1,0 +1,35 @@
+experiment_id: E1_casehold_flen_guarded_personalization
+purpose: prevent harmful local residual composition using train-internal validation gates
+claim_scope: development_only
+calibration_evidence_level: automatic_proxy_pilot
+formal_legal_claims_allowed: false
+methods:
+  personalization_guarded:
+    shared_steps: 10
+    local_steps: 2
+    conflict_lambda: 0.0
+  flen_guarded:
+    shared_steps: 10
+    local_steps: 2
+    conflict_lambda: 0.2
+local_gate:
+  source: deterministic client-training holdout
+  records_per_client: min(24, max(8, round(0.1 * client_records)))
+  accept_if:
+    - candidate_accuracy >= shared_accuracy
+    - candidate_eval_loss <= shared_eval_loss
+  fallback: zero local residual
+model: Qwen/Qwen2.5-0.5B-Instruct
+dataset: lex_glue/case_hold
+seeds: [41, 42, 43]
+num_clients: 4
+num_rounds: 20
+max_train_samples: 1200
+max_eval_samples: 240
+max_probe_samples: 24
+partition_strategy: jurisdiction
+target_jurisdiction: us_casehold_common_task
+limitations:
+  - The gate is selected on client-training holdouts, never the validation/test records.
+  - Extra local computation is reported separately rather than budget-matched to shared training.
+  - Automatic proxy calibration cannot validate legal conflict semantics.

@@ -1,0 +1,12 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+tokenizer: null
+adaptation: lora
+max_seq_length: 4096
+use_deepspeed: false
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj

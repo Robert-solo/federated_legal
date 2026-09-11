@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fedlegal-ipm"
+version = "0.1.0"
+description = "Federated legal LLM architecture for privacy-preserving cross-jurisdiction judicial reasoning."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.6",
+  "PyYAML>=6.0",
+  "numpy>=1.24",
+  "flwr>=1.8",
+  "torch>=2.1",
+  "transformers>=4.40",
+  "peft>=0.10",
+  "accelerate>=0.29",
+  "datasets>=2.18",
+  "langgraph>=0.0.45",
+  "langchain-core>=0.1.45",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.4",
+  "mypy>=1.9",
+]
+deepspeed = ["deepspeed>=0.14"]
+retrieval = ["faiss-cpu>=1.8"]
+plots = ["matplotlib>=3.8", "seaborn>=0.13"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

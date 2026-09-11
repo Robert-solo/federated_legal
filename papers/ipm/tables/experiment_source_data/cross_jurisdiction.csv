@@ -1,0 +1,65 @@
+train_jurisdiction,test_jurisdiction,method,accuracy
+Chinese civil law,Chinese civil law,FedAvg,0.6729290350597925
+Chinese civil law,Chinese civil law,FedLoRA,0.7140160722923571
+Chinese civil law,Chinese civil law,Conflict-aware,0.7482471712932461
+Chinese civil law,Chinese civil law,Full framework,0.768005729850799
+Chinese civil law,US common law,FedAvg,0.573214603823692
+Chinese civil law,US common law,FedLoRA,0.6019247509882334
+Chinese civil law,US common law,Conflict-aware,0.6572839219323218
+Chinese civil law,US common law,Full framework,0.6699212157909096
+Chinese civil law,EU regulatory,FedAvg,0.5675351345979655
+Chinese civil law,EU regulatory,FedLoRA,0.6189662435170239
+Chinese civil law,EU regulatory,Conflict-aware,0.6399712738430058
+Chinese civil law,EU regulatory,Full framework,0.676721582992756
+Chinese civil law,Contract law,FedAvg,0.5714783834298157
+Chinese civil law,Contract law,FedLoRA,0.5979239049411821
+Chinese civil law,Contract law,Conflict-aware,0.6604793524737496
+Chinese civil law,Contract law,Full framework,0.6830669668155998
+US common law,Chinese civil law,FedAvg,0.5563596902304851
+US common law,Chinese civil law,FedLoRA,0.6095772777034247
+US common law,Chinese civil law,Conflict-aware,0.6430219834565082
+US common law,Chinese civil law,Full framework,0.6740819783011079
+US common law,US common law,FedAvg,0.6606907031712255
+US common law,US common law,FedLoRA,0.6936127817101101
+US common law,US common law,Conflict-aware,0.7486806045794101
+US common law,US common law,Full framework,0.763658073299804
+US common law,EU regulatory,FedAvg,0.5788353886499777
+US common law,EU regulatory,FedLoRA,0.6096061648966645
+US common law,EU regulatory,Conflict-aware,0.6577019181978736
+US common law,EU regulatory,Full framework,0.6751279880781506
+US common law,Contract law,FedAvg,0.5654524444762495
+US common law,Contract law,FedLoRA,0.5996278124111787
+US common law,Contract law,Conflict-aware,0.6552018094072687
+US common law,Contract law,Full framework,0.6884401572817735
+EU regulatory,Chinese civil law,FedAvg,0.5890726970647673
+EU regulatory,Chinese civil law,FedLoRA,0.6216147476632032
+EU regulatory,Chinese civil law,Conflict-aware,0.6522480261143218
+EU regulatory,Chinese civil law,Full framework,0.6781012653093913
+EU regulatory,US common law,FedAvg,0.573498331555736
+EU regulatory,US common law,FedLoRA,0.609750360605643
+EU regulatory,US common law,Conflict-aware,0.6631712884941691
+EU regulatory,US common law,Full framework,0.6884954957651809
+EU regulatory,EU regulatory,FedAvg,0.6524691498036062
+EU regulatory,EU regulatory,FedLoRA,0.6938113251923536
+EU regulatory,EU regulatory,Conflict-aware,0.7523055371321534
+EU regulatory,EU regulatory,Full framework,0.7727727212129166
+EU regulatory,Contract law,FedAvg,0.5679141674187793
+EU regulatory,Contract law,FedLoRA,0.6206770254592238
+EU regulatory,Contract law,Conflict-aware,0.6465116529453279
+EU regulatory,Contract law,Full framework,0.6774820204056237
+Contract law,Chinese civil law,FedAvg,0.5658494561289081
+Contract law,Chinese civil law,FedLoRA,0.5923449474407558
+Contract law,Chinese civil law,Conflict-aware,0.6577783129122889
+Contract law,Chinese civil law,Full framework,0.6691182398777606
+Contract law,US common law,FedAvg,0.5648817655252059
+Contract law,US common law,FedLoRA,0.603305153055388
+Contract law,US common law,Conflict-aware,0.6565429154177064
+Contract law,US common law,Full framework,0.6793827549538647
+Contract law,EU regulatory,FedAvg,0.5701387489532772
+Contract law,EU regulatory,FedLoRA,0.5948848618549125
+Contract law,EU regulatory,Conflict-aware,0.6492130665658877
+Contract law,EU regulatory,Full framework,0.6667130021010709
+Contract law,Contract law,FedAvg,0.6627647729609777
+Contract law,Contract law,FedLoRA,0.7033005069414787
+Contract law,Contract law,Conflict-aware,0.7398434226553833
+Contract law,Contract law,Full framework,0.7883882931727076

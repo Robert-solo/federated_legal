@@ -1,0 +1,4 @@
+conflict_bucket,mean_conflict,human_agreement,fedavg_transfer_accuracy
+low,0.18,0.88,0.81
+medium,0.47,0.78,0.7
+high,0.76,0.63,0.56

@@ -1,0 +1,35 @@
+{
+  "template": "framework",
+  "title": "Privacy-Preserving Multi-Agent Judicial Deliberation",
+  "canvas": {
+    "width_in": 14.1,
+    "height_in": 7.7
+  },
+  "style": {
+    "base": "ieee-clean",
+    "font_candidates": ["Microsoft YaHei", "Arial", "Times New Roman"]
+  },
+  "nodes": [
+    {"id": "parse", "text": "Parse"},
+    {"id": "align", "text": "Align"},
+    {"id": "prosecutor", "text": "Prosecutor Agent"},
+    {"id": "defence", "text": "Defence Agent"},
+    {"id": "case_memory", "text": "Case Memory"},
+    {"id": "citation_verifier", "text": "Citation Verifier"},
+    {"id": "conflict_detector", "text": "Conflict Detector"},
+    {"id": "privacy_auditor", "text": "Privacy Auditor"},
+    {"id": "judge", "text": "Judge Agent"},
+    {"id": "abstention", "text": "Abstention"}
+  ],
+  "groups": [
+    {"id": "shared", "title": "Query and Shared Deliberation State", "nodes": ["parse", "align", "prosecutor", "defence", "case_memory"]},
+    {"id": "private", "title": "Private Institutional Reasoning", "nodes": []},
+    {"id": "verification", "title": "Verification, Decision, and Audit", "nodes": ["citation_verifier", "conflict_detector", "privacy_auditor", "judge", "abstention"]}
+  ],
+  "connectors": [],
+  "exports": {
+    "vsdx": "Fig 3 Privacy-Preserving Multi-Agent Judicial Deliberation.vsdx",
+    "png": "Fig 3 Privacy-Preserving Multi-Agent Judicial Deliberation_visio_preview.png",
+    "emf": "Fig 3 Privacy-Preserving Multi-Agent Judicial Deliberation.emf"
+  }
+}

@@ -1,0 +1,10 @@
+framework: langgraph
+roles:
+  - jurisdiction_alignment
+  - prosecutor
+  - defense
+  - citation_verification
+  - conflict_detection
+  - privacy_auditor
+  - judge
+exchange_format: reasoning_embeddings

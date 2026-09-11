@@ -1,0 +1,25 @@
+\begin{table}[t]
+\caption{Planned evaluation design beyond the current proxy screening.}
+\label{tab:revision-protocol}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ll}
+\toprule
+Item & Protocol \\
+\midrule
+Federated framework & Flower; 4 primary clients; 8, 16 and 32-client stress tests \\
+Backbone / adaptation & Qwen2.5-0.5B for development, 1.5B primary, 7B confirmation; fixed LoRA payload per comparison \\
+Datasets & CaseHOLD/ECtHR same-task FL; MultiEURLEX cross-language; LegalBench/LeCaRD reliability; expert comparable cross-jurisdiction probes \\
+Non-IID partitions & Dirichlet label skew within task; authentic metadata holdout; no cross-task accuracy averaging \\
+Optimization & AdamW; frozen learning rate, batch, accumulation, sequence length and selection rule \\
+Federated schedule & 20-round screening; 50-round five-seed primary runs; 100-round FedAvg/FedLoRA/FLEN confirmation \\
+Privacy & Clipping, sampling, accountant, $(\epsilon,\delta)$, secure-aggregation protocol and attacks \\
+Communication & LoRA adapter payload bytes logged per client and per round \\
+Randomness & Matched seeds \{41,42,43,44,45\}; fixed data selection and partition procedure \\
+Inference tests & Student-$t$ run-level CI; paired permutation; effect size; Holm correction \\
+Provenance & Resolved config, CLI, code revision, data/model revisions, predictions and raw logs \\
+Hardware & GPU model/count/memory, runtime, energy proxy and software versions per run \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

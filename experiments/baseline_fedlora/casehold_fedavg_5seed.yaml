@@ -1,0 +1,29 @@
+experiment_id: paper_casehold_fedavg_jurisdiction_5seed
+purpose: controlled FedAvg baseline for the revised IPM manuscript
+method: fedavg
+model: Qwen/Qwen2.5-0.5B-Instruct
+dataset: lex_glue/case_hold
+train_split: train
+eval_split: validation
+seeds: [41, 42, 43, 44, 45]
+num_clients: 4
+num_rounds: 3
+max_train_samples: 1200
+max_eval_samples: 240
+max_steps_per_client_round: 10
+partition_strategy: jurisdiction
+dirichlet_alpha: 0.3
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, v_proj]
+privacy:
+  differential_privacy: false
+  secure_aggregation: false
+conflict_aware_aggregation: false
+multi_agent_reasoning: false
+outputs:
+  runs: outputs/real_flower_peft/paper_casehold_fedavg_jurisdiction_seed*
+  slurm_logs: outputs/slurm/ipm-fedavg-5seed-*.out
+  summary: outputs/evaluation/paper_casehold_fedavg_5seed

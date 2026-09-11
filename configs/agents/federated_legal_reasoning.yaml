@@ -1,0 +1,8 @@
+framework: langgraph
+roles:
+  - prosecutor
+  - defense
+  - citation
+  - conflict
+  - judge
+exchange_format: reasoning_embeddings

@@ -1,0 +1,99 @@
+name: conflict_aware
+seed: 43
+description: Conflict-aware federated LoRA aggregation with citation, reasoning, verdict, and rule-alignment penalties.
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  partition_dir: data/partitions
+  partition_strategy: dirichlet
+  dirichlet_alpha: 0.2
+  jurisdictions:
+    - client_id: court_cn_01
+      jurisdiction: chinese_civil_law
+      legal_tradition: civil_law
+      institution_type: court
+      dataset_names: [CAIL, LeCaRD, LJPIV]
+      sample_weight: 1.2
+    - client_id: court_us_01
+      jurisdiction: us_common_law
+      legal_tradition: common_law
+      institution_type: court
+      dataset_names: [CaseHOLD, LexGLUE]
+      sample_weight: 1.0
+    - client_id: court_sg_01
+      jurisdiction: singapore_hybrid_law
+      legal_tradition: hybrid
+      institution_type: court
+      dataset_names: [LexGLUE]
+      sample_weight: 0.8
+    - client_id: gov_eu_01
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: government_legal_department
+      dataset_names: [ECtHR]
+      sample_weight: 1.0
+federated:
+  framework: flower
+  strategy: conflict_aware
+  num_clients: 4
+  num_rounds: 100
+  local_epochs: 1
+  client_fraction: 1.0
+  min_available_clients: 4
+  communication_payload: lora_adapters
+model:
+  base_model: Qwen/Qwen2.5-7B-Instruct
+  tokenizer: null
+  adaptation: lora
+  max_seq_length: 4096
+  use_deepspeed: false
+  lora:
+    rank: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: [q_proj, v_proj]
+conflict:
+  enabled: true
+  penalty_lambda: 0.2
+  citation_weight: 0.25
+  reasoning_weight: 0.30
+  verdict_weight: 0.25
+  rule_alignment_weight: 0.20
+  sample_count_cap: 10000
+  diversity_floor: 0.10
+  weight_smoothing: 1.0
+  missing_component_policy: omit_and_renormalize
+  cohort_policy: target_compatible
+  calibration_manifest: null
+  routing_thresholds: {}
+privacy:
+  differential_privacy: true
+  noise_multiplier: 0.8
+  secure_aggregation: true
+  gradient_compression: true
+  sanitize_legal_entities: true
+agents:
+  framework: langgraph
+  roles:
+    - jurisdiction_alignment
+    - prosecutor
+    - defense
+    - citation_verification
+    - conflict_detection
+    - privacy_auditor
+    - judge
+  exchange_format: reasoning_embeddings
+evaluation:
+  metrics:
+    - legal_accuracy
+    - citation_consistency
+    - reasoning_coherence
+    - hallucination_rate
+    - communication_cost
+    - client_drift
+    - cross_jurisdiction_generalization
+    - privacy_leakage_risk
+    - aggregation_stability
+  output_dir: outputs/metrics
+log_dir: outputs/logs
+figure_dir: outputs/figures

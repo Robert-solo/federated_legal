@@ -1,0 +1,70 @@
+raw_dir: data/raw/public_extended
+processed_dir: data/processed/multieurlex_language_holdout
+partition_dir: data/partitions/multieurlex_language_holdout
+partition_strategy: institution_based
+seed: 42
+tokenizer:
+  backend: auto
+  max_length: 2048
+datasets:
+  - name: MultiEURLEX
+    task: en-de
+    split: train
+    raw_path: data/raw/public_extended/MultiEURLEX/en-de/train.jsonl
+    text_fields: [parallel_text]
+    label_field: label
+    language_fields: [language_primary, language_secondary]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en-de
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-fr
+    split: train
+    raw_path: data/raw/public_extended/MultiEURLEX/en-fr/train.jsonl
+    text_fields: [parallel_text]
+    label_field: label
+    language_fields: [language_primary, language_secondary]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en-fr
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-es
+    split: train
+    raw_path: data/raw/public_extended/MultiEURLEX/en-es/train.jsonl
+    text_fields: [parallel_text]
+    label_field: label
+    language_fields: [language_primary, language_secondary]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en-es
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-pl
+    split: train
+    raw_path: data/raw/public_extended/MultiEURLEX/en-pl/train.jsonl
+    text_fields: [parallel_text]
+    label_field: label
+    language_fields: [language_primary, language_secondary]
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en-pl
+    institution_type: legal_research_institute
+jurisdictions:
+  - client_id: institute_eu_en-de
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en-fr
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en-es
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en-pl
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]

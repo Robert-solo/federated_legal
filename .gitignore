@@ -1,0 +1,58 @@
+# Python and local tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.venv/
+venv/
+*.egg-info/
+
+# Local secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Raw, processed, and partitioned datasets
+data/raw/
+data/processed/
+data/partitions/
+
+# Model checkpoints and large binary artifacts
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated experiment outputs and temporary files
+outputs/
+tmp/
+*.log
+*.swp
+
+# Paper render outputs and local reference library
+papers/ref_fig/
+papers/ipm/**/*.pdf
+papers/ipm/**/*.png
+papers/ipm/**/*.tiff
+papers/ipm/**/*.emf
+papers/ipm/**/*.vsdx
+papers/ipm/**/*.aux
+papers/ipm/**/*.bbl
+papers/ipm/**/*.blg
+papers/ipm/**/*.fdb_latexmk
+papers/ipm/**/*.fls
+papers/ipm/**/*.out
+papers/ipm/**/*.spl
+papers/ipm/**/*.synctex.gz
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

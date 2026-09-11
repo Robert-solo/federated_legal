@@ -1,0 +1,99 @@
+name: e12_casehold_real
+seed: 42
+description: Ten-round real Flower and PEFT CaseHOLD acceptance run for the IPM manuscript.
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  partition_dir: data/partitions
+  partition_strategy: jurisdiction_based
+  dirichlet_alpha: 0.3
+  seed: 42
+  datasets:
+    - name: CaseHOLD
+      task: case_hold
+      split: train
+      text_fields: [context, endings]
+      label_field: label
+      jurisdiction: us_common_law
+      institution_id: simulated_us_court
+      institution_type: court
+  tokenizer:
+    name_or_path: Qwen/Qwen2.5-0.5B-Instruct
+    backend: huggingface
+    max_length: 512
+    add_special_tokens: true
+    save_text_tokens: false
+  jurisdictions:
+    - client_id: court_us_00
+      jurisdiction: heuristic_casehold_partition_0
+      legal_tradition: common_law
+      institution_type: simulated_court
+      dataset_names: [CaseHOLD]
+    - client_id: court_us_01
+      jurisdiction: heuristic_casehold_partition_1
+      legal_tradition: common_law
+      institution_type: simulated_court
+      dataset_names: [CaseHOLD]
+    - client_id: court_us_02
+      jurisdiction: heuristic_casehold_partition_2
+      legal_tradition: common_law
+      institution_type: simulated_court
+      dataset_names: [CaseHOLD]
+    - client_id: court_us_03
+      jurisdiction: heuristic_casehold_partition_3
+      legal_tradition: common_law
+      institution_type: simulated_court
+      dataset_names: [CaseHOLD]
+federated:
+  framework: flower
+  strategy: fedavg
+  num_clients: 4
+  num_rounds: 10
+  local_epochs: 1
+  client_fraction: 1.0
+  min_available_clients: 4
+  communication_payload: lora_adapters
+  checkpoint_dir: outputs/real_flower_peft/E12_casehold_real_seed42_10r
+  communication_log_dir: outputs/real_flower_peft/E12_casehold_real_seed42_10r
+model:
+  base_model: Qwen/Qwen2.5-0.5B-Instruct
+  tokenizer: Qwen/Qwen2.5-0.5B-Instruct
+  model_family: qwen2.5
+  adaptation: lora
+  adapter_name: casehold_e12_adapter
+  max_seq_length: 512
+  use_deepspeed: false
+  lora:
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+    target_modules: [q_proj, v_proj]
+conflict:
+  enabled: false
+  penalty_lambda: 0.0
+  citation_weighted_aggregation: false
+  contradiction_penalty: false
+privacy:
+  differential_privacy: false
+  noise_multiplier: 0.0
+  secure_aggregation: false
+  gradient_compression: false
+  sanitize_legal_entities: false
+agents:
+  framework: langgraph
+  roles: [judge]
+  exchange_format: reasoning_embeddings
+evaluation:
+  metrics:
+    - legal_accuracy
+    - citation_consistency
+    - reasoning_coherence
+    - hallucination_rate
+    - communication_cost
+    - client_drift
+    - cross_jurisdiction_generalization
+    - privacy_leakage_risk
+    - aggregation_stability
+  output_dir: outputs/real_flower_peft/E12_casehold_real_seed42_10r
+log_dir: outputs/real_flower_peft/E12_casehold_real_seed42_10r
+figure_dir: outputs/figures/E12_casehold_real

@@ -1,0 +1,166 @@
+raw_dir: data/raw/public_extended
+processed_dir: data/processed/public_extended
+partition_dir: data/partitions/public_extended
+partition_strategy: institution_based
+dirichlet_alpha: 0.3
+seed: 42
+tokenizer:
+  name_or_path: null
+  backend: simple
+  max_length: 2048
+  add_special_tokens: true
+  save_text_tokens: false
+datasets:
+  - name: LeCaRDv2
+    task: queries
+    raw_path: data/raw/public_extended/LeCaRDv2/queries/queries.jsonl
+    split: queries
+    text_fields: [text]
+    jurisdiction: chinese_criminal_law
+    institution_id: court_cn_retrieval
+    institution_type: court
+  - name: LeCaRDv2
+    task: corpus
+    raw_path: data/raw/public_extended/LeCaRDv2/corpus/corpus.jsonl
+    split: corpus
+    text_fields: [title, text]
+    jurisdiction: chinese_criminal_law
+    institution_id: court_cn_retrieval
+    institution_type: court
+  - name: LegalBench
+    task: citation_prediction_classification
+    raw_path: data/raw/public_extended/LegalBench/citation_prediction_classification/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    citation_fields: [citation]
+    jurisdiction: us_common_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: LegalBench
+    task: citation_prediction_open
+    raw_path: data/raw/public_extended/LegalBench/citation_prediction_open/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    citation_fields: [citation]
+    jurisdiction: us_common_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: LegalBench
+    task: ucc_v_common_law
+    raw_path: data/raw/public_extended/LegalBench/ucc_v_common_law/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_mixed_commercial_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: LegalBench
+    task: canada_tax_court_outcomes
+    raw_path: data/raw/public_extended/LegalBench/canada_tax_court_outcomes/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    jurisdiction: canadian_tax_law
+    institution_id: court_ca_tax
+    institution_type: court
+  - name: LegalBench
+    task: personal_jurisdiction
+    raw_path: data/raw/public_extended/LegalBench/personal_jurisdiction/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_common_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: LegalBench
+    task: rule_qa
+    raw_path: data/raw/public_extended/LegalBench/rule_qa/test.jsonl
+    split: test
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_common_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: LegalBench
+    task: overruling
+    raw_path: data/raw/public_extended/LegalBench/overruling/train.jsonl
+    split: train
+    text_fields: [text]
+    label_field: label
+    jurisdiction: us_common_law
+    institution_id: court_us_legalbench
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-de
+    raw_path: data/raw/public_extended/MultiEURLEX/en-de/train.jsonl
+    split: train
+    text_fields: [text, parallel_text]
+    label_field: label
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en_de
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-fr
+    raw_path: data/raw/public_extended/MultiEURLEX/en-fr/train.jsonl
+    split: train
+    text_fields: [text, parallel_text]
+    label_field: label
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en_fr
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-es
+    raw_path: data/raw/public_extended/MultiEURLEX/en-es/train.jsonl
+    split: train
+    text_fields: [text, parallel_text]
+    label_field: label
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en_es
+    institution_type: legal_research_institute
+  - name: MultiEURLEX
+    task: en-pl
+    raw_path: data/raw/public_extended/MultiEURLEX/en-pl/train.jsonl
+    split: train
+    text_fields: [text, parallel_text]
+    label_field: label
+    jurisdiction: european_regulatory_law
+    institution_id: institute_eu_en_pl
+    institution_type: legal_research_institute
+jurisdictions:
+  - client_id: court_cn_retrieval
+    jurisdiction: chinese_criminal_law
+    legal_tradition: civil_law
+    institution_type: court
+    dataset_names: [LeCaRDv2]
+  - client_id: court_us_legalbench
+    jurisdiction: us_common_law
+    legal_tradition: common_law
+    institution_type: legal_research_institute
+    dataset_names: [LegalBench]
+  - client_id: court_ca_tax
+    jurisdiction: canadian_tax_law
+    legal_tradition: common_law_bijural
+    institution_type: court
+    dataset_names: [LegalBench]
+  - client_id: institute_eu_en_de
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en_fr
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en_es
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]
+  - client_id: institute_eu_en_pl
+    jurisdiction: european_regulatory_law
+    legal_tradition: civil_law_regulatory
+    institution_type: legal_research_institute
+    dataset_names: [MultiEURLEX]

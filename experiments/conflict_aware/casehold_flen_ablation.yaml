@@ -1,0 +1,28 @@
+experiment_id: E1_casehold_flen_component_ablation
+purpose: isolate conflict weighting and local residual effects under a fixed ten-step budget
+claim_scope: development_only
+calibration_evidence_level: automatic_proxy_pilot
+formal_legal_claims_allowed: false
+methods:
+  target_cohort: {shared_steps: 10, local_steps: 0, conflict_lambda: 0.0}
+  conflict_only: {shared_steps: 10, local_steps: 0, conflict_lambda: 0.2}
+  personalization_only: {shared_steps: 8, local_steps: 2, conflict_lambda: 0.0}
+  flen: {shared_steps: 8, local_steps: 2, conflict_lambda: 0.2}
+model: Qwen/Qwen2.5-0.5B-Instruct
+dataset: lex_glue/case_hold
+seeds: [41, 42, 43]
+num_clients: 4
+num_rounds: 20
+max_train_samples: 1200
+max_eval_samples: 240
+max_probe_samples: 24
+partition_strategy: jurisdiction
+target_jurisdiction: us_casehold_common_task
+primary_contrasts:
+  conflict_weighting_10_step: conflict_only - target_cohort
+  conflict_weighting_8_plus_2: flen - personalization_only
+  personalization_lambda_zero: personalization_only - target_cohort
+limitations:
+  - CaseHOLD partitions are same-task non-IID clients, not authentic jurisdictions.
+  - Seed 41 is diagnostic; confirmatory analysis uses all matched primary seeds.
+  - Automatic proxy calibration cannot validate legal conflict semantics.

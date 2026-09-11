@@ -1,0 +1,79 @@
+federated_trainable:
+  smoke:
+    - name: qwen2_5_0_5b
+      model_id: Qwen/Qwen2.5-0.5B-Instruct
+      family: qwen2.5
+      role: small open-weight sanity baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: tinyllama_1_1b
+      model_id: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      family: custom
+      role: lightweight systems baseline
+      lora_target_modules: [q_proj, v_proj]
+  main_open_weight:
+    - name: qwen2_5_1_5b
+      model_id: Qwen/Qwen2.5-1.5B-Instruct
+      family: qwen2.5
+      role: efficient Chinese-English legal FL baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: qwen2_5_7b
+      model_id: Qwen/Qwen2.5-7B-Instruct
+      family: qwen2.5
+      role: stronger bilingual open-weight baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: deepseek_r1_distill_qwen_1_5b
+      model_id: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+      family: qwen2.5
+      role: DeepSeek reasoning-distilled open-weight baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: deepseek_r1_distill_qwen_7b
+      model_id: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+      family: qwen2.5
+      role: larger DeepSeek reasoning-distilled open-weight baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: mistral_7b_instruct_v0_3
+      model_id: mistralai/Mistral-7B-Instruct-v0.3
+      family: mistral
+      role: strong English legal baseline
+      lora_target_modules: [q_proj, v_proj]
+    - name: openai_gpt_oss_20b
+      model_id: openai/gpt-oss-20b
+      family: custom
+      role: larger open-weight baseline when GPU memory permits
+      lora_target_modules: [q_proj, v_proj]
+api_inference_only:
+  - name: openai_gpt_5_3
+    provider: openai
+    model_id_env: OPENAI_GPT53_MODEL
+    api_key_env: OPENAI_API_KEY
+    role: closed API inference baseline; not a Flower LoRA client
+  - name: openai_gpt_5_4
+    provider: openai
+    model_id_env: OPENAI_GPT54_MODEL
+    api_key_env: OPENAI_API_KEY
+    role: closed API inference baseline; not a Flower LoRA client
+  - name: deepseek_api
+    provider: deepseek
+    model_id_env: DEEPSEEK_MODEL
+    api_key_env: DEEPSEEK_API_KEY
+    base_url_env: DEEPSEEK_BASE_URL
+    role: closed API inference baseline; not a Flower LoRA client
+federated_algorithms:
+  - fedavg
+  - fedprox
+  - scaffold
+  - conflict_aware
+partitions:
+  - iid
+  - label_dirichlet_alpha_0_3
+  - jurisdiction_based
+evaluation_tasks:
+  - case_hold_accuracy
+  - scotus_accuracy
+  - ecthr_micro_f1
+  - eurlex_micro_f1
+  - ledgar_accuracy
+  - cuad_qa_exact_match_f1
+  - communication_cost
+  - client_drift
+  - cross_jurisdiction_generalization

@@ -1,0 +1,561 @@
+seed,train_jurisdiction,test_jurisdiction,method,legal_accuracy
+1,CN civil,CN civil,Local-only,0.6360409338752618
+1,CN civil,CN civil,Centralized,0.6768997497564687
+1,CN civil,CN civil,FedAvg,0.6705413605160706
+1,CN civil,CN civil,FedProx,0.6753905013875335
+1,CN civil,CN civil,FedLoRA,0.7082856551379468
+1,CN civil,CN civil,Conflict-aware,0.7356251503823661
+1,CN civil,CN civil,Full framework,0.7584589103811926
+1,CN civil,US common,Local-only,0.5556536529297674
+1,CN civil,US common,Centralized,0.6045935942487879
+1,CN civil,US common,FedAvg,0.5903923562041705
+1,CN civil,US common,FedProx,0.6201424161637613
+1,CN civil,US common,FedLoRA,0.6316531409661786
+1,CN civil,US common,Conflict-aware,0.6723863218380881
+1,CN civil,US common,Full framework,0.6954241762466272
+1,CN civil,EU rights,Local-only,0.5593925328231009
+1,CN civil,EU rights,Centralized,0.6049036840950222
+1,CN civil,EU rights,FedAvg,0.5968510424838194
+1,CN civil,EU rights,FedProx,0.618053120311606
+1,CN civil,EU rights,FedLoRA,0.6297398245780317
+1,CN civil,EU rights,Conflict-aware,0.6672899037044362
+1,CN civil,EU rights,Full framework,0.6923420051090359
+1,CN civil,Contracts,Local-only,0.5584307306786029
+1,CN civil,Contracts,Centralized,0.6215299174496285
+1,CN civil,Contracts,FedAvg,0.5950168566937807
+1,CN civil,Contracts,FedProx,0.6089045876450896
+1,CN civil,Contracts,FedLoRA,0.6455254921508559
+1,CN civil,Contracts,Conflict-aware,0.667897652933691
+1,CN civil,Contracts,Full framework,0.6886838936139562
+1,US common,CN civil,Local-only,0.5657101017058968
+1,US common,CN civil,Centralized,0.5890055577916606
+1,US common,CN civil,FedAvg,0.5956006216001913
+1,US common,CN civil,FedProx,0.62157894960877
+1,US common,CN civil,FedLoRA,0.6321201744529388
+1,US common,CN civil,Conflict-aware,0.680311484577034
+1,US common,CN civil,Full framework,0.6939297527790125
+1,US common,US common,Local-only,0.6309513660760436
+1,US common,US common,Centralized,0.666857146006787
+1,US common,US common,FedAvg,0.6763313729319061
+1,US common,US common,FedProx,0.6853920979054142
+1,US common,US common,FedLoRA,0.7116447002299073
+1,US common,US common,Conflict-aware,0.7438930934590969
+1,US common,US common,Full framework,0.7373329358804147
+1,US common,EU rights,Local-only,0.5567776657391684
+1,US common,EU rights,Centralized,0.6105303266596732
+1,US common,EU rights,FedAvg,0.5926425019964017
+1,US common,EU rights,FedProx,0.63212770241991
+1,US common,EU rights,FedLoRA,0.6480733337570368
+1,US common,EU rights,Conflict-aware,0.6591421545521045
+1,US common,EU rights,Full framework,0.6956334860296293
+1,US common,Contracts,Local-only,0.560784290856308
+1,US common,Contracts,Centralized,0.6094202928211339
+1,US common,Contracts,FedAvg,0.6009962423873085
+1,US common,Contracts,FedProx,0.6119502301867383
+1,US common,Contracts,FedLoRA,0.6550986257515796
+1,US common,Contracts,Conflict-aware,0.6792960199649436
+1,US common,Contracts,Full framework,0.7129897990250086
+1,EU rights,CN civil,Local-only,0.5507651876591588
+1,EU rights,CN civil,Centralized,0.6153276124304221
+1,EU rights,CN civil,FedAvg,0.5935524581981453
+1,EU rights,CN civil,FedProx,0.59464875152885
+1,EU rights,CN civil,FedLoRA,0.63814379391687
+1,EU rights,CN civil,Conflict-aware,0.674685164786732
+1,EU rights,CN civil,Full framework,0.6909460504200805
+1,EU rights,US common,Local-only,0.5612175435400486
+1,EU rights,US common,Centralized,0.6088462168611621
+1,EU rights,US common,FedAvg,0.6133134821430721
+1,EU rights,US common,FedProx,0.6114188345061632
+1,EU rights,US common,FedLoRA,0.6414652836293742
+1,EU rights,US common,Conflict-aware,0.6608504959590342
+1,EU rights,US common,Full framework,0.702766811713237
+1,EU rights,EU rights,Local-only,0.6311958518035046
+1,EU rights,EU rights,Centralized,0.6832725258929813
+1,EU rights,EU rights,FedAvg,0.6744099032040509
+1,EU rights,EU rights,FedProx,0.6634626206129087
+1,EU rights,EU rights,FedLoRA,0.7235498173050352
+1,EU rights,EU rights,Conflict-aware,0.7365340461325303
+1,EU rights,EU rights,Full framework,0.76219761001013
+1,EU rights,Contracts,Local-only,0.5559520033130435
+1,EU rights,Contracts,Centralized,0.6140018043212055
+1,EU rights,Contracts,FedAvg,0.5934316616741148
+1,EU rights,Contracts,FedProx,0.605112834748449
+1,EU rights,Contracts,FedLoRA,0.6199175517996893
+1,EU rights,Contracts,Conflict-aware,0.6555522441706252
+1,EU rights,Contracts,Full framework,0.6843039798601703
+1,Contracts,CN civil,Local-only,0.5613768666973983
+1,Contracts,CN civil,Centralized,0.5973898089227712
+1,Contracts,CN civil,FedAvg,0.6000760859696007
+1,Contracts,CN civil,FedProx,0.6220362549936175
+1,Contracts,CN civil,FedLoRA,0.6356656586858669
+1,Contracts,CN civil,Conflict-aware,0.6700893646599291
+1,Contracts,CN civil,Full framework,0.6811147238869266
+1,Contracts,US common,Local-only,0.5556154819013148
+1,Contracts,US common,Centralized,0.608326584259726
+1,Contracts,US common,FedAvg,0.6022869552935114
+1,Contracts,US common,FedProx,0.6088935117045324
+1,Contracts,US common,FedLoRA,0.646283501669614
+1,Contracts,US common,Conflict-aware,0.6606732781963126
+1,Contracts,US common,Full framework,0.6759368731281723
+1,Contracts,EU rights,Local-only,0.5548442929387132
+1,Contracts,EU rights,Centralized,0.6067163053973978
+1,Contracts,EU rights,FedAvg,0.5917652590294352
+1,Contracts,EU rights,FedProx,0.6163665659767429
+1,Contracts,EU rights,FedLoRA,0.6402479588827055
+1,Contracts,EU rights,Conflict-aware,0.6622095959653614
+1,Contracts,EU rights,Full framework,0.6824131600878749
+1,Contracts,Contracts,Local-only,0.6415456325357872
+1,Contracts,Contracts,Centralized,0.6670053948767141
+1,Contracts,Contracts,FedAvg,0.6575387602443014
+1,Contracts,Contracts,FedProx,0.7008977102567063
+1,Contracts,Contracts,FedLoRA,0.7106197833759313
+1,Contracts,Contracts,Conflict-aware,0.7392052209196537
+1,Contracts,Contracts,Full framework,0.7595289351872277
+2,CN civil,CN civil,Local-only,0.6330796850614299
+2,CN civil,CN civil,Centralized,0.6754845344474941
+2,CN civil,CN civil,FedAvg,0.6807382732858487
+2,CN civil,CN civil,FedProx,0.6811690064149578
+2,CN civil,CN civil,FedLoRA,0.7128042123011471
+2,CN civil,CN civil,Conflict-aware,0.7351704060270245
+2,CN civil,CN civil,Full framework,0.7675667998966632
+2,CN civil,US common,Local-only,0.5475158652880397
+2,CN civil,US common,Centralized,0.6185099087857574
+2,CN civil,US common,FedAvg,0.5850913955531275
+2,CN civil,US common,FedProx,0.621040956149164
+2,CN civil,US common,FedLoRA,0.6205506540586457
+2,CN civil,US common,Conflict-aware,0.6799873325124459
+2,CN civil,US common,Full framework,0.6971687707526966
+2,CN civil,EU rights,Local-only,0.567174959292622
+2,CN civil,EU rights,Centralized,0.6085026818831448
+2,CN civil,EU rights,FedAvg,0.5909327783087768
+2,CN civil,EU rights,FedProx,0.6119250075866183
+2,CN civil,EU rights,FedLoRA,0.6446857717932196
+2,CN civil,EU rights,Conflict-aware,0.6622003015754787
+2,CN civil,EU rights,Full framework,0.6937516191130487
+2,CN civil,Contracts,Local-only,0.5420705380964453
+2,CN civil,Contracts,Centralized,0.5882522848733477
+2,CN civil,Contracts,FedAvg,0.6082201566839203
+2,CN civil,Contracts,FedProx,0.6104939978445365
+2,CN civil,Contracts,FedLoRA,0.6443311002713239
+2,CN civil,Contracts,Conflict-aware,0.6774749128510336
+2,CN civil,Contracts,Full framework,0.7058782359950196
+2,US common,CN civil,Local-only,0.560797267592144
+2,US common,CN civil,Centralized,0.6098597440003679
+2,US common,CN civil,FedAvg,0.6009352179080139
+2,US common,CN civil,FedProx,0.6100254495946676
+2,US common,CN civil,FedLoRA,0.6475690829293348
+2,US common,CN civil,Conflict-aware,0.670612173230978
+2,US common,CN civil,Full framework,0.6999532408189499
+2,US common,US common,Local-only,0.6375603863819416
+2,US common,US common,Centralized,0.6825526146816965
+2,US common,US common,FedAvg,0.6622193325099335
+2,US common,US common,FedProx,0.6925753975160424
+2,US common,US common,FedLoRA,0.7144711488266036
+2,US common,US common,Conflict-aware,0.734726531818939
+2,US common,US common,Full framework,0.7406672864739704
+2,US common,EU rights,Local-only,0.5623031636276774
+2,US common,EU rights,Centralized,0.6168364352322164
+2,US common,EU rights,FedAvg,0.5959481407170506
+2,US common,EU rights,FedProx,0.6080528105301578
+2,US common,EU rights,FedLoRA,0.629723409406775
+2,US common,EU rights,Conflict-aware,0.6631965817158031
+2,US common,EU rights,Full framework,0.6782223789340859
+2,US common,Contracts,Local-only,0.5688751110608888
+2,US common,Contracts,Centralized,0.6019830937167365
+2,US common,Contracts,FedAvg,0.5920273620271336
+2,US common,Contracts,FedProx,0.6098126668423642
+2,US common,Contracts,FedLoRA,0.6246499128851607
+2,US common,Contracts,Conflict-aware,0.6818949008651651
+2,US common,Contracts,Full framework,0.6759602120328784
+2,EU rights,CN civil,Local-only,0.572085727674245
+2,EU rights,CN civil,Centralized,0.6071353303627499
+2,EU rights,CN civil,FedAvg,0.5943056274987399
+2,EU rights,CN civil,FedProx,0.6125512197732679
+2,EU rights,CN civil,FedLoRA,0.6381697368252501
+2,EU rights,CN civil,Conflict-aware,0.653225328168464
+2,EU rights,CN civil,Full framework,0.6939657838589515
+2,EU rights,US common,Local-only,0.5687671613851909
+2,EU rights,US common,Centralized,0.5972239269366546
+2,EU rights,US common,FedAvg,0.6004729238336706
+2,EU rights,US common,FedProx,0.626531389012964
+2,EU rights,US common,FedLoRA,0.6240137396965951
+2,EU rights,US common,Conflict-aware,0.6527917327297508
+2,EU rights,US common,Full framework,0.6934256933900194
+2,EU rights,EU rights,Local-only,0.6303504007179384
+2,EU rights,EU rights,Centralized,0.6859407971242181
+2,EU rights,EU rights,FedAvg,0.671576847441233
+2,EU rights,EU rights,FedProx,0.6712285982496581
+2,EU rights,EU rights,FedLoRA,0.699132679651099
+2,EU rights,EU rights,Conflict-aware,0.7332151633660297
+2,EU rights,EU rights,Full framework,0.747533441592398
+2,EU rights,Contracts,Local-only,0.5688577651091947
+2,EU rights,Contracts,Centralized,0.6046053162203929
+2,EU rights,Contracts,FedAvg,0.5875285625706538
+2,EU rights,Contracts,FedProx,0.6029070567642273
+2,EU rights,Contracts,FedLoRA,0.638130916140733
+2,EU rights,Contracts,Conflict-aware,0.6554660793014923
+2,EU rights,Contracts,Full framework,0.680661783997335
+2,Contracts,CN civil,Local-only,0.5542608537119752
+2,Contracts,CN civil,Centralized,0.6199399918859075
+2,Contracts,CN civil,FedAvg,0.5875476014151174
+2,Contracts,CN civil,FedProx,0.608774122911575
+2,Contracts,CN civil,FedLoRA,0.6471961911457169
+2,Contracts,CN civil,Conflict-aware,0.6614811088285538
+2,Contracts,CN civil,Full framework,0.6725490453944781
+2,Contracts,US common,Local-only,0.5715737040348852
+2,Contracts,US common,Centralized,0.5966090948384377
+2,Contracts,US common,FedAvg,0.5840662145117927
+2,Contracts,US common,FedProx,0.6073196082750832
+2,Contracts,US common,FedLoRA,0.6431837536300585
+2,Contracts,US common,Conflict-aware,0.6696334991815741
+2,Contracts,US common,Full framework,0.6964657139483003
+2,Contracts,EU rights,Local-only,0.5615485380051556
+2,Contracts,EU rights,Centralized,0.6060647505548103
+2,Contracts,EU rights,FedAvg,0.6051030083285294
+2,Contracts,EU rights,FedProx,0.6019389897885009
+2,Contracts,EU rights,FedLoRA,0.631037468324571
+2,Contracts,EU rights,Conflict-aware,0.6692715763931761
+2,Contracts,EU rights,Full framework,0.6893708745598772
+2,Contracts,Contracts,Local-only,0.6279621743005777
+2,Contracts,Contracts,Centralized,0.6702716224738304
+2,Contracts,Contracts,FedAvg,0.6675902779362758
+2,Contracts,Contracts,FedProx,0.6768691240498868
+2,Contracts,Contracts,FedLoRA,0.7023149480694239
+2,Contracts,Contracts,Conflict-aware,0.7378624758020643
+2,Contracts,Contracts,Full framework,0.7741581952788681
+3,CN civil,CN civil,Local-only,0.6325539539237381
+3,CN civil,CN civil,Centralized,0.6912228129825037
+3,CN civil,CN civil,FedAvg,0.6638317261807172
+3,CN civil,CN civil,FedProx,0.6819816908195996
+3,CN civil,CN civil,FedLoRA,0.7253704738658547
+3,CN civil,CN civil,Conflict-aware,0.7369286946820195
+3,CN civil,CN civil,Full framework,0.7491544846062479
+3,CN civil,US common,Local-only,0.5718962361412936
+3,CN civil,US common,Centralized,0.6036766182427042
+3,CN civil,US common,FedAvg,0.5875214167256191
+3,CN civil,US common,FedProx,0.6165350056478297
+3,CN civil,US common,FedLoRA,0.6203149681661538
+3,CN civil,US common,Conflict-aware,0.6616047223841279
+3,CN civil,US common,Full framework,0.7027308748044843
+3,CN civil,EU rights,Local-only,0.5719920137348772
+3,CN civil,EU rights,Centralized,0.6080950262832934
+3,CN civil,EU rights,FedAvg,0.6048016673034691
+3,CN civil,EU rights,FedProx,0.6196778246655993
+3,CN civil,EU rights,FedLoRA,0.6330898997526319
+3,CN civil,EU rights,Conflict-aware,0.6675258847782002
+3,CN civil,EU rights,Full framework,0.6998249507942002
+3,CN civil,Contracts,Local-only,0.5630441421239315
+3,CN civil,Contracts,Centralized,0.6074706837652409
+3,CN civil,Contracts,FedAvg,0.599740361689972
+3,CN civil,Contracts,FedProx,0.6176053563490851
+3,CN civil,Contracts,FedLoRA,0.6382028104794993
+3,CN civil,Contracts,Conflict-aware,0.6644995830898596
+3,CN civil,Contracts,Full framework,0.6883672973350579
+3,US common,CN civil,Local-only,0.5573936944888543
+3,US common,CN civil,Centralized,0.5965205592616257
+3,US common,CN civil,FedAvg,0.603803634942119
+3,US common,CN civil,FedProx,0.601756416277342
+3,US common,CN civil,FedLoRA,0.6256040712461327
+3,US common,CN civil,Conflict-aware,0.6579381689503115
+3,US common,CN civil,Full framework,0.6919554332478902
+3,US common,US common,Local-only,0.6316443426644296
+3,US common,US common,Centralized,0.6947009524271017
+3,US common,US common,FedAvg,0.6450464964596619
+3,US common,US common,FedProx,0.6886116886981472
+3,US common,US common,FedLoRA,0.7094503728525423
+3,US common,US common,Conflict-aware,0.7335855942423436
+3,US common,US common,Full framework,0.758291293237062
+3,US common,EU rights,Local-only,0.5526429977770159
+3,US common,EU rights,Centralized,0.5912966527585304
+3,US common,EU rights,FedAvg,0.581885044565186
+3,US common,EU rights,FedProx,0.6125039319843615
+3,US common,EU rights,FedLoRA,0.6461165530679158
+3,US common,EU rights,Conflict-aware,0.6720672800332325
+3,US common,EU rights,Full framework,0.6957587676554315
+3,US common,Contracts,Local-only,0.5641579286518464
+3,US common,Contracts,Centralized,0.6260919187439512
+3,US common,Contracts,FedAvg,0.59999245165964
+3,US common,Contracts,FedProx,0.6115735785615712
+3,US common,Contracts,FedLoRA,0.6275665000484486
+3,US common,Contracts,Conflict-aware,0.6804531891143637
+3,US common,Contracts,Full framework,0.6885727481655312
+3,EU rights,CN civil,Local-only,0.5627692936412106
+3,EU rights,CN civil,Centralized,0.6023137427509575
+3,EU rights,CN civil,FedAvg,0.6096229471487985
+3,EU rights,CN civil,FedProx,0.607982087571444
+3,EU rights,CN civil,FedLoRA,0.6349880110177114
+3,EU rights,CN civil,Conflict-aware,0.6728281070837959
+3,EU rights,CN civil,Full framework,0.7033888239742763
+3,EU rights,US common,Local-only,0.5594901044249613
+3,EU rights,US common,Centralized,0.5985208155220141
+3,EU rights,US common,FedAvg,0.6122130976655561
+3,EU rights,US common,FedProx,0.6139197796346604
+3,EU rights,US common,FedLoRA,0.6378487881350166
+3,EU rights,US common,Conflict-aware,0.6674398327663559
+3,EU rights,US common,Full framework,0.6792151081324457
+3,EU rights,EU rights,Local-only,0.6340456563531529
+3,EU rights,EU rights,Centralized,0.6676011482539378
+3,EU rights,EU rights,FedAvg,0.6799729687225008
+3,EU rights,EU rights,FedProx,0.6834158518750291
+3,EU rights,EU rights,FedLoRA,0.7118751259857458
+3,EU rights,EU rights,Conflict-aware,0.7509898605905544
+3,EU rights,EU rights,Full framework,0.7592231472830271
+3,EU rights,Contracts,Local-only,0.5721577325314604
+3,EU rights,Contracts,Centralized,0.6182112459542033
+3,EU rights,Contracts,FedAvg,0.6023078710016314
+3,EU rights,Contracts,FedProx,0.6119833337904923
+3,EU rights,Contracts,FedLoRA,0.6218711526332924
+3,EU rights,Contracts,Conflict-aware,0.6749252037886987
+3,EU rights,Contracts,Full framework,0.6954814925788205
+3,Contracts,CN civil,Local-only,0.5654991824007666
+3,Contracts,CN civil,Centralized,0.6067922753478915
+3,Contracts,CN civil,FedAvg,0.591768382689213
+3,Contracts,CN civil,FedProx,0.6233509803755142
+3,Contracts,CN civil,FedLoRA,0.6325660726085224
+3,Contracts,CN civil,Conflict-aware,0.6680866977820974
+3,Contracts,CN civil,Full framework,0.6731076552631173
+3,Contracts,US common,Local-only,0.5639339232711238
+3,Contracts,US common,Centralized,0.6111589723897601
+3,Contracts,US common,FedAvg,0.5940616004647025
+3,Contracts,US common,FedProx,0.6187693385007809
+3,Contracts,US common,FedLoRA,0.6337078328639832
+3,Contracts,US common,Conflict-aware,0.6735412196699445
+3,Contracts,US common,Full framework,0.6794558415507774
+3,Contracts,EU rights,Local-only,0.5436060557340311
+3,Contracts,EU rights,Centralized,0.6184666251464266
+3,Contracts,EU rights,FedAvg,0.6061127216586889
+3,Contracts,EU rights,FedProx,0.6094614716960217
+3,Contracts,EU rights,FedLoRA,0.6385500261022663
+3,Contracts,EU rights,Conflict-aware,0.6716508143553958
+3,Contracts,EU rights,Full framework,0.7002257359912796
+3,Contracts,Contracts,Local-only,0.6314283112577094
+3,Contracts,Contracts,Centralized,0.6756647764913669
+3,Contracts,Contracts,FedAvg,0.66384025620229
+3,Contracts,Contracts,FedProx,0.6561824562428141
+3,Contracts,Contracts,FedLoRA,0.7080685597237388
+3,Contracts,Contracts,Conflict-aware,0.7261146986218918
+3,Contracts,Contracts,Full framework,0.7462369938638307
+4,CN civil,CN civil,Local-only,0.6301083894759043
+4,CN civil,CN civil,Centralized,0.6793044190199242
+4,CN civil,CN civil,FedAvg,0.6563906957204553
+4,CN civil,CN civil,FedProx,0.6895800824708116
+4,CN civil,CN civil,FedLoRA,0.7034632882463748
+4,CN civil,CN civil,Conflict-aware,0.7487992551566859
+4,CN civil,CN civil,Full framework,0.7651485761862975
+4,CN civil,US common,Local-only,0.5505482149844153
+4,CN civil,US common,Centralized,0.6216016456626393
+4,CN civil,US common,FedAvg,0.616684906645646
+4,CN civil,US common,FedProx,0.6194489490769688
+4,CN civil,US common,FedLoRA,0.6240459452285012
+4,CN civil,US common,Conflict-aware,0.6702374995795297
+4,CN civil,US common,Full framework,0.6841659037548513
+4,CN civil,EU rights,Local-only,0.5598965797199703
+4,CN civil,EU rights,Centralized,0.594995722100656
+4,CN civil,EU rights,FedAvg,0.5932672154418345
+4,CN civil,EU rights,FedProx,0.6151737711049486
+4,CN civil,EU rights,FedLoRA,0.6450890839135861
+4,CN civil,EU rights,Conflict-aware,0.6612449376814152
+4,CN civil,EU rights,Full framework,0.6880122158214175
+4,CN civil,Contracts,Local-only,0.5505339414588252
+4,CN civil,Contracts,Centralized,0.6097166030470913
+4,CN civil,Contracts,FedAvg,0.5928049448588969
+4,CN civil,Contracts,FedProx,0.6199694913282056
+4,CN civil,Contracts,FedLoRA,0.6382648351645229
+4,CN civil,Contracts,Conflict-aware,0.6606997084829457
+4,CN civil,Contracts,Full framework,0.6914891524282062
+4,US common,CN civil,Local-only,0.5617174028013309
+4,US common,CN civil,Centralized,0.6255136724989546
+4,US common,CN civil,FedAvg,0.6039744536123866
+4,US common,CN civil,FedProx,0.6052379315325955
+4,US common,CN civil,FedLoRA,0.6256239726108606
+4,US common,CN civil,Conflict-aware,0.6538287047924728
+4,US common,CN civil,Full framework,0.6776574572985249
+4,US common,US common,Local-only,0.6284173302296296
+4,US common,US common,Centralized,0.6819364637614043
+4,US common,US common,FedAvg,0.657708726888989
+4,US common,US common,FedProx,0.671095683328495
+4,US common,US common,FedLoRA,0.6947432318309481
+4,US common,US common,Conflict-aware,0.7436733294566729
+4,US common,US common,Full framework,0.7626517162841301
+4,US common,EU rights,Local-only,0.5517585012016065
+4,US common,EU rights,Centralized,0.6007980548179881
+4,US common,EU rights,FedAvg,0.6050989145736398
+4,US common,EU rights,FedProx,0.6214188997354387
+4,US common,EU rights,FedLoRA,0.6361830398605745
+4,US common,EU rights,Conflict-aware,0.6647732215168553
+4,US common,EU rights,Full framework,0.6989630563290882
+4,US common,Contracts,Local-only,0.5651009549755677
+4,US common,Contracts,Centralized,0.5894686886769092
+4,US common,Contracts,FedAvg,0.6100856480977968
+4,US common,Contracts,FedProx,0.613563777856257
+4,US common,Contracts,FedLoRA,0.6364118451549601
+4,US common,Contracts,Conflict-aware,0.685504255056959
+4,US common,Contracts,Full framework,0.6935492959372573
+4,EU rights,CN civil,Local-only,0.5573566112058397
+4,EU rights,CN civil,Centralized,0.6005553525727548
+4,EU rights,CN civil,FedAvg,0.6255696183524443
+4,EU rights,CN civil,FedProx,0.6127121068340032
+4,EU rights,CN civil,FedLoRA,0.6325953680507501
+4,EU rights,CN civil,Conflict-aware,0.6459144368052383
+4,EU rights,CN civil,Full framework,0.6942461242394844
+4,EU rights,US common,Local-only,0.5603234074752775
+4,EU rights,US common,Centralized,0.605108857263389
+4,EU rights,US common,FedAvg,0.6130017106290199
+4,EU rights,US common,FedProx,0.6147344345272603
+4,EU rights,US common,FedLoRA,0.6243856302196742
+4,EU rights,US common,Conflict-aware,0.6814561513968583
+4,EU rights,US common,Full framework,0.6929227711713956
+4,EU rights,EU rights,Local-only,0.6288022737266719
+4,EU rights,EU rights,Centralized,0.6709778048153475
+4,EU rights,EU rights,FedAvg,0.657505409274587
+4,EU rights,EU rights,FedProx,0.6942108757933729
+4,EU rights,EU rights,FedLoRA,0.7034954935616501
+4,EU rights,EU rights,Conflict-aware,0.7506366434656374
+4,EU rights,EU rights,Full framework,0.7695597339139325
+4,EU rights,Contracts,Local-only,0.5521735784095196
+4,EU rights,Contracts,Centralized,0.5982834629947804
+4,EU rights,Contracts,FedAvg,0.5836183106527901
+4,EU rights,Contracts,FedProx,0.6079831675540307
+4,EU rights,Contracts,FedLoRA,0.6482849182779368
+4,EU rights,Contracts,Conflict-aware,0.659337733532847
+4,EU rights,Contracts,Full framework,0.6948048286685456
+4,Contracts,CN civil,Local-only,0.5699340311445259
+4,Contracts,CN civil,Centralized,0.5965937856440842
+4,Contracts,CN civil,FedAvg,0.6070025235489984
+4,Contracts,CN civil,FedProx,0.608836329363556
+4,Contracts,CN civil,FedLoRA,0.611632750823578
+4,Contracts,CN civil,Conflict-aware,0.674899287270592
+4,Contracts,CN civil,Full framework,0.6810606550922086
+4,Contracts,US common,Local-only,0.5644475279200817
+4,Contracts,US common,Centralized,0.5995229018464813
+4,Contracts,US common,FedAvg,0.6051107248854097
+4,Contracts,US common,FedProx,0.5999038973145732
+4,Contracts,US common,FedLoRA,0.6398148509151105
+4,Contracts,US common,Conflict-aware,0.6573042340041719
+4,Contracts,US common,Full framework,0.6700099004972341
+4,Contracts,EU rights,Local-only,0.5619973544662811
+4,Contracts,EU rights,Centralized,0.5949931336481257
+4,Contracts,EU rights,FedAvg,0.598566684026726
+4,Contracts,EU rights,FedProx,0.6038556960760688
+4,Contracts,EU rights,FedLoRA,0.6285759873337937
+4,Contracts,EU rights,Conflict-aware,0.6534809303555434
+4,Contracts,EU rights,Full framework,0.6940930112202067
+4,Contracts,Contracts,Local-only,0.6379428449175228
+4,Contracts,Contracts,Centralized,0.6691670368712042
+4,Contracts,Contracts,FedAvg,0.6799530862982263
+4,Contracts,Contracts,FedProx,0.664943072116528
+4,Contracts,Contracts,FedLoRA,0.7182208087902878
+4,Contracts,Contracts,Conflict-aware,0.7138787541494066
+4,Contracts,Contracts,Full framework,0.7653512624960861
+5,CN civil,CN civil,Local-only,0.628725805472778
+5,CN civil,CN civil,Centralized,0.6752492340074085
+5,CN civil,CN civil,FedAvg,0.6761121144021335
+5,CN civil,CN civil,FedProx,0.6824134240582912
+5,CN civil,CN civil,FedLoRA,0.71578892003852
+5,CN civil,CN civil,Conflict-aware,0.7400778127842356
+5,CN civil,CN civil,Full framework,0.746415484311945
+5,CN civil,US common,Local-only,0.5552398169513051
+5,CN civil,US common,Centralized,0.6047347684892538
+5,CN civil,US common,FedAvg,0.5983278824353673
+5,CN civil,US common,FedProx,0.6209234446634574
+5,CN civil,US common,FedLoRA,0.6380908725600776
+5,CN civil,US common,Conflict-aware,0.6623197904867507
+5,CN civil,US common,Full framework,0.6781835556534637
+5,CN civil,EU rights,Local-only,0.5542587197350561
+5,CN civil,EU rights,Centralized,0.6077489652494321
+5,CN civil,EU rights,FedAvg,0.5954928608697262
+5,CN civil,EU rights,FedProx,0.6176207729834566
+5,CN civil,EU rights,FedLoRA,0.6440128340564152
+5,CN civil,EU rights,Conflict-aware,0.6729413155113644
+5,CN civil,EU rights,Full framework,0.689048888307111
+5,CN civil,Contracts,Local-only,0.5661458165960797
+5,CN civil,Contracts,Centralized,0.5963081502554447
+5,CN civil,Contracts,FedAvg,0.5997831805611874
+5,CN civil,Contracts,FedProx,0.6139113995090886
+5,CN civil,Contracts,FedLoRA,0.6368266267350993
+5,CN civil,Contracts,Conflict-aware,0.674269976028957
+5,CN civil,Contracts,Full framework,0.7005175824544109
+5,US common,CN civil,Local-only,0.5526591435905213
+5,US common,CN civil,Centralized,0.6029875761125462
+5,US common,CN civil,FedAvg,0.5997491192941384
+5,US common,CN civil,FedProx,0.61010322980112
+5,US common,CN civil,FedLoRA,0.6378498460930327
+5,US common,CN civil,Conflict-aware,0.6759966086899583
+5,US common,CN civil,Full framework,0.6967330606031902
+5,US common,US common,Local-only,0.6197613869061233
+5,US common,US common,Centralized,0.6732181053912903
+5,US common,US common,FedAvg,0.6872635184935916
+5,US common,US common,FedProx,0.6834409767477018
+5,US common,US common,FedLoRA,0.7042838855406934
+5,US common,US common,Conflict-aware,0.7364557341653487
+5,US common,US common,Full framework,0.7586067921320008
+5,US common,EU rights,Local-only,0.5680565378944815
+5,US common,EU rights,Centralized,0.6080805978874355
+5,US common,EU rights,FedAvg,0.5999072383759759
+5,US common,EU rights,FedProx,0.6010745337611738
+5,US common,EU rights,FedLoRA,0.6426755410561884
+5,US common,EU rights,Conflict-aware,0.6618937958755243
+5,US common,EU rights,Full framework,0.6935435958861785
+5,US common,Contracts,Local-only,0.5572746678880496
+5,US common,Contracts,Centralized,0.6021616750816914
+5,US common,Contracts,FedAvg,0.5911146444133197
+5,US common,Contracts,FedProx,0.6046006983163297
+5,US common,Contracts,FedLoRA,0.6117258072353486
+5,US common,Contracts,Conflict-aware,0.6721088439784243
+5,US common,Contracts,Full framework,0.6896385477217369
+5,EU rights,CN civil,Local-only,0.5519089986493736
+5,EU rights,CN civil,Centralized,0.6021831946476248
+5,EU rights,CN civil,FedAvg,0.5898049725992238
+5,EU rights,CN civil,FedProx,0.6131881168178962
+5,EU rights,CN civil,FedLoRA,0.6288312472281268
+5,EU rights,CN civil,Conflict-aware,0.6658208035594225
+5,EU rights,CN civil,Full framework,0.6853738912477134
+5,EU rights,US common,Local-only,0.5693831656192898
+5,EU rights,US common,Centralized,0.6166624351855446
+5,EU rights,US common,FedAvg,0.5992688246189654
+5,EU rights,US common,FedProx,0.6168414197613894
+5,EU rights,US common,FedLoRA,0.6227947122505694
+5,EU rights,US common,Conflict-aware,0.6599840177870464
+5,EU rights,US common,Full framework,0.6980817092386954
+5,EU rights,EU rights,Local-only,0.6211593249159707
+5,EU rights,EU rights,Centralized,0.6748344813628384
+5,EU rights,EU rights,FedAvg,0.6607264128331067
+5,EU rights,EU rights,FedProx,0.6854157806080531
+5,EU rights,EU rights,FedLoRA,0.7148974122702829
+5,EU rights,EU rights,Conflict-aware,0.7466630037564302
+5,EU rights,EU rights,Full framework,0.765582542219624
+5,EU rights,Contracts,Local-only,0.5616284564346931
+5,EU rights,Contracts,Centralized,0.6108258476759301
+5,EU rights,Contracts,FedAvg,0.5952971933415875
+5,EU rights,Contracts,FedProx,0.6139386414178014
+5,EU rights,Contracts,FedLoRA,0.6226781250746198
+5,EU rights,Contracts,Conflict-aware,0.6565382621740689
+5,EU rights,Contracts,Full framework,0.7033508586311699
+5,Contracts,CN civil,Local-only,0.5588598919875218
+5,Contracts,CN civil,Centralized,0.6097822385197451
+5,Contracts,CN civil,FedAvg,0.584489600500062
+5,Contracts,CN civil,FedProx,0.6189835102619654
+5,Contracts,CN civil,FedLoRA,0.6295922422304948
+5,Contracts,CN civil,Conflict-aware,0.66577821918995
+5,Contracts,CN civil,Full framework,0.6907885182852656
+5,Contracts,US common,Local-only,0.566730180528183
+5,Contracts,US common,Centralized,0.6012885913497656
+5,Contracts,US common,FedAvg,0.6033116478462813
+5,Contracts,US common,FedProx,0.6160478864734206
+5,Contracts,US common,FedLoRA,0.6321484479675364
+5,Contracts,US common,Conflict-aware,0.6600993623397181
+5,Contracts,US common,Full framework,0.683669722444267
+5,Contracts,EU rights,Local-only,0.5674259387572765
+5,Contracts,EU rights,Centralized,0.6034312051529603
+5,Contracts,EU rights,FedAvg,0.6006568044567675
+5,Contracts,EU rights,FedProx,0.6101191977826951
+5,Contracts,EU rights,FedLoRA,0.6255517325613971
+5,Contracts,EU rights,Conflict-aware,0.6702481674914369
+5,Contracts,EU rights,Full framework,0.6954110912464737
+5,Contracts,Contracts,Local-only,0.6452691564700265
+5,Contracts,Contracts,Centralized,0.6795660807393882
+5,Contracts,Contracts,FedAvg,0.6522356250700474
+5,Contracts,Contracts,FedProx,0.6836468124968527
+5,Contracts,Contracts,FedLoRA,0.6986151802312979
+5,Contracts,Contracts,Conflict-aware,0.7326332598743036
+5,Contracts,Contracts,Full framework,0.758248632700381

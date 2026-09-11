@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\caption{Twenty-round CaseHOLD proxy screening over matched seeds 41--43. Values are mean $\pm$ run-level standard deviation. ``Aggregated'' is Flower's sample-weighted client evaluation; client identifiers are heuristic non-IID partitions, not authentic jurisdictions.}
+\label{tab:e1-flen-screening}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrl}
+\toprule
+Method & Aggregated accuracy $\uparrow$ & Worst-client accuracy $\uparrow$ & Mean update norm & Logical payload (MiB) & Experimental role \\
+\midrule
+FedAvg & $33.75 \pm 3.15$ & $28.33 \pm 4.41$ & $0.4170$ & $330.00$ & shared baseline \\
+FedProx & $34.58 \pm 2.73$ & $30.00 \pm 1.67$ & $0.3635$ & $330.00$ & proximal baseline \\
+Target cohort ($\lambda=0$) & $33.89 \pm 5.75$ & $28.89 \pm 8.55$ & $0.4172$ & $330.01$ & target-conditioned control \\
+Conflict only & $35.42 \pm 3.56$ & $30.00 \pm 6.67$ & $0.4172$ & $330.01$ & conflict-weight ablation \\
+Personalization only, unguarded & $25.56 \pm 1.68$ & $20.00 \pm 1.67$ & $0.3740$ & $330.01$ & residual ablation \\
+FLEN, unguarded & $25.28 \pm 2.55$ & $20.00 \pm 4.41$ & $0.3739$ & $330.01$ & budget-matched full variant \\
+Personalization only, guarded & $35.14 \pm 2.84$ & $31.67 \pm 5.00$ & $0.4173$ & $330.01$ & residual-safeguard control \\
+FLEN, guarded & $35.56 \pm 3.94$ & $27.22 \pm 8.22$ & $0.4172$ & $330.01$ & guarded full variant \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
