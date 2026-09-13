@@ -74,6 +74,10 @@ class PeftMultilabelModel(torch.nn.Module):
         self.backbone = backbone
         self.classifier = torch.nn.Linear(hidden_size, LABEL_COUNT)
 
+    @property
+    def config(self):
+        return self.backbone.config
+
     def forward(self, input_ids, attention_mask, labels=None):
         output = self.backbone(input_ids=input_ids, attention_mask=attention_mask)
         hidden = output.last_hidden_state

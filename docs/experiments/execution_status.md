@@ -175,3 +175,10 @@ the run-level artifacts.
   contained tokenizer files but not `config.json` or model weights. It produced no metrics and is
   not counted. The launcher now points to the cache snapshot containing both `config.json` and
   `model.safetensors`.
+- **Third GPU attempt:** job `104799` was cancelled after accounting showed only 11 seconds of
+  CPU activity and no output. Diagnostic job `104803` showed that `conda activate` hangs on the
+  compute node during Slurm partition lookup. The launcher now bypasses activation and calls the
+  environment's Python executable directly.
+- **Fourth GPU attempt:** job `104805` loaded the cached model and reached the real runner, then
+  failed on a missing `config` forwarding property in the custom classifier wrapper. It produced
+  no metrics and is not counted. The wrapper contract and regression test are now fixed.
