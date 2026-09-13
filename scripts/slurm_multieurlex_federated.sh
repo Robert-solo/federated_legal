@@ -27,10 +27,11 @@ RUNS=${RUNS:-3}
 LIMIT=${LIMIT:-500}
 ROUNDS=${ROUNDS:-3}
 for RUN_SEED in $(seq "${SEED}" $((SEED + RUNS - 1))); do
+  MODEL_PATH=${MODEL_PATH:-/remote_dir/home/junluo/IPM/.hf_cache/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775}
   python scripts/run_multieurlex_federated.py \
     --raw-root data/raw/public_extended/MultiEURLEX \
     --output "outputs/experiments/multieurlex_${METHOD}_${HOLDOUT}_seed${RUN_SEED}" \
     --holdout "${HOLDOUT}" --method "${METHOD}" --seed "${RUN_SEED}" \
     --rounds "${ROUNDS}" --limit-per-client "${LIMIT}" --eval-limit "${LIMIT}" \
-    --model Qwen/Qwen2.5-0.5B-Instruct --max-length 256 --batch-size 4
+    --model "${MODEL_PATH}" --max-length 256 --batch-size 4
 done

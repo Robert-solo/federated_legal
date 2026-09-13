@@ -167,3 +167,11 @@ the run-level artifacts.
   adapter and a 21-dimensional multilabel head. The original XLM-R smoke was blocked because
   Hugging Face is unreachable from the login node and XLM-R is not cached; GPU execution must
   use `scripts/slurm_multieurlex_federated.sh` with offline loading.
+- **First GPU attempt:** job `104791` reached `gpu04` but failed before model loading because
+  the cache was addressed by model name and Transformers attempted an offline HEAD lookup. The
+  failure produced no metrics and is not counted as an experiment result. The Slurm launcher now
+  passes the resolved cached snapshot path directly.
+- **Second GPU attempt:** job `104796` failed before loading because the first resolved snapshot
+  contained tokenizer files but not `config.json` or model weights. It produced no metrics and is
+  not counted. The launcher now points to the cache snapshot containing both `config.json` and
+  `model.safetensors`.
