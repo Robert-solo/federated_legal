@@ -182,3 +182,12 @@ the run-level artifacts.
 - **Fourth GPU attempt:** job `104805` loaded the cached model and reached the real runner, then
   failed on a missing `config` forwarding property in the custom classifier wrapper. It produced
   no metrics and is not counted. The wrapper contract and regression test are now fixed.
+- **Successful real smoke:** job `104813` completed on `gpu25` with the Qwen backbone, LoRA
+  feature adapter, multilabel head, three training-language clients, one round, and 50 records
+  per client/split. For `en-pl` holdout, the resulting test micro-F1 was `0.1994`; other-language
+  test micro-F1 values were `0.1804` (`en-de`), `0.1215` (`en-es`), and `0.1891` (`en-fr`). These
+  are smoke diagnostics only: one seed, one round, and 50 examples, not paper evidence.
+- **Formal first run submitted:** job `104815` is running on `gpu48` for the frozen `en-pl`
+  holdout, FedAvg, three seeds, three rounds, and 500 records per client/split. Its outputs will
+  be accepted only if all seed directories contain `final_metrics.json` and the run manifests
+  pass the existing artifact checks.
