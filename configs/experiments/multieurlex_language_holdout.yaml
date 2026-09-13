@@ -1,0 +1,102 @@
+name: multieurlex_language_holdout
+seed: 41
+description: >-
+  Frozen multilingual EU-law transfer protocol using four explicit MultiEURLEX language
+  clients. This is not an independent national-jurisdiction experiment.
+data:
+  raw_dir: data/raw/public_extended
+  processed_dir: data/processed/multieurlex_language_holdout
+  partition_dir: data/partitions/multieurlex_language_holdout
+  partition_strategy: institution_based
+  seed: 41
+  tokenizer:
+    backend: auto
+    max_length: 2048
+  datasets:
+    - name: MultiEURLEX
+      task: en-de
+      split: train
+      raw_path: data/raw/public_extended/MultiEURLEX/en-de/train.jsonl
+      text_fields: [parallel_text]
+      label_field: label
+      language_fields: [language_primary, language_secondary]
+      jurisdiction: european_regulatory_law
+      institution_id: institute_eu_en-de
+      institution_type: legal_research_institute
+    - name: MultiEURLEX
+      task: en-fr
+      split: train
+      raw_path: data/raw/public_extended/MultiEURLEX/en-fr/train.jsonl
+      text_fields: [parallel_text]
+      label_field: label
+      language_fields: [language_primary, language_secondary]
+      jurisdiction: european_regulatory_law
+      institution_id: institute_eu_en-fr
+      institution_type: legal_research_institute
+    - name: MultiEURLEX
+      task: en-es
+      split: train
+      raw_path: data/raw/public_extended/MultiEURLEX/en-es/train.jsonl
+      text_fields: [parallel_text]
+      label_field: label
+      language_fields: [language_primary, language_secondary]
+      jurisdiction: european_regulatory_law
+      institution_id: institute_eu_en-es
+      institution_type: legal_research_institute
+    - name: MultiEURLEX
+      task: en-pl
+      split: train
+      raw_path: data/raw/public_extended/MultiEURLEX/en-pl/train.jsonl
+      text_fields: [parallel_text]
+      label_field: label
+      language_fields: [language_primary, language_secondary]
+      jurisdiction: european_regulatory_law
+      institution_id: institute_eu_en-pl
+      institution_type: legal_research_institute
+  jurisdictions:
+    - client_id: institute_eu_en-de
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: legal_research_institute
+      dataset_names: [MultiEURLEX]
+    - client_id: institute_eu_en-fr
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: legal_research_institute
+      dataset_names: [MultiEURLEX]
+    - client_id: institute_eu_en-es
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: legal_research_institute
+      dataset_names: [MultiEURLEX]
+    - client_id: institute_eu_en-pl
+      jurisdiction: european_regulatory_law
+      legal_tradition: civil_law_regulatory
+      institution_type: legal_research_institute
+      dataset_names: [MultiEURLEX]
+federated:
+  framework: flower
+  strategy: fedavg
+  num_clients: 3
+  num_rounds: 50
+  local_epochs: 1
+  client_fraction: 1.0
+  min_available_clients: 3
+  communication_payload: lora_adapters
+model:
+  base_model: Qwen/Qwen2.5-0.5B-Instruct
+  model_family: qwen2.5
+  adaptation: lora
+  max_seq_length: 2048
+  lora:
+    rank: 8
+    alpha: 16
+    dropout: 0.05
+    target_modules: [q_proj, v_proj]
+conflict:
+  enabled: false
+privacy:
+  differential_privacy: false
+  secure_aggregation: false
+evaluation:
+  metrics: [micro_f1, macro_f1, per_language_f1, communication_cost, client_drift]

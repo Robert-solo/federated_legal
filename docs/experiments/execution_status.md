@@ -147,3 +147,15 @@ the run-level artifacts.
   task adapter, frozen CELEX-level split/partition manifest, and identical-budget FedAvg/FedProx/
   target-cohort/FLEN comparison. No result should enter the paper before that runner completes
   five matched seeds and per-language held-out evaluation.
+- **Preparation added:** `scripts/prepare_multieurlex_experiment.py` now creates language-client
+  files and rejects duplicate or cross-split CELEX identifiers before training. Its manifest
+  explicitly records that the task is multilingual EU-law transfer rather than national
+  jurisdiction transfer.
+- **Frozen protocol added:** `configs/experiments/multieurlex_language_holdout.yaml` records the
+  50-round, three-client training condition for each one-language holdout. It is a protocol
+  contract only until a multilabel PEFT runner is implemented; the existing CaseHOLD runner and
+  dry-run Flower orchestrator must not be used to populate its results.
+- **Remote preparation result:** four symmetric holdouts (`en-de`, `en-fr`, `en-es`, `en-pl`)
+  were generated on zhurong with 2,000 records per split and client. Every manifest reports
+  `status=prepared` and an empty `cross_split_overlaps` set. These are frozen data artifacts,
+  not model-performance results.
