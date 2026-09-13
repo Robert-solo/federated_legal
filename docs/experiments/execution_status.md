@@ -159,3 +159,11 @@ the run-level artifacts.
   were generated on zhurong with 2,000 records per split and client. Every manifest reports
   `status=prepared` and an empty `cross_split_overlaps` set. These are frozen data artifacts,
   not model-performance results.
+- **Training implementation added:** `scripts/run_multieurlex_federated.py` is a real
+  HuggingFace/PEFT multilabel loop with language clients, LoRA adapter exchange, FedAvg,
+  FedProx, FLEN-weighted aggregation, and per-language held-out evaluation. It is separate from
+  the CaseHOLD-specific runner and must first pass smoke validation before formal runs.
+- **Backbone adjustment:** the runner uses the cached Qwen backbone with a LoRA feature
+  adapter and a 21-dimensional multilabel head. The original XLM-R smoke was blocked because
+  Hugging Face is unreachable from the login node and XLM-R is not cached; GPU execution must
+  use `scripts/slurm_multieurlex_federated.sh` with offline loading.
