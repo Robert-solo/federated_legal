@@ -1,0 +1,37 @@
+name: multieurlex_controlled_comparison
+description: >-
+  Matched multilingual EU-law transfer comparison. This protocol is not a national
+  jurisdiction experiment: every client remains within the common EU regulatory
+  authority scope and differs by explicit language partition.
+claim_scope: multilingual_eu_law_transfer
+national_jurisdiction_claim_permitted: false
+methods:
+  - fedavg
+  - fedprox
+  - lambda0
+  - proxy_flen
+  - flen
+flen_requirement: expert_adjudicated_calibration_manifest
+seeds: [41, 42, 43, 44, 45]
+holdouts: [en-de, en-fr, en-es, en-pl]
+rounds: 3
+local_epochs: 1
+train_examples_per_client: 500
+validation_examples_per_language: 500
+test_examples_per_language: 500
+backbone: Qwen/Qwen2.5-0.5B-Instruct
+metrics:
+  - micro_f1
+  - macro_f1
+  - micro_precision
+  - micro_recall
+  - threshold_selected_on_source_languages_only
+  - logical_communication_bytes
+  - mean_update_l2
+  - mean_pairwise_update_l2
+  - per_language_predictions
+acceptance:
+  require_finite_metrics: true
+  require_completed_rounds: true
+  require_predictions: true
+  report_holdout_as_language: true

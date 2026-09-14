@@ -133,7 +133,7 @@ the run-level artifacts.
   `legal_tradition`, and `paragraphs`, but no explicit respondent-state/country field. The
   current files must not be partitioned into countries using text, filenames, labels, or
   heuristics.
-- **MultiEURLEX language holdout: data-ready, runtime-blocked.** The remote corpus contains
+- **MultiEURLEX language holdout: runner corrected and ready for matched comparison.** The remote corpus contains
   four 55,000-record language pairs (`en-de`, `en-fr`, `en-es`, `en-pl`) with `celex_id`,
   explicit language fields, and a common EU regulatory authority. This supports a multilingual
   EU-law experiment, not independent national-jurisdiction transfer.
@@ -150,7 +150,10 @@ the run-level artifacts.
 - **Preparation added:** `scripts/prepare_multieurlex_experiment.py` now creates language-client
   files and rejects duplicate or cross-split CELEX identifiers before training. Its manifest
   explicitly records that the task is multilingual EU-law transfer rather than national
-  jurisdiction transfer.
+  jurisdiction transfer. The corrected runner now provides FedAvg, FedProx, lambda-zero,
+  diagnostic proxy-FLEN, source-language validation threshold selection, macro-F1,
+  predictions, drift, communication, and acceptance manifests. True FLEN is rejected
+  unless an expert-adjudicated calibration manifest is supplied.
 - **Frozen protocol added:** `configs/experiments/multieurlex_language_holdout.yaml` records the
   50-round, three-client training condition for each one-language holdout. It is a protocol
   contract only until a multilabel PEFT runner is implemented; the existing CaseHOLD runner and
