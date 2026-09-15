@@ -9,6 +9,7 @@ from scripts.run_multieurlex_federated import (
     load_flen_manifest,
     multilabel_metrics,
     proximal_penalty,
+    THRESHOLD_GRID,
     trainable_parameter_snapshot,
 )
 
@@ -60,6 +61,12 @@ def test_multilabel_metrics_include_macro_f1() -> None:
     metrics = multilabel_metrics(probabilities, labels, 0.5)
     assert metrics["micro_f1"] == pytest.approx(1.0)
     assert metrics["macro_f1"] == pytest.approx(1.0 / 21.0)
+
+
+def test_threshold_grid_covers_probabilities_below_point_one() -> None:
+    assert THRESHOLD_GRID[0] == 0.01
+    assert 0.1 in THRESHOLD_GRID
+    assert THRESHOLD_GRID[-1] == 0.9
 
 
 def test_model_wrapper_exposes_backbone_config() -> None:

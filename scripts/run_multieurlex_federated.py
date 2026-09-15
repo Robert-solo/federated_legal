@@ -32,7 +32,10 @@ from fedlegal.aggregation import RoutingState, TargetClientUpdate, TargetConditi
 from fedlegal.config.schemas import ConflictConfig
 
 LABEL_COUNT = 21
-THRESHOLD_GRID = tuple(float(value) for value in np.arange(0.10, 0.91, 0.05))
+THRESHOLD_GRID = tuple(
+    round(float(value), 2)
+    for value in np.concatenate((np.arange(0.01, 0.51, 0.01), np.arange(0.55, 0.91, 0.05)))
+)
 
 
 class MultiEURLEXDataset(Dataset):
@@ -302,14 +305,27 @@ def predict(model, rows, tokenizer, max_length, batch_size, device):
     return np.concatenate(probabilities), np.concatenate(labels), float(np.mean(losses)), indices
 
 
-def select_threshold(validation: dict[str, tuple[np.ndarray, np.ndarray]]) -> float:
+def threshold_search(
+    validation: dict[str, tuple[np.ndarray, np.ndarray]],
+) -> tuple[float, list[dict[str, float]]]:
     probabilities = np.concatenate([values[0] for values in validation.values()])
     labels = np.concatenate([values[1] for values in validation.values()])
     scores = [
-        (multilabel_metrics(probabilities, labels, threshold)["macro_f1"], threshold)
+        {
+            "threshold": threshold,
+            "macro_f1": multilabel_metrics(probabilities, labels, threshold)["macro_f1"],
+        }
         for threshold in THRESHOLD_GRID
     ]
-    return max(scores, key=lambda item: (item[0], -abs(item[1] - 0.5)))[1]
+    selected = max(
+        scores,
+        key=lambda item: (item["macro_f1"], -abs(item["threshold"] - 0.5)),
+    )["threshold"]
+    return selected, scores
+
+
+def select_threshold(validation: dict[str, tuple[np.ndarray, np.ndarray]]) -> float:
+    return threshold_search(validation)[0]
 
 
 def state_bytes(state: dict[str, torch.Tensor]) -> int:
@@ -445,6 +461,7 @@ def main() -> None:
     global_state = adapter_state(model)
     records: list[dict[str, Any]] = []
     aggregation_audit: list[dict[str, Any]] = []
+    threshold_audit: list[dict[str, Any]] = []
     started = time.time()
     final_predictions = {}
     for round_id in range(1, args.rounds + 1):
@@ -472,10 +489,21 @@ def main() -> None:
             language: predict(model, rows, tokenizer, args.max_length, args.batch_size, device)
             for language, rows in validation_rows.items()
         }
-        threshold = select_threshold(
+        threshold, threshold_scores = threshold_search(
             {
                 language: (validation_predictions[language][0], validation_predictions[language][1])
                 for language in client_languages
+            }
+        )
+        threshold_at_boundary = threshold in {THRESHOLD_GRID[0], THRESHOLD_GRID[-1]}
+        threshold_audit.append(
+            {
+                "round": round_id,
+                "selected_threshold": threshold,
+                "selected_on_languages": client_languages,
+                "held_out_language_excluded": args.holdout,
+                "at_search_boundary": threshold_at_boundary,
+                "scores": threshold_scores,
             }
         )
         final_predictions = {
@@ -490,6 +518,7 @@ def main() -> None:
             "claim_scope": "multilingual_eu_law_transfer",
             "device": str(device),
             "threshold": threshold,
+            "threshold_at_search_boundary": threshold_at_boundary,
             "elapsed_seconds": time.time() - started,
             "logical_communication_bytes": 2 * len(client_languages) * state_bytes(global_state),
             "mean_fedprox_penalty": float(np.mean(proximal_values)),
@@ -515,6 +544,9 @@ def main() -> None:
     (args.output / "aggregation_audit.json").write_text(
         json.dumps(aggregation_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    (args.output / "threshold_calibration.json").write_text(
+        json.dumps(threshold_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
     write_predictions(
         args.output / "predictions.jsonl",
         test_rows,
@@ -534,8 +566,9 @@ def main() -> None:
             for key, value in records[-1].items()
             if isinstance(value, (float, int)) and key != "seed"
         ),
+        "threshold_search_interior": not bool(records[-1]["threshold_at_search_boundary"]),
     }
-    if not acceptance["finite_metrics"]:
+    if not acceptance["finite_metrics"] or not acceptance["threshold_search_interior"]:
         acceptance["status"] = "blocked"
     (args.output / "acceptance.json").write_text(
         json.dumps(acceptance, indent=2, sort_keys=True) + "\n", encoding="utf-8"
