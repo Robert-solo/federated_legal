@@ -307,19 +307,25 @@ def predict(model, rows, tokenizer, max_length, batch_size, device):
 
 def threshold_search(
     validation: dict[str, tuple[np.ndarray, np.ndarray]],
+    objective: str = "micro_f1",
 ) -> tuple[float, list[dict[str, float]]]:
+    if objective not in {"micro_f1", "macro_f1"}:
+        raise ValueError(f"Unsupported threshold objective: {objective}")
     probabilities = np.concatenate([values[0] for values in validation.values()])
     labels = np.concatenate([values[1] for values in validation.values()])
-    scores = [
-        {
-            "threshold": threshold,
-            "macro_f1": multilabel_metrics(probabilities, labels, threshold)["macro_f1"],
-        }
-        for threshold in THRESHOLD_GRID
-    ]
+    scores = []
+    for threshold in THRESHOLD_GRID:
+        metrics = multilabel_metrics(probabilities, labels, threshold)
+        scores.append(
+            {
+                "threshold": threshold,
+                "micro_f1": metrics["micro_f1"],
+                "macro_f1": metrics["macro_f1"],
+            }
+        )
     selected = max(
         scores,
-        key=lambda item: (item["macro_f1"], -abs(item["threshold"] - 0.5)),
+        key=lambda item: (item[objective], -abs(item["threshold"] - 0.5)),
     )["threshold"]
     return selected, scores
 
@@ -414,6 +420,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--learning-rate", type=float, default=2e-5)
     parser.add_argument("--fedprox-mu", type=float, default=0.01)
     parser.add_argument("--penalty-lambda", type=float, default=0.2)
+    parser.add_argument(
+        "--threshold-objective",
+        choices=["micro_f1", "macro_f1"],
+        default="micro_f1",
+    )
     parser.add_argument("--calibration-manifest", type=Path)
     parser.add_argument("--require-cuda", action="store_true")
     parser.add_argument(
@@ -493,13 +504,15 @@ def main() -> None:
             {
                 language: (validation_predictions[language][0], validation_predictions[language][1])
                 for language in client_languages
-            }
+            },
+            objective=args.threshold_objective,
         )
         threshold_at_boundary = threshold in {THRESHOLD_GRID[0], THRESHOLD_GRID[-1]}
         threshold_audit.append(
             {
                 "round": round_id,
                 "selected_threshold": threshold,
+                "selection_objective": args.threshold_objective,
                 "selected_on_languages": client_languages,
                 "held_out_language_excluded": args.holdout,
                 "at_search_boundary": threshold_at_boundary,

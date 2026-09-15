@@ -19,6 +19,10 @@ local_epochs: 1
 train_examples_per_client: 500
 validation_examples_per_language: 500
 test_examples_per_language: 500
+threshold_selection:
+  objective: micro_f1
+  data: source_language_validation_only
+  macro_f1_role: secondary_reported_metric
 backbone: Qwen/Qwen2.5-0.5B-Instruct
 metrics:
   - micro_f1

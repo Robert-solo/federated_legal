@@ -10,6 +10,7 @@ from scripts.run_multieurlex_federated import (
     multilabel_metrics,
     proximal_penalty,
     THRESHOLD_GRID,
+    threshold_search,
     trainable_parameter_snapshot,
 )
 
@@ -67,6 +68,16 @@ def test_threshold_grid_covers_probabilities_below_point_one() -> None:
     assert THRESHOLD_GRID[0] == 0.01
     assert 0.1 in THRESHOLD_GRID
     assert THRESHOLD_GRID[-1] == 0.9
+
+
+def test_threshold_search_uses_micro_f1_by_default() -> None:
+    probabilities = np.zeros((2, 21), dtype=np.float32)
+    labels = np.zeros((2, 21), dtype=np.float32)
+    probabilities[0, 0] = 0.8
+    labels[0, 0] = 1.0
+    selected, scores = threshold_search({"source": (probabilities, labels)})
+    assert 0.0 < selected < 0.8
+    assert {"threshold", "micro_f1", "macro_f1"} == set(scores[0])
 
 
 def test_model_wrapper_exposes_backbone_config() -> None:
