@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #SBATCH --job-name=ipm-multieurlex
 #SBATCH --partition=gre
+#SBATCH --exclude=gpu12,gpu17
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
@@ -32,5 +33,5 @@ for RUN_SEED in $(seq "${SEED}" $((SEED + RUNS - 1))); do
     --output "outputs/experiments/multieurlex_${METHOD}_${HOLDOUT}_seed${RUN_SEED}" \
     --holdout "${HOLDOUT}" --method "${METHOD}" --seed "${RUN_SEED}" \
     --rounds "${ROUNDS}" --limit-per-client "${LIMIT}" --eval-limit "${LIMIT}" \
-    --model "${MODEL_PATH}" --max-length 256 --batch-size 4
+    --model "${MODEL_PATH}" --max-length 256 --batch-size 4 --require-cuda
 done

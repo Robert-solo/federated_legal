@@ -399,6 +399,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fedprox-mu", type=float, default=0.01)
     parser.add_argument("--penalty-lambda", type=float, default=0.2)
     parser.add_argument("--calibration-manifest", type=Path)
+    parser.add_argument("--require-cuda", action="store_true")
     parser.add_argument(
         "--method",
         choices=["fedavg", "fedprox", "lambda0", "flen", "proxy_flen"],
@@ -417,6 +418,8 @@ def main() -> None:
     set_seed(args.seed)
     args.output.mkdir(parents=True, exist_ok=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if args.require_cuda and device.type != "cuda":
+        raise SystemExit("CUDA is required for this run but is unavailable")
     from transformers import AutoTokenizer
 
     tokenizer = AutoTokenizer.from_pretrained(args.model)
