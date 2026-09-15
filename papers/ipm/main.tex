@@ -429,11 +429,30 @@ All target-conditioned methods communicate $330.01$~MiB of logical model and pro
 
 \FloatBarrier
 
+\subsection{Measured MultiEURLEX multilingual screening}
+
+We additionally ran a controlled MultiEURLEX screening with English--German, English--French, English--Spanish, and English--Polish language clients. For each target language pair, the remaining three language clients trained a Qwen2.5-0.5B-Instruct LoRA adapter for three federated rounds using 500 training examples per client. The evaluation uses 500 validation and 500 test examples per language and matched seeds 41--43. A single decision threshold is selected by micro-$F_1$ on source-language validation sets only; the held-out language does not participate in threshold selection. All 36 runs completed on GPU and passed checks for finite metrics, interior calibration thresholds, prediction reconstruction, identifiers, and artifact completeness.
+
+\input{tables/multieurlex_results_table}
+
+Table~\ref{tab:multieurlex-results} shows no FedProx advantage over FedAvg. Averaging the four held-out-language scores within each seed, FedProx changes micro-$F_1$ by $-0.0015$ (95\% Student-$t$ interval $[-0.0107,0.0077]$) and macro-$F_1$ by $-0.0011$ ($[-0.0156,0.0135]$). The $\lambda=0$ control exactly reproduces FedAvg because equal client sample counts and the absence of calibrated target-specific conflict evidence reduce this control to sample-weighted averaging. This equality is an implementation check, not evidence for the conflict mechanism. Each run communicates 12.81~MiB of logical adapter payload per round, or 38.42~MiB over three rounds, excluding serialization and transport overhead.
+
+These experiments measure held-out-language behavior within a common EU regulatory authority and therefore cannot establish independent national-jurisdiction rule migration. They also do not evaluate FLEN: the runner rejects that method without an expert-adjudicated target-conflict manifest. Moreover, because this screening lacks a local-only or unadapted reference, its non-zero held-out score demonstrates evaluation feasibility but does not by itself identify a positive transfer gain. Five-seed long runs and those references remain necessary before an effectiveness claim.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{multieurlex_heldout_micro_f1.pdf}
+    \caption{Held-out-language MultiEURLEX micro-$F_1$ over seeds 41--43; error bars show one standard deviation. The $\lambda=0$ control overlaps FedAvg exactly, while FedProx has no consistent advantage. All language pairs share one EU regulatory authority scope.}
+    \label{fig:multieurlex-heldout}
+\end{figure}
+
+\FloatBarrier
+
 \section{Discussion}
 
 The central design principle is that legal heterogeneity cannot be reduced to one optimization residual. Divergence may arise from sampling, task mismatch, model error, or legitimate authority-scoped disagreement. The revised FLEN formulation therefore uses a comparability gate, target-conditioned cohorts, jurisdiction-local residuals, and a diversity floor. These safeguards address a failure of unconditional conflict downweighting, which can otherwise suppress a legally valid minority jurisdiction. Whether the proposed diagnostics identify those categories accurately remains an empirical construct-validity question.
 
-The current evidence establishes that target-conditioned Flower/PEFT aggregation executes reproducibly, that conflict weighting changes client contributions, and that unguarded local residuals are a concrete failure mode mitigated by train-internal selection. The three-seed CaseHOLD screening does not demonstrate statistically reliable aggregate or worst-client gains, and its heuristic partitions cannot validate legal-conflict semantics or cross-jurisdiction transfer. It also provides no formal privacy or multi-agent evidence, so the corresponding claims remain outside the scope of the measured study.
+The current evidence establishes that target-conditioned Flower/PEFT aggregation executes reproducibly, that conflict weighting changes client contributions, and that unguarded local residuals are a concrete failure mode mitigated by train-internal selection. The MultiEURLEX screening additionally establishes a reproducible held-out-language evaluation path, but FedProx does not improve its average result and the experiment contains no calibrated FLEN condition. The three-seed studies do not demonstrate statistically reliable aggregate or worst-client gains, and neither heuristic CaseHOLD partitions nor common-authority language partitions validate legal-conflict semantics or independent national-jurisdiction transfer. They also provide no formal privacy or multi-agent evidence, so the corresponding claims remain outside the scope of the measured study.
 
 Three practical limitations remain. Proxy probes may not reflect expert legal disagreement, authority metadata may be incomplete, and differences between datasets can be mistaken for jurisdiction effects. The next evaluation therefore prioritizes expert conflict labels, authentic jurisdiction partitions, per-jurisdiction utility, and negative transfer. Privacy is evaluated separately because data locality alone does not quantify leakage from model updates.
 
@@ -447,7 +466,7 @@ Fairness evaluation must include minority jurisdictions and affected groups rath
 
 \section{Conclusion}
 
-This paper specifies FLEN, a data-local federated framework for cross-jurisdiction legal language modeling. Its key idea is to separate transfer eligibility from raw client disagreement: conflict diagnostics operate on comparable probes, shared adapters are target-conditioned, jurisdiction-local residuals are selected using training-only evidence, and typed deliberation can abstain when legal support is insufficient. The measured twenty-round CaseHOLD screening demonstrates executable target-conditioned Flower/PEFT aggregation, active conflict weighting, and the value of selecting local residuals against a train-internal control. It does not establish statistically reliable utility gains, legal-conflict construct validity, privacy protection, or cross-jurisdiction generalization. Those claims require expert-adjudicated calibration, five-seed evaluation on authentic jurisdictions, privacy experiments, and blinded legal evaluation of agent outputs.
+This paper specifies FLEN, a data-local federated framework for cross-jurisdiction legal language modeling. Its key idea is to separate transfer eligibility from raw client disagreement: conflict diagnostics operate on comparable probes, shared adapters are target-conditioned, jurisdiction-local residuals are selected using training-only evidence, and typed deliberation can abstain when legal support is insufficient. The measured CaseHOLD and MultiEURLEX screenings demonstrate executable target-conditioned aggregation and held-out-language evaluation, respectively. They do not establish FLEN superiority, statistically reliable utility gains, legal-conflict construct validity, privacy protection, or independent national-jurisdiction generalization. Those claims require expert-adjudicated calibration, five-seed evaluation on authentic jurisdictions, privacy experiments, and blinded legal evaluation of agent outputs.
 
 \section*{Data and code availability}
 The accompanying repository contains the manuscript source, experiment configurations, synthetic figure-layout templates, and the logs and summaries for the measured CaseHOLD Flower/PEFT studies. Synthetic templates are retained only for layout development and are not empirical results. The matched screening is traceable to \path{outputs/experiment_analysis/e1_flen_screening}, including run metadata, seed- and round-level metrics, paired effects, uncertainty intervals, and figures. Benchmark datasets remain subject to their original licences and access conditions. Future reported results include the resolved configuration, code and data versions, seeds, raw logs, per-example predictions, and the source runs used for each table or figure.
