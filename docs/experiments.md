@@ -23,6 +23,12 @@ The revised runtime and matched-budget protocol are documented in
 strategies; the legacy `conflict_aware` starter manifest above is not its runner.
 Human annotation instructions are in `docs/experiments/HUMAN_ANNOTATION_GUIDE.md`.
 
+The frozen extension manifest is `configs/experiments/revision_v2_extensions.yaml`.
+It adds a five-seed FedAdam baseline, a new 120-run MultiEURLEX matrix, fixed
+LegalBench diagnostics and FLEN-adapter reasoning. Reproduction commands and
+definitions of paired inference, worst-language performance and analysis costs
+are in `experiments/revision_v2/README.md`.
+
 Run:
 
 ```bash

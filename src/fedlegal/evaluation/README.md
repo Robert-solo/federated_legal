@@ -39,3 +39,18 @@ python scripts/run_evaluation.py configs/experiments/evaluation_default.yaml --p
 ```
 
 Artifacts are written to `outputs/evaluation/<run_name>/`.
+
+## Published-label diagnostics
+
+`legalbench_diagnostic.py` supplies task-specific prompts, including candidate
+citations, and computes accuracy, macro F1, balanced accuracy, multiclass Brier
+score and ten-bin top-confidence ECE. It uses benchmark labels; expert authority
+conflict and blinded reasoning quality use their separate annotation pipelines.
+
+```bash
+python scripts/run_legalbench_diagnostics.py --model /path/to/cached/model --condition qwen_base --output outputs/revision_v2/legalbench/qwen_base
+python scripts/analyze_revision_legalbench.py --input outputs/revision_v2/legalbench --output outputs/revision_v2/analysis/legalbench
+```
+
+The classifier runner evaluates a fixed sample after checkpoints are frozen.
+See `experiments/revision_v2/README.md` for adapter-seed and pretrained comparisons.

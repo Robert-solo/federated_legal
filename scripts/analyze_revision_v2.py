@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import itertools
 import statistics
 import sys
 from pathlib import Path
@@ -42,12 +43,23 @@ def load_casehold(root: Path) -> list[dict]:
         if abs(reconstructed-result["accuracy"]) > 1e-8:
             raise ValueError(f"Prediction accuracy differs: {path.parent}")
         events = read_lines(path.parent / "communication_log.jsonl")
+        gate_events = [event for event in events if "local_gate_accepted" in event["metrics"]]
+        diagnostics = {}
+        if gate_events:
+            diagnostics = {
+                "gate_acceptance_rate": statistics.fmean(e["metrics"]["local_gate_accepted"] for e in gate_events),
+                "gate_candidate_accuracy_gain": statistics.fmean(e["metrics"]["local_gate_candidate_accuracy"]-e["metrics"]["local_gate_shared_accuracy"] for e in gate_events),
+            }
+        if all("personalization_accuracy_gain" in client for client in result["clients"]):
+            diagnostics["test_personalization_accuracy_gain"] = statistics.fmean(client["personalization_accuracy_gain"] for client in result["clients"])
         rows.append({key: result[key] for key in (
             "spec", "seed", "accuracy", "worst_client_accuracy", "elapsed_seconds"
         )} | {
             "condition": result["spec"], "path": str(path.parent),
             "communication_bytes": sum(event["num_bytes"] for event in events),
             "mean_client_drift_l2": statistics.fmean(event["metrics"]["client_drift_l2"] for event in events),
+            "client_fit_seconds": sum(event["metrics"]["elapsed_sec"] for event in events),
+            **diagnostics,
         })
     return rows
 
@@ -80,16 +92,36 @@ def summarize(rows, conditions, seeds, metrics, contrasts):
         cohort = [index[(condition, s)] for s in seeds if (condition, s) in index]
         if cohort:
             for metric in metrics:
+                if not all(metric in row for row in cohort):
+                    continue
                 summaries.append({"condition": condition, "metric": metric} | interval([row[metric] for row in cohort]))
     for treatment, control in contrasts:
         common = [s for s in seeds if (treatment, s) in index and (control, s) in index]
         if common:
             for metric in metrics:
-                paired.append({"treatment": treatment, "control": control, "metric": metric, "paired_seeds": common}
-                              | interval([index[(treatment,s)][metric]-index[(control,s)][metric] for s in common]))
+                if not all(metric in index[(c,s)] for c in (treatment,control) for s in common):
+                    continue
+                differences = [index[(treatment,s)][metric]-index[(control,s)][metric] for s in common]
+                paired.append({"treatment": treatment, "control": control, "metric": metric, "paired_seeds": common,
+                               "paired_sign_flip_pvalue": sign_flip_pvalue(differences)} | interval(differences))
+    # Treat all planned contrasts for one metric as one exploratory family.
+    for metric in metrics:
+        family = sorted([row for row in paired if row["metric"]==metric],key=lambda row:row["paired_sign_flip_pvalue"])
+        previous = 0.
+        for rank,row in enumerate(family):
+            previous = max(previous,min(1.,(len(family)-rank)*row["paired_sign_flip_pvalue"]))
+            row["holm_adjusted_pvalue"] = previous
+            row["multiplicity_family"] = f"all_planned_contrasts:{metric}"
     return {"matrix_complete": not missing, "completed_runs": len(rows), "missing_runs": missing,
             "runs": rows, "summaries": summaries, "paired_contrasts": paired,
             "inference_unit": "matched_training_seed", "completed_runs_excluded_for_poor_utility": 0}
+
+
+def sign_flip_pvalue(differences):
+    observed = abs(statistics.fmean(differences))
+    permuted = [abs(statistics.fmean(sign*value for sign,value in zip(signs,differences)))
+                for signs in itertools.product((-1,1),repeat=len(differences))]
+    return sum(value>=observed-1e-12 for value in permuted)/len(permuted)
 
 
 def write_csv(path: Path, rows: list[dict]):
@@ -182,12 +214,18 @@ def main():
     parser.add_argument("--kind", choices=["casehold","privacy"], required=True)
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--fedadam-input", type=Path)
     args = parser.parse_args()
     if args.kind=="casehold":
         rows, conditions, seeds = load_casehold(args.input), CASEHOLD, list(range(41,46))
-        metrics = ["accuracy", "worst_client_accuracy", "communication_bytes", "mean_client_drift_l2", "elapsed_seconds"]
+        metrics = ["accuracy", "worst_client_accuracy", "communication_bytes", "mean_client_drift_l2", "elapsed_seconds",
+                   "client_fit_seconds","gate_acceptance_rate","gate_candidate_accuracy_gain","test_personalization_accuracy_gain"]
         contrasts = [("guarded_8_2","unguarded_8_2"),("guarded_10_2","unguarded_10_2"),
                      ("flen_guarded_8_2","guarded_8_2"),("ditto_8_2","fedavg_10"),("fedprox_10","fedavg_10")]
+        if args.fedadam_input:
+            rows += load_casehold(args.fedadam_input)
+            conditions = CASEHOLD + ["fedadam_10"]
+            contrasts += [("fedadam_10","fedavg_10"),("flen_guarded_8_2","fedadam_10")]
     else:
         rows, conditions, seeds = load_privacy(args.input), PRIVACY, [41,42,43]
         metrics = ["micro_f1", "macro_f1", "worst_language_micro_f1", "loss", "brier", "ece_15", "attack_auc", "attack_balanced_accuracy"]

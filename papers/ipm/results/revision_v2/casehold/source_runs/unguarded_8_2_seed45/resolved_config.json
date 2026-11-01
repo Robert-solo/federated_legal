@@ -1,0 +1,58 @@
+{
+  "batch_size": 1,
+  "conflict": {
+    "calibration_manifest": "conflict_calibration_manifest.json",
+    "diversity_floor": 0.1,
+    "enabled": true,
+    "penalty_lambda": 0.0,
+    "require_expert_calibration": false,
+    "sample_count_cap": 1000,
+    "weight_smoothing": 0.5
+  },
+  "conflict_aware_aggregation": true,
+  "dataset_config": "case_hold",
+  "dataset_name": "lex_glue",
+  "dirichlet_alpha": 0.3,
+  "eval_split": "validation",
+  "execution": "sequential_flower_numpy_clients",
+  "expert_legal_conflict_validated": false,
+  "fedprox_mu": null,
+  "gate_examples_excluded_from_shared_and_private_training": true,
+  "grad_accum": 4,
+  "learning_rate": 0.0002,
+  "local_epochs": 1.0,
+  "local_personalization_steps": 2,
+  "lora": {
+    "alpha": 16,
+    "dropout": 0.05,
+    "rank": 8,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "max_eval_samples": 80,
+  "max_length": 512,
+  "max_probe_samples": 24,
+  "max_steps": 8,
+  "max_train_samples": 1200,
+  "method": "personalization_only",
+  "model_name": "/remote_dir/home/junluo/IPM/.hf_cache/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "multi_agent_reasoning": false,
+  "num_clients": 4,
+  "num_rounds": 20,
+  "partition_strategy": "jurisdiction",
+  "privacy": {
+    "differential_privacy": false,
+    "secure_aggregation": false
+  },
+  "protocol": "revision_v2_dual_lora",
+  "run_name": "unguarded_8_2_seed45",
+  "seed": 45,
+  "spec": "unguarded_8_2",
+  "test_evaluated_after_final_round_only": true,
+  "test_limit": 1000,
+  "test_sample_seed": 20261101,
+  "test_split": "test",
+  "train_split": "train"
+}

@@ -1,0 +1,246 @@
+{
+  "matrix_complete": false,
+  "completed_conditions": [
+    "qwen_base"
+  ],
+  "missing_conditions": [
+    "mistral_7b_base",
+    "qwen_fedavg_seed41",
+    "qwen_fedavg_seed42",
+    "qwen_fedavg_seed43",
+    "qwen_fedavg_seed44",
+    "qwen_fedavg_seed45",
+    "qwen_flen_seed41",
+    "qwen_flen_seed42",
+    "qwen_flen_seed43",
+    "qwen_flen_seed44",
+    "qwen_flen_seed45"
+  ],
+  "summaries": [
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "metric": "accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.49166666666666664,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.49166666666666664,
+      "ci95_high": 0.49166666666666664
+    },
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.43826260455836086,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.43826260455836086,
+      "ci95_high": 0.43826260455836086
+    },
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.5145089285714286,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5145089285714286,
+      "ci95_high": 0.5145089285714286
+    },
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.6297996829559076,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.6297996829559076,
+      "ci95_high": 0.6297996829559076
+    },
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "metric": "ece_10",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.2204805602544339,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.2204805602544339,
+      "ci95_high": 0.2204805602544339
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.574468085106383,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.574468085106383,
+      "ci95_high": 0.574468085106383
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.36486486486486486,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.36486486486486486,
+      "ci95_high": 0.36486486486486486
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.5,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5,
+      "ci95_high": 0.5
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.773179116008958,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.773179116008958,
+      "ci95_high": 0.773179116008958
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.3804101082451891,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.3804101082451891,
+      "ci95_high": 0.3804101082451891
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.5370370370370371,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5370370370370371,
+      "ci95_high": 0.5370370370370371
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.4791666666666667,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.4791666666666667,
+      "ci95_high": 0.4791666666666667
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.537037037037037,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.537037037037037,
+      "ci95_high": 0.537037037037037
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.5723059517300163,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5723059517300163,
+      "ci95_high": 0.5723059517300163
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.14729586556718302,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.14729586556718302,
+      "ci95_high": 0.14729586556718302
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.42,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.42,
+      "ci95_high": 0.42
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.29577464788732394,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.29577464788732394,
+      "ci95_high": 0.29577464788732394
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.5,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5,
+      "ci95_high": 0.5
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.6565655802876182,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.6565655802876182,
+      "ci95_high": 0.6565655802876182
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "replication": "single_pretrained_checkpoint",
+      "n": 1,
+      "mean": 0.28976735599166636,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.28976735599166636,
+      "ci95_high": 0.28976735599166636
+    }
+  ],
+  "adapter_seed_contrasts": [],
+  "pretrained_case_contrasts": [],
+  "scope": "published_benchmark_component_diagnostics",
+  "expert_conflict_annotation_replaced": false,
+  "larger_model_reference": "Mistral 7B pretrained; different model family and parameter budget"
+}

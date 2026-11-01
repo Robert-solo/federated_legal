@@ -16,6 +16,13 @@ Current scope:
 - checkpointing
 - conflict-aware strategy placeholder only
 
+The starter-plan scope above applies to the dry runner. The research runtime in
+`scripts/run_casehold_revision.py` executes PEFT clients with Flower FedAvg,
+FedProx, Ditto, target-conditioned aggregation and independent private adapters.
+`adaptive_strategy.CheckpointingFedAdam` adds Flower's persistent-moment server
+optimizer and compatible per-round checkpoints/logs. The frozen client and server
+settings are in `configs/experiments/revision_v2_extensions.yaml`.
+
 Future scope:
 
 - LoRA adapter serialization and communication-cost accounting

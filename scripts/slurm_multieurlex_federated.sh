@@ -36,6 +36,9 @@ for RUN_SEED in $(seq "${SEED}" $((SEED + RUNS - 1))); do
   MODEL_PATH=${MODEL_PATH:-/remote_dir/home/junluo/IPM/.hf_cache/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775}
   RUN_OUTPUT="outputs/experiments/${OUTPUT_PREFIX}_seed${RUN_SEED}"
   EXTRA_ARGS=()
+  if [[ -n "${EVALUATION_SEED:-}" ]]; then
+    EXTRA_ARGS+=(--evaluation-seed "$EVALUATION_SEED")
+  fi
   if [[ "${CLIP_UPDATES}" == "1" ]]; then
     EXTRA_ARGS+=(--clip-updates)
   fi

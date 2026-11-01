@@ -2,6 +2,8 @@
 
 更新时间：2026-11-01，Asia/Shanghai。本文件记录实际完成状态；运行中的矩阵以服务器输出为准。
 
+本轮追加状态见文末「非人工实验扩展，23:43」。该节覆盖下文较早的运行数量和任务号。
+
 ## 目标与当前判断
 
 本轮要统一方法和代码，完成相同训练预算的门控消融、强基线与独立测试、
@@ -17,7 +19,7 @@
 - 旧 `papers/ipm/main.tex` 及旧表格有此前未提交的改动，本轮保留；不继续维护该稿。
 - Data and code availability 已使用 `https://github.com/Robert-solo/federated_legal.git`。
 - 改写了旧实验中把“门控+训练预算同时变化”归因为门控效果的句子。
-- 最新 PDF 已更新为 20 页，隐私新表、概率可靠性图、方法公式和 Figure 2 已渲染检查。
+- 最新 PDF 已更新为 21 页，新增冻结协议表、等预算对比、最差语言统计、LegalBench 与推理成本说明；最新首页和协议页已渲染检查。
 - 方法公式明确为共享 LoRA 因子平均与独立双分支矩阵输出；算法伪码同步更新。
 - Figure 2 已重绘，源脚本 `scripts/create_revision_method_figure.py`。旧 Visio 文件属于
   旧图版本，不要用它覆盖新 PDF。其他框架图仍描述完整设计协议。
@@ -128,8 +130,8 @@ pilot；要报告两位独立评审还需要另一位。用户尚未提供法律
    才能训练/校准法律冲突分类器并运行专家校准 FLEN。
 5. 真实法域分区仍未解决。CaseHOLD 是启发式非 IID；固定 round-robin 测试最差客户端
    是部署诊断，不是最差法域指标。MultiEURLEX 是共享 EU 权威下语言迁移。
-6. 旧 MultiEURLEX 72 运行结果保留为 legacy；修正 probe/threshold 分离后尚未重新完成
-   六方法 × 四语言 × 三种子的完整矩阵，不要混为新版结果。
+6. 旧 MultiEURLEX 72 运行结果保留为 legacy；修正 probe/threshold 分离后已提交新的
+   六方法 × 四语言 × 五种子共 120 次矩阵，当前仍在运行，不要混为新版结果。
 7. 更强的近期方法（如 SCAFFOLD、FedJudge）还需忠实实现和公平调参，不能声称已达到 SOTA。
 8. 隐私当前为可信聚合器下的客户端更新保护，攻击测记录成员身份。按攻击对象、
    micro/macro F1 与 BCE、Brier/ECE 分开解释；尚无推理消息隐私/重构攻击证据。
@@ -176,3 +178,99 @@ sacct -j 168496,168511,168491,168492,168493,168494,168495,168512,168518 --format
 贡献定义与代码双分支已对齐；写作中的门控归因已纠正；新版实验正在补齐公平对照；
 人工与真实法域评价尚缺结果；方法效果需要正式配对区间支持。以上五点均应在最终
 投稿前重新核对，尤其不能沿用旧图表宣称修正版已获证实。
+
+## 非人工实验扩展，23:43
+
+用户要求继续完善人工标注以外的实验和内容。本轮没有生成专家真值，也没有改动
+`annotation/authority_v3` 的待填实体包。实验扩展已部署到原 junluo 工作区。
+
+### 当前实际数量
+
+本地最后取回的快照：CaseHOLD 主矩阵 25/40，FedAdam 4/5，新的 MultiEURLEX
+20/120，LegalBench 完成 Qwen base 1/12 个配置，推理完成 base_1pass 1/6 个单元。
+隐私维持已完成的 15/15。其他单元在运行或等待训练依赖/计算资源。
+以上部分矩阵没有写成最终方法优劣结论。
+
+### 本轮做完
+
+1. 排查并释放原 FedAvg seed41 补跑作业 168511_0；现已成功完成，导出 adapter。
+   168512 的 base/FedAvg 推理作业已开始运行。
+2. 新增真实 Flower FedAdam：`src/fedlegal/federated/adaptive_strategy.py`，同 FedAvg
+   的十步客户端，服务器 eta=.01、beta1=.9、beta2=.99、tau=1e-9。保持服务器动量，
+   保存同格式 checkpoint 和轮次日志。测试验证第一步与跨轮动量。
+3. 新 MultiEURLEX 六方法、四 holdout、五种子矩阵，探针来自额外训练记录，阈值使用
+   验证记录；evaluation_seed=20261101，测试只在第三轮后执行。旧结果没有复用。
+4. LegalBench 四任务：overruling 240、UCC/common law 94、citation classification 108、
+   personal jurisdiction 50，共 492 固定案例。加入 Qwen base、五 FedAvg shared、
+   五 FLEN shared、Mistral 7B base。引用候选包含在提示里，金标签不进入提示。
+   训练种子写实际种子，base 不虚构训练种子；模型标签用平均 token NLL 评分。
+5. FLEN shared seed41 接入代理推理，与 base/FedAvg 相同案例和一/四次单代理控制。
+   记录分析 prompt tokens、generated tokens 和耗时，排除共同展示步骤的成本。
+6. 新分析器：`analyze_revision_multieurlex.py`、`analyze_revision_legalbench.py`、
+   `analyze_revision_agents.py`；原 `analyze_revision_v2.py` 可另加 FedAdam 目录。
+   增加门控接受率、候选效应、最终 private-minus-shared、fit 耗时、精确符号置换检验
+   和逐指标 Holm 校正。五种子双侧精确检验最小 p=.0625，正文如实说明。
+7. `publish_revision_results.py` 仅为完整矩阵生成 CAS 的 sections/tables/figures。
+   最新主 TeX 会在对应结果文件存在时使用新版结果，否则显示明确标记的 legacy 结果。
+   `export_revision_evidence.py` 导出配置、数值预测、轮次日志、分析和生成的 CAS 资产；
+   不导出 benchmark 正文或 checkpoint，推理预测仅保留数值与成本字段。
+8. 最新模板补全训练参数、固定测试协议、等预算对比、最差语言定义和推理成本，纠正了
+   legacy MultiEURLEX 探针与阈值验证数据复用的描述；新方案已经分离两者。
+   FedAdam 与 LegalBench 参考文献核对了 arXiv 元数据。PDF 21 页，编译通过。
+9. 远端全量测试 82 passed；本地从下载的 source_runs 重算了 CaseHOLD 和 MultiEURLEX
+   快照。LegalBench/推理分析器已在真实完成单元上执行。当前仅作为进度分析。
+
+### 新作业与依赖
+
+| 作业 | 用途 | 备注 |
+| --- | --- | --- |
+| 168496 | 原 CaseHOLD 40 单元 | task0 训练前失败，已由 168511_0 补齐；其他继续 |
+| 168566 | FedAdam 五种子 | 原矩阵外的扩展目录 casehold_fedadam |
+| 168559 | MultiEURLEX 24 数组单元，每单元五种子 | 最多四个数组单元并行，共 120 次 |
+| 168574 | LegalBench 冒烟，两种 base 模型，各每任务两例 | Qwen 已通过，Mistral 等待 gpu46 资源 |
+| 168591 | 正式 Qwen base LegalBench | 已完成 |
+| 168592 | 正式 Mistral 7B LegalBench | afterok:168574_1 |
+| 168593 | 五 FedAvg adapter LegalBench | afterok:168511_0 已满足，等待 gpu14 资源 |
+| 168594 | 五 FLEN adapter LegalBench | afterok:168496_35 至 _39 |
+| 168512 | base/FedAvg 一/四次控制推理 | 已运行，base_1pass 完成 |
+| 168575 | FLEN 一/四次控制推理 | afterok:168496_35 |
+| 168623 | 完整扩展分析、CAS 数值资产生成、归档 | afterany 上述训练/推理作业；取代取消的 168608 |
+
+Slurm 在提交时保存脚本，因此更新磁盘上的 `.sh` 不改变已经排队的脚本。168608
+是在加入 publication 步骤前提交的旧分析作业，已取消并以 168623 重新提交。
+publication/export 的 Python 程序在运行时从磁盘读取，后续修复可直接同步脚本。
+
+### 坑与待处理
+
+- 部分新任务被调度器置为 `launch_failed_requeued_held`，尚无程序日志和输出，不是模型
+  运行失败。释放一次仍重复时，已给实际失败的任务指定可用节点再释放：168574_1→gpu46，
+  168591_0→gpu42，168593 各子任务→gpu14。当前为正常 Resources 排队。
+  数组需要对每个 `JOB_INDEX` 更新 NodeList；更新整个数组会报 resizing unsupported。
+- Slurm 分区/节点详情查询有权限限制，但提交、作业查询和运行正常。勿据此宣称 SSH 失败。
+- Windows Git archive 曾导出 CRLF shell，sbatch 拒绝 DOS 行尾。新增 `.gitattributes`
+  指定 `*.sh text eol=lf`。部署 shell 后可 `bash -n` 检查；不要重建另一套 runtime。
+- `analyze_multieurlex_comparison.py` 是旧矩阵分析器，名称过滤不接受新前缀且会排除阈值
+  触边运行。新矩阵使用新的 `analyze_revision_multieurlex.py`，所有完成运行均保留。
+- 推理重复生成的 multi-agent 结果是同一确定性条件，不能把 1pass 与 4pass 包的副本
+  合并成 120 个独立案例。适配器比较仍是 seed41 checkpoint，不能称为五种子推理。
+- 逻辑通信采用 fit 阶段模型/探针负载定义，不含单独 evaluation 调用和网络封装。
+  GPU 机型随节点不同，耗时是实测描述，不作硬件归一的加速结论。
+- 新方法统计、完整矩阵和人工作业分别处理。FedAdam/大模型 reference 并不能替代
+  SCAFFOLD/FedJudge 等忠实近期方法，或 authentic national-jurisdiction 测试。
+
+### 接下来直接执行
+
+1. 检查上述队列，处理真正失败单元，保持冻结配置和种子。正常 Resources/Dependency
+   不重复提交。Mistral 冒烟成功后正式 168592 会自动开始。
+2. 168623 会在服务器输出分析、完整矩阵的 CAS 结果章节和
+   `outputs/revision_v2/revision_evidence.tar.gz`。下载归档，数值数据放
+   `papers/ipm/results/revision_v2/`；`cas_assets` 的 sections/tables/figures 复制到最新模板。
+3. 手工审读完整新结果，统一摘要、Discussion、Conclusion 的数字和解释，再编译。
+   当前自动发布只替换结果章节，不会自动重写这些概括段落。不要把 partial 图当投稿图。
+4. 若在队列未全部完成时检查，可手工运行各分析器与 exporter；完整命令见
+   `experiments/revision_v2/README.md`。source_runs 支持本地重算，归档内不包含模型参数。
+5. 人工部分维持待完成：用户试标、第二位法律评审、冲突校准和两份冻结盲评。
+   当前不要求用户先完成标注才能运行其他实验。
+
+本轮修改将同步 GitHub main 和原远端源代码。此前旧稿 main.tex、旧表格和未提交的
+authority_v1/v2、旧 SVG 等仍保留，不纳入本轮提交。

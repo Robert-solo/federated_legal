@@ -22,3 +22,24 @@ The manuscript uses seed SD for plot bars and tables. Paired uncertainty interva
 use the training seed as the unit; test records are not independent repetitions
 of the full training algorithm. Privacy uses trusted central aggregation, while
 the loss attack tests record membership; read these outcomes separately.
+
+## Extension snapshot
+
+`analysis/casehold_extended/analysis.json` contains the joint CaseHOLD/FedAdam
+progress snapshot. `casehold/source_runs/` and `casehold_fedadam/source_runs/`
+retain numeric predictions, configurations and round logs. The corresponding
+MultiEURLEX evidence is in `multieurlex/source_runs/` and `analysis/multieurlex/`.
+These source snapshots are partial until the analysis says `matrix_complete`.
+The original `casehold/analysis.json` is an earlier original-matrix snapshot;
+use the newer extended path for this extension's progress.
+
+```bash
+python scripts/analyze_revision_v2.py --kind casehold --input papers/ipm/results/revision_v2/casehold/source_runs --fedadam-input papers/ipm/results/revision_v2/casehold_fedadam/source_runs --output tmp/reproduced_revision_casehold
+python scripts/analyze_revision_multieurlex.py --input papers/ipm/results/revision_v2/multieurlex/source_runs --output tmp/reproduced_revision_multieurlex
+```
+
+The language analyzer reconstructs held-out micro F1 and checks identical test
+IDs and gold labels across completed runs. Both commands were rerun locally on
+the downloaded evidence. Source files contain numeric predictions and benchmark
+identifiers; the benchmark text and model checkpoints remain with their providers
+and the remote experiment workspace.

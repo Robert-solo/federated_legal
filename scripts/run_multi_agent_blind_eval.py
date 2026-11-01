@@ -7,6 +7,7 @@ import csv
 import json
 import random
 import re
+import time
 from pathlib import Path
 from typing import Any
 
@@ -57,6 +58,7 @@ def parse_decision(text: str) -> tuple[int | None, str]:
 
 
 def generate(model, tokenizer, prompt: str, max_new_tokens: int) -> str:
+    started = time.perf_counter()
     messages = [{"role": "user", "content": prompt}]
     text = tokenizer.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=True
@@ -71,7 +73,13 @@ def generate(model, tokenizer, prompt: str, max_new_tokens: int) -> str:
             eos_token_id=tokenizer.eos_token_id,
         )
     generated = output[0, inputs["input_ids"].shape[1] :]
-    return tokenizer.decode(generated, skip_special_tokens=True).strip()
+    text = tokenizer.decode(generated, skip_special_tokens=True).strip()
+    usage = getattr(model, "_fedlegal_generation_usage", None)
+    if usage is not None:
+        usage.append({"prompt_tokens":int(inputs["input_ids"].shape[1]),
+                      "generated_tokens":int(generated.shape[0]),
+                      "elapsed_seconds":time.perf_counter()-started})
+    return text
 
 
 def single_agent_output(model, tokenizer, case_text: str, max_new_tokens: int) -> str:
@@ -213,6 +221,7 @@ def main() -> None:
         from peft import PeftModel
         model = PeftModel.from_pretrained(model, str(args.adapter), is_trainable=False)
     model.eval()
+    model._fedlegal_generation_usage = []
 
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "run_config.json").write_text(
@@ -225,6 +234,7 @@ def main() -> None:
     for index, row in enumerate(cases):
         case_id = str(row.get("id") or f"case-{index:04d}")
         case_text = format_case(row)
+        usage_start = len(model._fedlegal_generation_usage)
         single_raw = single_agent_output(
             model, tokenizer, case_text, args.max_new_tokens
         )
@@ -236,9 +246,12 @@ def main() -> None:
                 + case_text + "\n\nPrevious answer:\n" + single_raw,
                 args.max_new_tokens,
             )
+        single_usage = model._fedlegal_generation_usage[usage_start:]
+        usage_start = len(model._fedlegal_generation_usage)
         multi_raw = deliberation_output(
             model, tokenizer, case_text, args.max_new_tokens
         )
+        multi_usage = model._fedlegal_generation_usage[usage_start:]
         single_label, single_rationale = parse_decision(single_raw)
         multi_label, multi_rationale = parse_decision(multi_raw)
         options = row.get("endings") or row.get("choices") or []
@@ -273,6 +286,10 @@ def main() -> None:
                 "multi_correct": multi_label == gold,
                 "multi_raw_output": multi_raw,
                 "multi_output": multi_review_output,
+                "single_analysis_usage": {key:sum(item[key] for item in single_usage)
+                    for key in ("prompt_tokens","generated_tokens","elapsed_seconds")},
+                "multi_analysis_usage": {key:sum(item[key] for item in multi_usage)
+                    for key in ("prompt_tokens","generated_tokens","elapsed_seconds")},
             }
         )
         pair, key = blind_pair(

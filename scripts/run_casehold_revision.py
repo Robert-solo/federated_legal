@@ -35,6 +35,7 @@ SPECS = {
     "unguarded_10_2": ("personalization_only", 10, 2),
     "guarded_10_2": ("personalization_guarded", 10, 2),
     "flen_guarded_8_2": ("flen_guarded", 8, 2),
+    "fedadam_10": ("fedavg", 10, 0),
 }
 
 
@@ -79,7 +80,11 @@ def run() -> None:
         "test_limit": cli.test_limit, "test_evaluated_after_final_round_only": True,
         "gate_examples_excluded_from_shared_and_private_training": True,
         "expert_legal_conflict_validated": False,
+        "aggregation_method": "flower_fedadam" if cli.spec == "fedadam_10" else method,
     }
+    if cli.spec == "fedadam_10":
+        resolved["server_optimizer"] = {"eta":0.01,"beta_1":0.9,"beta_2":0.99,"tau":1e-9,
+                                        "implementation":"flwr.server.strategy.FedAdam"}
     runtime.write_json(out / "resolved_config.json", resolved)
     runtime.write_json(out / "environment.json", runtime.environment_metadata())
     runtime.write_json(out / "model_cache_manifest.json", {"snapshot_path": cli.model})
@@ -91,7 +96,11 @@ def run() -> None:
         client_args.client_id = index
         clients.append(runtime.PeftFlowerClient(client_args, out, "cuda"))
     parameters = clients[0].get_parameters({})
-    if method in runtime.CONFLICT_METHODS:
+    if cli.spec == "fedadam_10":
+        from fedlegal.federated.adaptive_strategy import CheckpointingFedAdam
+        strategy = CheckpointingFedAdam(out, 4, fl.common.ndarrays_to_parameters(parameters),
+                                       runtime.weighted_eval_metrics)
+    elif method in runtime.CONFLICT_METHODS:
         calibration = runtime.load_calibration_manifest(out / "conflict_calibration_manifest.json")
         from fedlegal.config.schemas import ConflictConfig
         strategy = runtime.CheckpointingFLEN(

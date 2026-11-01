@@ -1,0 +1,57 @@
+{
+  "accuracy": 0.262,
+  "clients": [
+    {
+      "accuracy": 0.272,
+      "client": 0,
+      "correct": 68.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 37.033793210983276,
+      "eval_loss": 0.1300633393432945,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.288,
+      "client": 1,
+      "correct": 72.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 36.97776246070862,
+      "eval_loss": 0.15382974166050553,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.26,
+      "client": 2,
+      "correct": 65.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 37.03483581542969,
+      "eval_loss": 0.15416532407701017,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.228,
+      "client": 3,
+      "correct": 57.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 36.997705936431885,
+      "eval_loss": 0.1515134541541338,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    }
+  ],
+  "completed_rounds": 20,
+  "elapsed_seconds": 985.4082794189453,
+  "protocol": "revision_v2_dual_lora",
+  "seed": 44,
+  "spec": "ditto_8_2",
+  "test_examples": 1000,
+  "test_split": "test",
+  "worst_client_accuracy": 0.228
+}

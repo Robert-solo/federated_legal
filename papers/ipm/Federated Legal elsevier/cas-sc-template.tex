@@ -380,16 +380,40 @@ Figure~\ref{fig:multi-agent} makes the intended disclosure boundary explicit: pr
 }
 \end{algorithm}
 
+\FloatBarrier
 \section{Experiments}
 \label{sec:experiments}
 
 \subsection{Experimental setup}
 
-The evaluation contains four matched studies. CaseHOLD tests aggregation and personalization under controlled non-IID partitions. MultiEURLEX tests source-to-target language behavior within a shared EU regulatory authority. A client-update privacy screen measures membership leakage and utility under replace-one Gaussian protection. A paired CaseHOLD inference study compares single-agent prediction with typed four-stage deliberation. All model experiments use Qwen2.5-0.5B-Instruct and matched seeds or paired examples. Run-level means are accompanied by standard deviations; paired differences use 95\% intervals over matched seeds or examples.
+The evaluation separates optimization, language transfer, privacy, and reasoning. CaseHOLD tests aggregation and personalization under controlled non-IID partitions. MultiEURLEX tests source-to-target language behavior within a shared EU regulatory authority. A client-update privacy study measures membership leakage and utility under replace-one Gaussian protection. Paired CaseHOLD inference compares single-agent prediction with typed four-stage deliberation. The federated studies use Qwen2.5-0.5B-Instruct with matched seeds or paired examples. Run-level means are accompanied by standard deviations; paired differences use 95\% intervals over matched seeds or examples. The completed legacy screenings and privacy study are reported separately from the frozen revision protocol below.
 
-CaseHOLD compares FedAvg, FedProx, a target-cohort control with $\lambda=0$, conflict-only aggregation, unguarded personalization, guarded personalization, and full FLEN variants. This design isolates conflict weighting from the local residual. MultiEURLEX compares FedAvg, FedProx, the $\lambda=0$ control, proxy-FLEN, an unadapted backbone, and a target-supervised local-only reference across four language conditions. The held-out language is excluded from federated threshold selection.
+The legacy CaseHOLD comparison includes FedAvg, FedProx, a target-cohort control with $\lambda=0$, conflict-only aggregation, and local-residual variants. The revised comparison adds Ditto and FedAdam~\citep{reddi2021adaptive} and uses independent shared and private LoRA branches. MultiEURLEX compares FedAvg, FedProx, the $\lambda=0$ control, proxy-FLEN, a frozen backbone with a supervised classification head, and a target-supervised local-only reference across four language conditions. The held-out language is excluded from federated threshold selection.
 
-\subsection{CaseHOLD mechanism and ablation study}
+\input{tables/revision_experiment_protocol_table}
+
+All federated adapters use rank eight, scaling sixteen, and query/value projections. CaseHOLD uses AdamW at $2\times10^{-4}$, batch size one, accumulation over four batches, and a 512-token limit. MultiEURLEX uses AdamW at $2\times10^{-5}$, batch size four, a 256-token limit, and one local epoch per round, jointly training the classification head. CaseHOLD selects the holding with the smallest mean answer-token loss; MultiEURLEX applies a validation-selected threshold to 21 sigmoid label outputs.
+
+\paragraph{Frozen tests and matched contrasts.}
+The revised CaseHOLD study fixes 1,000 test records before training and evaluates them after round twenty. Four equal, fixed test shards define deployment clients. Guarded and unguarded personalization are compared at both $8+2$ and $10+2$ shared/private optimizer steps, with identical gate records excluded from both training phases. FedAdam uses the same ten-step clients as FedAvg and the Flower server optimizer with learning rate 0.01, $\beta_1=0.9$, $\beta_2=0.99$, and $\tau=10^{-9}$. Five matched training seeds determine run-level uncertainty. Paired Student-$t$ intervals describe effect magnitude; exact two-sided sign-flip tests and Holm adjustment are reported for planned contrasts within each metric. With five pairs, the smallest attainable two-sided sign-flip $p$-value is 0.0625.
+
+The revised MultiEURLEX matrix uses the same 500 test records per language across methods and training seeds. Each source client reserves 64 additional training-split records as aggregation probes, separate from the 500-record validation sample used for threshold selection. Test predictions are produced after the final round. For method $m$ and seed $s$, average and worst held-out-language micro-$F_1$ are computed as
+\begin{equation}
+ \bar F_{m,s}=\frac{1}{4}\sum_{\ell=1}^{4}F_{m,s,\ell},
+ \qquad F^{\min}_{m,s}=\min_{\ell\in\{1,\ldots,4\}} F_{m,s,\ell}.
+\end{equation}
+Uncertainty and paired method differences are then calculated over training seeds. Thresholds at the search boundary remain in the analysis. Local-only adaptation uses target-language labels and is reported as a target-supervised reference.
+
+\paragraph{Published-label component diagnostics.}
+A separate LegalBench~\citep{guha2023legalbench} protocol tests precedent overruling, UCC versus common-law applicability, citation support, and personal jurisdiction. A fixed sample contains 240, 94, 108, and 50 test cases, respectively. Each prompt supplies the legal material and allowed labels; citation classification also supplies the proposed citation. Labels are scored by mean answer-token negative log likelihood. The protocol compares the pretrained Qwen backbone with five FedAvg and five FLEN shared adapters, and includes pretrained Mistral-7B-Instruct-v0.2 as a larger-model reference. Accuracy, macro-$F_1$, balanced accuracy, multiclass Brier score, and ten-bin confidence ECE describe distinct outcomes. Adapter effects are paired across training seeds; the pretrained-reference contrast is paired across cases. These tasks measure benchmark components, while expert authority-pair annotation evaluates the legal-conflict construct.
+
+\paragraph{Inference and resource controls.}
+The revised reasoning protocol crosses base, FedAvg-shared, and FLEN-shared checkpoints with one-call and four-call single-agent controls and four-stage deliberation on the same sixty cases. The four-call control repeatedly rechecks its answer against the supplied holdings. Analysis prompt tokens, generated tokens, and elapsed time are recorded separately from the shared presentation step. A repeated deterministic four-stage output is counted once per checkpoint. Case-level bootstrap intervals and exact McNemar tests quantify prediction differences; the seed-41 checkpoint comparison measures those checkpoints. Logical federated payload and client drift accompany task performance. Elapsed times are interpreted alongside recorded GPU metadata.
+
+\IfFileExists{sections/revision_casehold_results.tex}{%
+\input{sections/revision_casehold_results}
+}{%
+\subsection{Legacy CaseHOLD mechanism and ablation study}
 
 The legacy CaseHOLD study uses four clients, 1,200 training records, 240 validation records, 24 disjoint aggregation probes, and twenty Flower rounds. All 24 runs completed the configured rounds and client evaluations. These runs use a factor-space local residual, whereas the revised method uses independent LoRA branches. Unguarded variants allocate eight shared and two local steps; guarded variants allocate ten shared and two local steps. Their recovery contrast therefore combines a gate change with a shared-training-budget change. Target-conditioned runs record client predictions, proxy conflict exposure, aggregation weights, local-residual decisions, and communication volume. Client labels are heuristic non-IID cohorts, and calibration uses automatic proxy labels.
 
@@ -422,13 +446,17 @@ All target-conditioned methods communicate $330.01$~MiB of logical model and pro
 
 \FloatBarrier
 
-\subsection{MultiEURLEX multilingual screening}
+}
+\IfFileExists{sections/revision_multieurlex_results.tex}{%
+\input{sections/revision_multieurlex_results}
+}{%
+\subsection{Legacy MultiEURLEX multilingual screening}
 
 The MultiEURLEX study uses English--German, English--French, English--Spanish, and English--Polish language clients. For each held-out pair, the remaining three clients train a LoRA adapter for three rounds using 500 training examples per client. The comparison adds an unadapted backbone with a trained classifier head and local-only adaptation using 500 target-language examples. The local-only condition measures target-supervised adaptation, while the federated conditions measure source-to-target transfer. Evaluation uses 500 validation and 500 test examples per language and matched seeds 41--43. The 72-run matrix completed on GPU and passed method-specific checks for finite metrics, threshold calibration, prediction reconstruction, identifiers, communication accounting, and artifact completeness.
 
 \input{tables/multieurlex_results_table}
 
-FedProx matches FedAvg within uncertainty in Table~\ref{tab:multieurlex-results}. Averaging the four held-out-language scores within each seed, FedProx changes micro-$F_1$ by $-0.0015$ (95\% Student-$t$ interval $[-0.0107,0.0077]$). Proxy-FLEN uses gold-error-gated prediction disagreement on disjoint source-language validation probes; it changes client weights by approximately 0.06 from minimum to maximum per round, but its paired micro-$F_1$ effect over FedAvg is $+0.0013$ ($[-0.0154,0.0181]$). This automatic proxy tests aggregation mechanics, while expert conflict calibration remains the criterion for a legal-conflict claim. The $\lambda=0$ control exactly reproduces FedAvg, verifying the control implementation. Each federated run communicates 12.81~MiB per round, or 38.42~MiB over three rounds; local-only communication is zero.
+FedProx matches FedAvg within uncertainty in Table~\ref{tab:multieurlex-results}. Averaging the four held-out-language scores within each seed, FedProx changes micro-$F_1$ by $-0.0015$ (95\% Student-$t$ interval $[-0.0107,0.0077]$). Legacy proxy-FLEN uses gold-error-gated prediction disagreement on source-language validation probes; those records also contribute to threshold selection. It changes client weights by approximately 0.06 from minimum to maximum per round, with a paired micro-$F_1$ effect over FedAvg of $+0.0013$ ($[-0.0154,0.0181]$). The revised matrix separates probes from threshold-validation records. The $\lambda=0$ control exactly reproduces FedAvg, verifying the control implementation. Each federated run communicates 12.81~MiB per round, or 38.42~MiB over three rounds; local-only communication is zero.
 
 The unadapted reference averages $0.3057$ micro-$F_1$, compared with $0.3360$ for FedAvg; the paired difference is $-0.0303$ with a 95\% interval of $[-0.0581,-0.0024]$, showing that adaptation contributes measurable utility. The target-supervised local-only reference reaches $0.4600$ and exceeds FedAvg by $0.1240$ ($[0.0712,0.1767]$). Source-language federation therefore improves over the unadapted reference but does not match target-language supervision in this three-round setting.
 
@@ -441,6 +469,7 @@ The unadapted reference averages $0.3057$ micro-$F_1$, compared with $0.3360$ fo
 
 \FloatBarrier
 
+}
 \subsection{Client-update privacy and membership inference}
 
 The completed privacy revision compares unclipped training, clipping only, and Gaussian noise multipliers 0.25, 0.5, and 1.0 over seeds 41--43, giving 15 runs. It uses replace-one-client-update adjacency, an $L_2$ clipping norm of 1.0, full participation by three source-language clients, and a central Gaussian mechanism on the weighted aggregate. The mechanism assumes a trusted aggregator and protects the released update. The accountant reports the composed three-round $(\epsilon,\delta)$ budget at $\delta=10^{-5}$. Source-training probes are separated from threshold-validation records; final task evaluation uses held-out test records. A black-box loss attack compares source-language training members with source-language test non-members, separating attack calibration and evaluation halves. Its direction and threshold are selected on the calibration half. This diagnostic measures record membership, while the mechanism's protected unit is the client update.
@@ -467,7 +496,15 @@ Probability quality deteriorates strongly under noise. At $\sigma=0.5$, BCE rise
 
 \FloatBarrier
 
-\subsection{Paired multi-agent diagnostic and blinded review package}
+\IfFileExists{sections/revision_legalbench_results.tex}{%
+\input{sections/revision_legalbench_results}
+\FloatBarrier
+}{}
+
+\IfFileExists{sections/revision_agents_results.tex}{%
+\input{sections/revision_agents_results}
+}{%
+\subsection{Legacy paired multi-agent diagnostic and blinded review package}
 
 The legacy inference study compares a single legal analyst with a typed four-stage workflow comprising primary analysis, adversarial challenge, evidence verification, and final judgement. It loads the base model; the experiment evaluates role prompting rather than the effect of federated adaptation. Both conditions use deterministic decoding and the same presentation step, which renders a selected holding and two-sentence explanation before per-case A/B randomization. The 60-case package contains the anonymous review sheet, a separately stored method key, raw predictions, a concise holistic rubric, and an adjudication protocol for two legally trained reviewers.
 
@@ -477,6 +514,7 @@ Table~\ref{tab:multi-agent-automatic} reports the completed automatic diagnostic
 
 \FloatBarrier
 
+}
 \section{Discussion}
 
 \paragraph{Frozen revision protocol.}

@@ -617,6 +617,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--clip-updates", action="store_true")
     parser.add_argument("--probe-limit", type=int, default=64)
     parser.add_argument("--test-final-only", action="store_true")
+    parser.add_argument("--evaluation-seed", type=int, default=None)
     parser.add_argument("--dp-noise-multiplier", type=float, default=0.0)
     parser.add_argument("--dp-delta", type=float, default=1e-5)
     parser.add_argument("--write-membership-features", action="store_true")
@@ -673,7 +674,8 @@ def main() -> None:
         for language in args.languages
     }
     test_rows = {
-        language: load_rows(args.raw_root, language, "test", args.eval_limit, args.seed)
+        language: load_rows(args.raw_root, language, "test", args.eval_limit,
+                            args.seed if args.evaluation_seed is None else args.evaluation_seed)
         for language in args.languages
     }
     manifest = None

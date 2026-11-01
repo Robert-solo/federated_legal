@@ -1,0 +1,57 @@
+{
+  "accuracy": 0.281,
+  "clients": [
+    {
+      "accuracy": 0.3,
+      "client": 0,
+      "correct": 75.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.7207293510437,
+      "eval_loss": 0.13470348741766067,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.288,
+      "client": 1,
+      "correct": 72.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.30019450187683,
+      "eval_loss": 0.13257868012413382,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.272,
+      "client": 2,
+      "correct": 68.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.586305141448975,
+      "eval_loss": 0.12768742375262082,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.264,
+      "client": 3,
+      "correct": 66.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.54113173484802,
+      "eval_loss": 0.14019068227149545,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    }
+  ],
+  "completed_rounds": 20,
+  "elapsed_seconds": 931.7007315158844,
+  "protocol": "revision_v2_dual_lora",
+  "seed": 41,
+  "spec": "fedavg_10",
+  "test_examples": 1000,
+  "test_split": "test",
+  "worst_client_accuracy": 0.264
+}

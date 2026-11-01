@@ -1,0 +1,41 @@
+protocol: revision_v2_extensions
+frozen_on: 2026-11-01
+multieurlex:
+  methods: [fedavg, fedprox, lambda0, proxy_flen, local_only, unadapted]
+  holdouts: [en-de, en-fr, en-es, en-pl]
+  seeds: [41, 42, 43, 44, 45]
+  rounds: 3
+  training_examples_per_client: 500
+  disjoint_training_probes_per_client: 64
+  validation_examples_per_language: 500
+  fixed_test_examples_per_language: 500
+  evaluation_seed: 20261101
+  test_evaluation: after_final_round_only
+  threshold_selection: source_validation_except_target_supervised_local_only
+  legacy_results_reused: false
+casehold_fedadam:
+  seeds: [41, 42, 43, 44, 45]
+  rounds: 20
+  shared_steps: 10
+  private_steps: 0
+  client_optimizer: same_as_fedavg_10
+  server_learning_rate: 0.01
+  beta_1: 0.9
+  beta_2: 0.99
+  tau: 0.000000001
+legalbench:
+  tasks: [overruling, ucc_v_common_law, citation_prediction_classification, personal_jurisdiction]
+  sample_seed: 20261101
+  max_examples_per_task: 240
+  settings: [qwen_base, qwen_fedavg_shared, qwen_flen_shared, mistral_7b_base]
+  label_metric: accuracy_and_macro_f1
+  probability_metrics: [brier, ece_10]
+  scoring: mean_answer_token_negative_log_likelihood
+  labels: published_benchmark_labels
+  human_conflict_annotation_replaced: false
+flen_agents:
+  adapter: flen_guarded_8_2_seed41/shared_adapter
+  cases: 60
+  seed: 41
+  single_agent_calls: [1, 4]
+  multi_agent_calls: 4

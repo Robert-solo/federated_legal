@@ -1,25 +1,18 @@
 \begin{table}[t]
-\caption{Primary evaluation protocol extending the development screenings.}
+\caption{Frozen revision protocols. Counts denote scheduled runs or conditions; completed outcomes are identified in the results.}
 \label{tab:revision-protocol}
 \centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{ll}
+\small
+\begin{tabular}{@{}p{0.19\linewidth}p{0.73\linewidth}@{}}
 \toprule
-Item & Protocol \\
+Study & Matched design \\
 \midrule
-Federated framework & Flower; 4 primary clients; 8, 16 and 32-client stress tests \\
-Backbone / adaptation & Qwen2.5-0.5B for development, 1.5B primary, 7B confirmation; fixed LoRA payload per comparison \\
-Datasets & CaseHOLD/ECtHR same-task FL; MultiEURLEX cross-language; LegalBench/LeCaRD reliability; expert comparable cross-jurisdiction probes \\
-Non-IID partitions & Dirichlet label skew within task; authentic metadata holdout; no cross-task accuracy averaging \\
-Optimization & AdamW; frozen learning rate, batch, accumulation, sequence length and selection rule \\
-Federated schedule & 20-round screening; 50-round five-seed primary runs; 100-round FedAvg/FedLoRA/FLEN confirmation \\
-Privacy & Clipping, sampling, accountant, $(\epsilon,\delta)$, secure-aggregation protocol and attacks \\
-Communication & LoRA adapter payload bytes logged per client and per round \\
-Randomness & Matched seeds \{41,42,43,44,45\}; fixed data selection and partition procedure \\
-Inference tests & Student-$t$ run-level CI; paired permutation; effect size; Holm correction \\
-Provenance & Resolved config, CLI, code revision, data/model revisions, predictions and raw logs \\
-Hardware & GPU model/count/memory, runtime, energy proxy and software versions per run \\
+CaseHOLD & Eight conditions $\times$ five seeds; twenty rounds; 1,200 training, 80 validation and 1,000 fixed test records; independent shared/private LoRA branches. \\
+FedAdam & Five additional seeds; same ten-step clients as FedAvg; Flower adaptive server optimizer. \\
+MultiEURLEX & Six methods $\times$ four holdouts $\times$ five seeds; three rounds; 500 training records and 64 separate probes per source client; 500 validation and 500 fixed test records per language. \\
+Privacy & Five conditions $\times$ three seeds; unclipped, clipping-only and three noise levels; disjoint source probes and threshold validation. \\
+LegalBench & Four tasks; 492 fixed cases; two pretrained checkpoints plus five FedAvg and five FLEN shared adapters. \\
+Reasoning & Three checkpoints $\times$ two single-agent call budgets; same sixty cases; four-stage deliberation and blinded presentation. \\
 \bottomrule
 \end{tabular}
-}
 \end{table}

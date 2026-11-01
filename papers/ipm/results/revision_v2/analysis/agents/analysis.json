@@ -1,0 +1,44 @@
+{
+  "matrix_complete": false,
+  "missing_cells": [
+    "base_4pass",
+    "federated_1pass",
+    "federated_4pass",
+    "flen_1pass",
+    "flen_4pass"
+  ],
+  "summaries": [
+    {
+      "cases": 60,
+      "single_accuracy": 0.21666666666666667,
+      "multi_accuracy": 0.15,
+      "paired_accuracy_difference": -0.06666666666666667,
+      "paired_bootstrap_ci95": [
+        -0.16666666666666666,
+        0.03333333333333333
+      ],
+      "single_only_correct": 7,
+      "multi_only_correct": 3,
+      "both_correct": 6,
+      "both_incorrect": 44,
+      "mcnemar_exact_pvalue": 0.34375,
+      "human_review_status": "awaiting_two_blinded_reviewers",
+      "backbone": "base",
+      "single_calls": 1,
+      "multi_calls": 4,
+      "single_parse_rate": 0.9666666666666667,
+      "multi_parse_rate": 0.9166666666666666,
+      "single_mean_prompt_tokens": 469.96666666666664,
+      "single_mean_generated_tokens": 28.916666666666668,
+      "single_mean_elapsed_seconds": 0.5193714237461488,
+      "multi_mean_prompt_tokens": 2711.133333333333,
+      "multi_mean_generated_tokens": 447.51666666666665,
+      "multi_mean_elapsed_seconds": 7.745787223801017
+    }
+  ],
+  "contrasts": [],
+  "inference_unit": "paired_case_with_one_training_checkpoint_per_backbone",
+  "human_review_status": "pending_actual_independent_reviewers",
+  "repeated_multi_agent_generations_pooled": false,
+  "cost_scope": "analysis_only; shared_presentation_step_excluded"
+}

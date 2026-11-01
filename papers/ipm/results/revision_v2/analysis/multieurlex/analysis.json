@@ -1,0 +1,536 @@
+{
+  "matrix_complete": false,
+  "missing_runs": [
+    {
+      "condition": "fedprox",
+      "seed": 41
+    },
+    {
+      "condition": "fedprox",
+      "seed": 42
+    },
+    {
+      "condition": "fedprox",
+      "seed": 43
+    },
+    {
+      "condition": "fedprox",
+      "seed": 44
+    },
+    {
+      "condition": "fedprox",
+      "seed": 45
+    },
+    {
+      "condition": "lambda0",
+      "seed": 41
+    },
+    {
+      "condition": "lambda0",
+      "seed": 42
+    },
+    {
+      "condition": "lambda0",
+      "seed": 43
+    },
+    {
+      "condition": "lambda0",
+      "seed": 44
+    },
+    {
+      "condition": "lambda0",
+      "seed": 45
+    },
+    {
+      "condition": "proxy_flen",
+      "seed": 41
+    },
+    {
+      "condition": "proxy_flen",
+      "seed": 42
+    },
+    {
+      "condition": "proxy_flen",
+      "seed": 43
+    },
+    {
+      "condition": "proxy_flen",
+      "seed": 44
+    },
+    {
+      "condition": "proxy_flen",
+      "seed": 45
+    },
+    {
+      "condition": "local_only",
+      "seed": 41
+    },
+    {
+      "condition": "local_only",
+      "seed": 42
+    },
+    {
+      "condition": "local_only",
+      "seed": 43
+    },
+    {
+      "condition": "local_only",
+      "seed": 44
+    },
+    {
+      "condition": "local_only",
+      "seed": 45
+    },
+    {
+      "condition": "unadapted",
+      "seed": 41
+    },
+    {
+      "condition": "unadapted",
+      "seed": 42
+    },
+    {
+      "condition": "unadapted",
+      "seed": 43
+    },
+    {
+      "condition": "unadapted",
+      "seed": 44
+    },
+    {
+      "condition": "unadapted",
+      "seed": 45
+    }
+  ],
+  "runs": [
+    {
+      "method": "fedavg",
+      "holdout": "en-de",
+      "seed": 41,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-de_seed41",
+      "micro_f1": 0.32878975629905,
+      "macro_f1": 0.19503851983618534,
+      "loss": 0.5630256881713868,
+      "brier": 0.17791005969047546,
+      "ece_15": 0.1560729981958866,
+      "mean_update_l2": 0.38655656576156616,
+      "mean_pairwise_update_l2": 0.4793650011221568,
+      "elapsed_seconds": 309.80092191696167,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-de",
+      "seed": 42,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-de_seed42",
+      "micro_f1": 0.2975631905554715,
+      "macro_f1": 0.1648870007477462,
+      "loss": 0.7567501955032349,
+      "brier": 0.23091109097003937,
+      "ece_15": 0.23055329349211282,
+      "mean_update_l2": 0.41064465045928955,
+      "mean_pairwise_update_l2": 0.5144841571648916,
+      "elapsed_seconds": 305.0143976211548,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-de",
+      "seed": 43,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-de_seed43",
+      "micro_f1": 0.2695451040863531,
+      "macro_f1": 0.15257578427140622,
+      "loss": 0.6747048382759094,
+      "brier": 0.22425507009029388,
+      "ece_15": 0.21831599008327437,
+      "mean_update_l2": 0.409475713968277,
+      "mean_pairwise_update_l2": 0.5005474090576172,
+      "elapsed_seconds": 307.0826449394226,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-de",
+      "seed": 44,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-de_seed44",
+      "micro_f1": 0.3594856234648172,
+      "macro_f1": 0.19311410182936736,
+      "loss": 0.6115363898277283,
+      "brier": 0.1956610232591629,
+      "ece_15": 0.19681890656337853,
+      "mean_update_l2": 0.37078558405240375,
+      "mean_pairwise_update_l2": 0.452317217985789,
+      "elapsed_seconds": 312.623694896698,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-de",
+      "seed": 45,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-de_seed45",
+      "micro_f1": 0.3393598103141672,
+      "macro_f1": 0.19313048823805382,
+      "loss": 0.5751959121227265,
+      "brier": 0.1860044002532959,
+      "ece_15": 0.18553639955038115,
+      "mean_update_l2": 0.3607446849346161,
+      "mean_pairwise_update_l2": 0.4937393565972646,
+      "elapsed_seconds": 316.6305651664734,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-fr",
+      "seed": 41,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-fr_seed41",
+      "micro_f1": 0.4466303892842194,
+      "macro_f1": 0.16816394227625958,
+      "loss": 0.47114364194869995,
+      "brier": 0.13601909577846527,
+      "ece_15": 0.07558691241769565,
+      "mean_update_l2": 0.3874020576477051,
+      "mean_pairwise_update_l2": 0.4689833919207255,
+      "elapsed_seconds": 312.38039541244507,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-fr",
+      "seed": 42,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-fr_seed42",
+      "micro_f1": 0.3573402099834223,
+      "macro_f1": 0.17656774080586368,
+      "loss": 0.5005347757339478,
+      "brier": 0.1607995480298996,
+      "ece_15": 0.12738901714058148,
+      "mean_update_l2": 0.43931851784388226,
+      "mean_pairwise_update_l2": 0.5114405552546183,
+      "elapsed_seconds": 308.3842785358429,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-fr",
+      "seed": 43,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-fr_seed43",
+      "micro_f1": 0.40995440729483285,
+      "macro_f1": 0.20463671134997613,
+      "loss": 0.5047690951824189,
+      "brier": 0.14764989912509918,
+      "ece_15": 0.0738443369375808,
+      "mean_update_l2": 0.37696306904157,
+      "mean_pairwise_update_l2": 0.45399534702301025,
+      "elapsed_seconds": 310.38737773895264,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-fr",
+      "seed": 44,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-fr_seed44",
+      "micro_f1": 0.38631722260040846,
+      "macro_f1": 0.1864021965132918,
+      "loss": 0.531338271856308,
+      "brier": 0.16298486292362213,
+      "ece_15": 0.12451110722124575,
+      "mean_update_l2": 0.3765486280123393,
+      "mean_pairwise_update_l2": 0.4490033487478892,
+      "elapsed_seconds": 315.09783935546875,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-fr",
+      "seed": 45,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-fr_seed45",
+      "micro_f1": 0.3723761544920235,
+      "macro_f1": 0.13625898055753463,
+      "loss": 0.5005620299577713,
+      "brier": 0.1529444307088852,
+      "ece_15": 0.126887809513935,
+      "mean_update_l2": 0.34869826833407086,
+      "mean_pairwise_update_l2": 0.45247580607732135,
+      "elapsed_seconds": 316.7075674533844,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-es",
+      "seed": 41,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-es_seed41",
+      "micro_f1": 0.27450980392156865,
+      "macro_f1": 0.11137084627399466,
+      "loss": 0.7336625909805298,
+      "brier": 0.21144822239875793,
+      "ece_15": 0.174989646731388,
+      "mean_update_l2": 0.40264994899431866,
+      "mean_pairwise_update_l2": 0.5011685987313589,
+      "elapsed_seconds": 310.2610924243927,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-es",
+      "seed": 42,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-es_seed42",
+      "micro_f1": 0.38056265984654736,
+      "macro_f1": 0.12543519957280502,
+      "loss": 0.47825557017326353,
+      "brier": 0.1390961855649948,
+      "ece_15": 0.10277419723499391,
+      "mean_update_l2": 0.46141843994458515,
+      "mean_pairwise_update_l2": 0.5428017179171244,
+      "elapsed_seconds": 309.9759261608124,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-es",
+      "seed": 43,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-es_seed43",
+      "micro_f1": 0.2931754874651811,
+      "macro_f1": 0.15830525525780698,
+      "loss": 0.5818847439289093,
+      "brier": 0.16434568166732788,
+      "ece_15": 0.12147193334996699,
+      "mean_update_l2": 0.38972259561220807,
+      "mean_pairwise_update_l2": 0.47560503085454303,
+      "elapsed_seconds": 309.5811848640442,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-es",
+      "seed": 44,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-es_seed44",
+      "micro_f1": 0.2962454997428425,
+      "macro_f1": 0.1418761247505937,
+      "loss": 0.5607505130767823,
+      "brier": 0.1645531803369522,
+      "ece_15": 0.14777734588725228,
+      "mean_update_l2": 0.35710981488227844,
+      "mean_pairwise_update_l2": 0.4462522367636363,
+      "elapsed_seconds": 311.73797249794006,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-es",
+      "seed": 45,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-es_seed45",
+      "micro_f1": 0.3752844389987747,
+      "macro_f1": 0.19859084578061703,
+      "loss": 0.4520823543071747,
+      "brier": 0.1371370404958725,
+      "ece_15": 0.07696136431041219,
+      "mean_update_l2": 0.38428544004758197,
+      "mean_pairwise_update_l2": 0.5153215130170187,
+      "elapsed_seconds": 316.08748960494995,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-pl",
+      "seed": 41,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-pl_seed41",
+      "micro_f1": 0.2931827137790621,
+      "macro_f1": 0.189643517142761,
+      "loss": 0.7648085079193115,
+      "brier": 0.23260104656219482,
+      "ece_15": 0.2210102927620922,
+      "mean_update_l2": 0.33771731456120807,
+      "mean_pairwise_update_l2": 0.4273923635482788,
+      "elapsed_seconds": 312.66985392570496,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-pl",
+      "seed": 42,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-pl_seed42",
+      "micro_f1": 0.3678624210667741,
+      "macro_f1": 0.2120744692531065,
+      "loss": 0.6744417152404785,
+      "brier": 0.22076302766799927,
+      "ece_15": 0.25137922472400326,
+      "mean_update_l2": 0.41621023416519165,
+      "mean_pairwise_update_l2": 0.48784194389979046,
+      "elapsed_seconds": 309.5506343841553,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-pl",
+      "seed": 43,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-pl_seed43",
+      "micro_f1": 0.3768385775460808,
+      "macro_f1": 0.1673658315000628,
+      "loss": 0.7306982572078705,
+      "brier": 0.2044980227947235,
+      "ece_15": 0.14934458523314625,
+      "mean_update_l2": 0.3523556391398112,
+      "mean_pairwise_update_l2": 0.4178938666979472,
+      "elapsed_seconds": 310.99782395362854,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-pl",
+      "seed": 44,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-pl_seed44",
+      "micro_f1": 0.21356903965599622,
+      "macro_f1": 0.08750930927306477,
+      "loss": 0.5804307944774628,
+      "brier": 0.17519092559814453,
+      "ece_15": 0.14675347423695384,
+      "mean_update_l2": 0.3284217913945516,
+      "mean_pairwise_update_l2": 0.40089409550031024,
+      "elapsed_seconds": 315.4540994167328,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    },
+    {
+      "method": "fedavg",
+      "holdout": "en-pl",
+      "seed": 45,
+      "path": "outputs/experiments/revision_v2_multieurlex_fedavg_en-pl_seed45",
+      "micro_f1": 0.30771175726927935,
+      "macro_f1": 0.18945554557189942,
+      "loss": 0.8235575041770935,
+      "brier": 0.2520093619823456,
+      "ece_15": 0.2349045529074612,
+      "mean_update_l2": 0.31579358379046124,
+      "mean_pairwise_update_l2": 0.3997896413008372,
+      "elapsed_seconds": 317.1991009712219,
+      "communication_bytes": 40284648,
+      "threshold_at_search_boundary": false
+    }
+  ],
+  "summaries": [
+    {
+      "condition": "fedavg",
+      "metric": "micro_f1",
+      "n": 5,
+      "mean": 0.3373152133833436,
+      "standard_deviation": 0.014683063916508598,
+      "ci95_low": 0.31908670430295194,
+      "ci95_high": 0.3555437224637352
+    },
+    {
+      "condition": "fedavg",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.16762012054011982,
+      "standard_deviation": 0.009891439856346515,
+      "ci95_low": 0.15534024474138844,
+      "ci95_high": 0.1798999963388512
+    },
+    {
+      "condition": "fedavg",
+      "metric": "loss",
+      "n": 5,
+      "mean": 0.6035066695034504,
+      "standard_deviation": 0.02530719439587098,
+      "ci95_low": 0.5720886749031747,
+      "ci95_high": 0.6349246641037262
+    },
+    {
+      "condition": "fedavg",
+      "metric": "brier",
+      "n": 5,
+      "mean": 0.1838391087949276,
+      "standard_deviation": 0.0058935193347438445,
+      "ci95_low": 0.17652251116110165,
+      "ci95_high": 0.19115570642875354
+    },
+    {
+      "condition": "fedavg",
+      "metric": "ece_15",
+      "n": 5,
+      "mean": 0.15714416942468712,
+      "standard_deviation": 0.013381235859545912,
+      "ci95_low": 0.14053183423636526,
+      "ci95_high": 0.17375650461300898
+    },
+    {
+      "condition": "fedavg",
+      "metric": "communication_bytes",
+      "n": 5,
+      "mean": 40284648.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 40284648.0,
+      "ci95_high": 40284648.0
+    },
+    {
+      "condition": "fedavg",
+      "metric": "mean_update_l2",
+      "n": 5,
+      "mean": 0.3806411271293958,
+      "standard_deviation": 0.03136578147009405,
+      "ci95_low": 0.34170160908382274,
+      "ci95_high": 0.41958064517496885
+    },
+    {
+      "condition": "fedavg",
+      "metric": "mean_pairwise_update_l2",
+      "n": 5,
+      "mean": 0.46956562995910645,
+      "standard_deviation": 0.02790660978975679,
+      "ci95_low": 0.43492055227994536,
+      "ci95_high": 0.5042107076382676
+    },
+    {
+      "condition": "fedavg",
+      "metric": "elapsed_seconds",
+      "n": 5,
+      "mean": 311.88124306201934,
+      "standard_deviation": 3.373053353529754,
+      "ci95_low": 307.69371557912575,
+      "ci95_high": 316.0687705449129
+    },
+    {
+      "condition": "fedavg",
+      "metric": "worst_holdout_micro_f1",
+      "n": 5,
+      "mean": 0.2725797790977338,
+      "standard_deviation": 0.036584246459434325,
+      "ci95_low": 0.22716171972149587,
+      "ci95_high": 0.3179978384739717
+    },
+    {
+      "condition": "fedavg",
+      "metric": "worst_holdout_macro_f1",
+      "n": 5,
+      "mean": 0.12263002398976106,
+      "standard_deviation": 0.02475176615451158,
+      "ci95_low": 0.09190157407843424,
+      "ci95_high": 0.15335847390108787
+    }
+  ],
+  "paired_contrasts": [],
+  "inference_unit": "matched_training_seed",
+  "completed_runs_excluded_for_poor_utility": 0,
+  "completed_training_runs": 20,
+  "completed_method_seed_blocks": 5,
+  "scope": "source_to_target_language_transfer_under_shared_EU_authority",
+  "worst_holdout_definition": "minimum of four independently held-out target language scores within seed",
+  "local_only_uses_target_supervision": true
+}

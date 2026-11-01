@@ -33,8 +33,8 @@ The implementation remains modular:
 - `citation_divergence.py`: citation inconsistency scoring and citation reliability weights
 - `jurisdiction_similarity.py`: rule-alignment similarity and distance
 - `aggregators.py`: legacy framework-independent diagnostic aggregator; it must not be used to claim FLEN effectiveness
-- planned `target_conditioned.py`: cohort construction, diversity-floored client weights, smoothing, and target-specific aggregation
-- planned `flower_flen.py`: Flower runtime strategy and secure-aggregation-compatible weighting
+- `target_conditioned.py`: cohort construction, diversity-floored client weights, smoothing, and target-specific aggregation
+- `scripts/run_real_flower_peft.py` (`CheckpointingFLEN`): Flower runtime strategy and weighting audits
 
 ## Layer 5: Federated Multi-Agent Reasoning
 
@@ -73,6 +73,13 @@ The frozen runner executes real PEFT clients and Flower strategies in one proces
 and measures logical communication. The agent diagnostic can now load the exported
 shared adapter. Human authority calibration and authentic jurisdiction partitions
 remain separate inputs; automatic prediction disagreement is recorded as a proxy.
+
+`federated/adaptive_strategy.py` wraps Flower FedAdam with persistent server
+moments, checkpoints and the same evaluation logs as shared baselines.
+`evaluation/legalbench_diagnostic.py` defines published-label component prompts
+and metrics. The revision analyzers keep seed-level optimization inference
+separate from paired case-level reasoning inference. The language analyzer
+computes the minimum across held-out languages within each seed.
 
 ## Figure generation
 
