@@ -15,7 +15,7 @@ from typing import Any
 import numpy as np
 
 RUN_PATTERN = re.compile(
-    r"^multieurlex_(fedavg|fedprox|lambda0|proxy_flen|flen)_(en-[a-z]+)_seed(\d+)$"
+    r"^multieurlex_(fedavg|fedprox|lambda0|proxy_flen|flen|local_only|unadapted)_(en-[a-z]+)_seed(\d+)$"
 )
 T_CRITICAL_95 = {1: 12.706, 2: 4.303, 3: 3.182, 4: 2.776, 5: 2.571}
 
@@ -64,9 +64,14 @@ def load_accepted_runs(root: Path) -> list[dict[str, Any]]:
         final_threshold = threshold_audit[-1]
         if final_threshold.get("selection_objective") != "micro_f1":
             raise ValueError(f"Threshold audit objective mismatch for {directory}")
-        if final_threshold.get("at_search_boundary"):
+        if final_threshold.get("at_search_boundary") and not acceptance.get(
+            "reference_baseline_boundary_allowed"
+        ):
             raise ValueError(f"Boundary threshold cannot be accepted for {directory}")
-        if holdout in final_threshold.get("selected_on_languages", []):
+        selected_languages = final_threshold.get("selected_on_languages", [])
+        if method == "local_only" and selected_languages != [holdout]:
+            raise ValueError(f"Local-only threshold must use its target language for {directory}")
+        if method != "local_only" and holdout in selected_languages:
             raise ValueError(f"Held-out language leaked into threshold selection for {directory}")
         prediction_count = validate_predictions(
             directory / "predictions.jsonl", float(metrics["threshold"])
@@ -78,6 +83,23 @@ def load_accepted_runs(root: Path) -> list[dict[str, Any]]:
             raise ValueError(f"FedProx penalty was not active for {directory}")
         if method != "fedprox" and fedprox_penalty != 0:
             raise ValueError(f"Unexpected FedProx penalty for {directory}")
+        aggregation_audit = json.loads(
+            (directory / "aggregation_audit.json").read_text(encoding="utf-8")
+        )
+        weight_spreads = [
+            max(float(value) for value in row["weights"].values())
+            - min(float(value) for value in row["weights"].values())
+            for row in aggregation_audit
+        ]
+        if method == "proxy_flen":
+            if not all(
+                row.get("calibration_level") == "automatic_prediction_disagreement"
+                and row.get("formal_legal_claims_allowed") is False
+                for row in aggregation_audit
+            ):
+                raise ValueError(f"Invalid proxy-FLEN evidence boundary for {directory}")
+            if not any(spread > 0 for spread in weight_spreads):
+                raise ValueError(f"Proxy-FLEN weights were inactive for {directory}")
         communication_per_round = int(metrics["logical_communication_bytes"])
         runs.append(
             {
@@ -93,6 +115,8 @@ def load_accepted_runs(root: Path) -> list[dict[str, Any]]:
                 "mean_update_l2": float(metrics["mean_update_l2"]),
                 "mean_pairwise_update_l2": float(metrics["mean_pairwise_update_l2"]),
                 "mean_fedprox_penalty": float(metrics["mean_fedprox_penalty"]),
+                "backbone_adapted": bool(metrics.get("backbone_adapted", True)),
+                "mean_aggregation_weight_spread": statistics.fmean(weight_spreads),
                 "path": str(directory),
             }
         )
@@ -270,12 +294,22 @@ def plot_micro_f1(path: Path, summaries: list[dict[str, Any]], methods: list[str
     labels = ["DE", "FR", "ES", "PL", "Mean"]
     width = 0.8 / len(methods)
     positions = np.arange(len(holdouts), dtype=float)
-    figure, axis = plt.subplots(figsize=(8.2, 4.2))
-    colors = {"fedavg": "#3B6FB6", "fedprox": "#D97941", "lambda0": "#4E9A68"}
+    figure, axis = plt.subplots(figsize=(10.5, 4.8))
+    colors = {
+        "fedavg": "#3B6FB6",
+        "fedprox": "#D97941",
+        "lambda0": "#4E9A68",
+        "local_only": "#7C5AA6",
+        "unadapted": "#888888",
+        "proxy_flen": "#C44E52",
+    }
     display_names = {
         "fedavg": "FedAvg",
         "fedprox": "FedProx",
         "lambda0": r"$\lambda=0$ control",
+        "local_only": "Local only",
+        "unadapted": "Unadapted backbone",
+        "proxy_flen": "Proxy-FLEN",
     }
     for method_index, method in enumerate(methods):
         rows = {
@@ -301,7 +335,12 @@ def plot_micro_f1(path: Path, summaries: list[dict[str, Any]], methods: list[str
     axis.grid(axis="y", color="#D9D9D9", linewidth=0.7)
     axis.set_axisbelow(True)
     axis.spines[["top", "right"]].set_visible(False)
-    axis.legend(frameon=False, ncols=len(methods), loc="upper center")
+    axis.legend(
+        frameon=False,
+        ncols=min(3, len(methods)),
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.02),
+    )
     figure.tight_layout()
     figure.savefig(path, bbox_inches="tight")
     plt.close(figure)

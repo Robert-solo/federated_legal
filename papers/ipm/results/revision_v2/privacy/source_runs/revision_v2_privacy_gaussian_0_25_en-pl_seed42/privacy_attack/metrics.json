@@ -1,0 +1,16 @@
+{
+  "attack": "black_box_loss_membership_inference",
+  "attack_auc": 0.6286535620507769,
+  "attack_auc_ci95": [
+    0.6003004449785688,
+    0.6556759656461612
+  ],
+  "attack_direction_selected_on_calibration_half": "lower_loss_is_member",
+  "balanced_accuracy": 0.609556639211803,
+  "calibration_examples": 1500,
+  "evaluation_examples": 1500,
+  "member_examples": 749,
+  "nonmember_examples": 751,
+  "raw_text_in_attack_artifacts": false,
+  "threshold_selected_on_calibration_half": -14.0099458694458
+}

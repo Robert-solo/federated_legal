@@ -40,6 +40,7 @@ from fedlegal.aggregation import (
 )
 from fedlegal.config.schemas import ConflictConfig
 from fedlegal.federated.strategy import ConflictAwareFlowerStrategy
+from fedlegal.training.dual_lora import DualLora
 
 
 CONFLICT_METHODS = {
@@ -97,6 +98,7 @@ def main() -> None:
         choices=[
             "fedavg",
             "fedprox",
+            "ditto",
             "target_cohort",
             "conflict_only",
             "personalization_only",
@@ -107,12 +109,14 @@ def main() -> None:
         default="fedavg",
     )
     parser.add_argument("--fedprox-mu", type=float, default=0.01)
+    parser.add_argument("--ditto-mu", type=float, default=0.01)
     parser.add_argument("--max-probe-samples", type=int, default=24)
     parser.add_argument("--conflict-lambda", type=float, default=0.2)
     parser.add_argument("--diversity-floor", type=float, default=0.1)
     parser.add_argument("--weight-smoothing", type=float, default=0.5)
     parser.add_argument("--sample-count-cap", type=int, default=1000)
     parser.add_argument("--local-personalization-steps", type=int, default=0)
+    parser.add_argument("--adapter-composition", choices=["dual", "factor_residual"], default="dual")
     parser.add_argument("--require-expert-calibration", action="store_true")
     parser.add_argument("--checkpoint-round", type=int, default=None)
     parser.add_argument("--prediction-limit", type=int, default=0)
@@ -389,15 +393,20 @@ class PeftFlowerClient(fl.client.NumPyClient):
         )
         self.model = get_peft_model(base, lora).to(device)
         self.keys = sorted(get_peft_model_state_dict(self.model).keys())
+        self.dual = (
+            DualLora(self.model, lora)
+            if args.adapter_composition == "dual" and args.method in LOCAL_RESIDUAL_METHODS
+            else None
+        )
         self.dataset = self._load_client_dataset()
         self.local_personalization_dataset = self.dataset
         self.personalization_gate_records: list[dict[str, Any]] = []
-        if args.method in GUARDED_LOCAL_METHODS:
-            self._prepare_personalization_gate()
+        self._prepare_personalization_gate()
         self.eval_records = read_jsonl(self.output_dir / "eval_shards" / f"client_{self.client_id}.jsonl")
         self.probe_records: list[dict[str, Any]] = []
         self.calibration = None
         self.local_residual = [np.zeros_like(array) for array in self._state_to_numpy()]
+        self.ditto_parameters = [array.copy() for array in self._state_to_numpy()]
         if args.method in CONFLICT_METHODS:
             self.calibration = load_calibration_manifest(
                 self.output_dir / "conflict_calibration_manifest.json",
@@ -418,9 +427,21 @@ class PeftFlowerClient(fl.client.NumPyClient):
         downlink_bytes = int(sum(array.nbytes for array in parameters))
         incoming = [array.copy() for array in parameters]
         self._load_numpy_state(parameters)
+        if self.dual:
+            self.dual.activate(local=False, train="shared")
         start = time.time()
         loss = self._train_one_round()
         params = self._state_to_numpy()
+        if self.args.method == "ditto":
+            shared_reference = {
+                name: value.detach().clone()
+                for name, value in self.model.named_parameters() if value.requires_grad
+            }
+            self._load_numpy_state(self.ditto_parameters)
+            self._ditto_reference = shared_reference
+            self._train_one_round(max_steps=self.args.local_personalization_steps, phase="local")
+            self.ditto_parameters = [array.copy() for array in self._state_to_numpy()]
+            self._load_numpy_state(params)
         probe_metrics = None
         probe_predictions: list[int] = []
         local_loss = None
@@ -486,7 +507,15 @@ class PeftFlowerClient(fl.client.NumPyClient):
             and self.args.local_personalization_steps > 0
         )
         shared_metrics = None
-        if personalized:
+        if self.args.method == "ditto":
+            evaluation_parameters = self.ditto_parameters
+        elif self.dual:
+            self._load_numpy_state(parameters)
+            self.dual.activate(local=False)
+            shared_metrics = self._evaluate_records(self.eval_records)
+            self.dual.activate(local=self.dual.enabled)
+            evaluation_parameters = parameters
+        elif personalized:
             self._load_numpy_state(parameters)
             shared_metrics = self._evaluate_records(self.eval_records)
             evaluation_parameters = [
@@ -517,6 +546,8 @@ class PeftFlowerClient(fl.client.NumPyClient):
         eval_metrics["server_round"] = float(config.get("server_round", 0))
         eval_metrics["downlink_bytes"] = float(sum(array.nbytes for array in parameters))
         self._log_eval_event(eval_metrics)
+        if self.dual:
+            self.dual.activate(local=False, train="shared")
         return float(eval_metrics["eval_loss"]), int(eval_metrics["num_examples"]), eval_metrics
 
     def _load_client_dataset(self) -> Dataset:
@@ -552,6 +583,7 @@ class PeftFlowerClient(fl.client.NumPyClient):
         train_indices = [index for index in range(len(records)) if index not in gate_indices]
         self.personalization_gate_records = [records[index] for index in sorted(gate_indices)]
         self.local_personalization_dataset = self.dataset.select(train_indices)
+        self.dataset = self.local_personalization_dataset
 
     def _evaluate_records(self, records: list[dict[str, Any]]) -> dict[str, float]:
         metrics, _ = self._evaluate_records_with_predictions(records)
@@ -628,16 +660,17 @@ class PeftFlowerClient(fl.client.NumPyClient):
             remove_unused_columns=False,
             bf16=torch.cuda.is_available(),
         )
-        trainer_cls = FedProxTrainer if self.args.method == "fedprox" else Trainer
+        use_prox = self.args.method == "fedprox" or (self.args.method == "ditto" and phase == "local")
+        trainer_cls = FedProxTrainer if use_prox else Trainer
         trainer_kwargs: dict[str, Any] = {}
-        if self.args.method == "fedprox":
+        if use_prox:
             trainer_kwargs = {
-                "global_parameters": {
+                "global_parameters": getattr(self, "_ditto_reference", None) or {
                     name: parameter.detach().clone()
                     for name, parameter in self.model.named_parameters()
                     if parameter.requires_grad
                 },
-                "fedprox_mu": self.args.fedprox_mu,
+                "fedprox_mu": self.args.ditto_mu if self.args.method == "ditto" else self.args.fedprox_mu,
             }
         trainer = trainer_cls(
             model=self.model,
@@ -653,6 +686,8 @@ class PeftFlowerClient(fl.client.NumPyClient):
         self,
         shared_parameters: list[np.ndarray],
     ) -> tuple[float, dict[str, float]]:
+        if self.dual:
+            return self._update_private_branch(shared_parameters)
         guarded = self.args.method in GUARDED_LOCAL_METHODS
         shared_gate_metrics = None
         if guarded:
@@ -703,6 +738,40 @@ class PeftFlowerClient(fl.client.NumPyClient):
         )
         self._load_numpy_state(shared_parameters)
         return loss, gate_metrics
+
+    def _update_private_branch(self, shared_parameters):
+        self._load_numpy_state(shared_parameters)
+        self.dual.activate(local=False)
+        reference = self._evaluate_records(self.personalization_gate_records)
+        self.dual.activate(local=True, train="local")
+        started = time.time()
+        loss = self._train_one_round(
+            max_steps=self.args.local_personalization_steps,
+            phase="local", train_dataset=self.local_personalization_dataset,
+        )
+        self.dual.activate(local=True)
+        candidate = self._evaluate_records(self.personalization_gate_records)
+        accepted = self.args.method not in GUARDED_LOCAL_METHODS or (
+            candidate["accuracy"] >= reference["accuracy"]
+            and candidate["eval_loss"] <= reference["eval_loss"]
+        )
+        if not accepted:
+            self.dual.reset()
+        self.dual.enabled = accepted
+        folder = self.output_dir / "private_adapters" / f"client_{self.client_id}"
+        folder.mkdir(parents=True, exist_ok=True)
+        torch.save(self.dual.state(), folder / "local_state.pt")
+        write_json(folder / "selection.json", {"enabled": accepted, "composition": "dual"})
+        self.dual.activate(local=False, train="shared")
+        return loss, {
+            "local_gate_accepted": float(accepted),
+            "local_gate_examples": float(len(self.personalization_gate_records)),
+            "local_gate_shared_accuracy": reference["accuracy"],
+            "local_gate_candidate_accuracy": candidate["accuracy"],
+            "local_gate_shared_eval_loss": reference["eval_loss"],
+            "local_gate_candidate_eval_loss": candidate["eval_loss"],
+            "local_training_seconds": time.time() - started,
+        }
 
     def _load_local_residual(self) -> None:
         residual_path = self.output_dir / "local_residuals" / f"client_{self.client_id}.npz"
@@ -930,6 +999,8 @@ def write_report(args: argparse.Namespace, output_dir: Path) -> None:
         "max_steps": args.max_steps,
         "max_probe_samples": args.max_probe_samples,
         "local_personalization_steps": args.local_personalization_steps,
+        "adapter_composition": args.adapter_composition,
+        "training_gate_reserved_for_all_methods": True,
         "communication_events": len(communication),
         "communication_bytes": total_bytes,
         "uplink_bytes": uplink_bytes,

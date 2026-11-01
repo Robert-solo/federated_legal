@@ -1,0 +1,22 @@
+protocol: revision_v2_dual_lora
+frozen_on: 2026-11-01
+casehold:
+  model: Qwen/Qwen2.5-0.5B-Instruct
+  seeds: [41, 42, 43, 44, 45]
+  rounds: 20
+  clients: 4
+  training_records: 1200
+  validation_records: 80
+  final_test_records: 1000
+  test_sample_seed: 20261101
+  gate_disjoint_from_both_training_phases: true
+  composition: independent_additive_lora_branches
+  specs: [fedavg_10, fedprox_10, ditto_8_2, unguarded_8_2, guarded_8_2, unguarded_10_2, guarded_10_2, flen_guarded_8_2]
+  paired_gate_contrasts: [[unguarded_8_2, guarded_8_2], [unguarded_10_2, guarded_10_2]]
+  metrics: [accuracy, worst_client_accuracy, client_drift, logical_communication_bytes, elapsed_seconds]
+  stopping: fixed_rounds
+  test_usage: after_final_round_only
+human_evidence:
+  expert_conflict_labels: pending_two_qualified_annotators
+  blind_reasoning_review: pending_two_qualified_reviewers
+  automatic_scores_do_not_replace_human_labels: true

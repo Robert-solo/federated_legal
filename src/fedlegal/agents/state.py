@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field
@@ -24,7 +24,7 @@ class ReasoningTrace(BaseModel):
     content: str
     citations: list[str] = Field(default_factory=list)
     client_id: str | None = None
-    timestamp: str = Field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 

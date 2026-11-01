@@ -1,0 +1,22 @@
+\begin{table}[t]
+\caption{Measured outputs from five bounded CaseHOLD Flower/PEFT FedAvg runs. Uncertainty is run-level standard deviation across seeds 41--45.}
+\label{tab:current-evaluation}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lll}
+\toprule
+Metric & Value & Source detail \\
+\midrule
+strategy / model & FedAvg / Qwen2.5-0.5B & no FLEN aggregation \\
+data / repetitions & 1,200 train; 240 validation; five seeds & fixed evaluation slice \\
+validation accuracy, round 1 & 23.92\% +/- 0.48 & run-level SD \\
+validation accuracy, round 3 & 29.17\% +/- 0.98 & 95\% t interval: 27.95--30.38\% \\
+descriptive change & 5.25 pp & no baseline or round-0 attribution \\
+evaluation loss reduction & 49.0\% & round 1 to round 3 \\
+mean update norm & 0.5128 +/- 0.0028 & L2 from broadcast adapter \\
+logical tensor payload & 49.50 MiB per seed & excludes protocol overhead \\
+privacy / agents & not enabled & data locality only \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

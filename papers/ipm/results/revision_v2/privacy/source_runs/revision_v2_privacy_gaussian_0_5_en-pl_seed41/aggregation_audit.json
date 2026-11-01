@@ -1,0 +1,92 @@
+[
+  {
+    "privacy": {
+      "adjacency": "replace_one_client_update",
+      "aggregate_l2_sensitivity": 0.6666666666666666,
+      "attack_scope": "record_membership_black_box_diagnostic",
+      "clip_norm": 1.0,
+      "clip_scales": [
+        0.7026506975153868,
+        0.7205126985024076,
+        0.5924106732688692
+      ],
+      "delta": 1e-05,
+      "epsilon": 11.756462732485115,
+      "mechanism": "central_client_update_gaussian",
+      "noise_multiplier": 0.5,
+      "protection_scope": "released_weighted_update_only",
+      "trusted_aggregator": true,
+      "unclipped_update_norms": [
+        1.4231822490692139,
+        1.3879005908966064,
+        1.6880182027816772
+      ]
+    },
+    "round": 1,
+    "weights": {
+      "en-de": 0.3333333333333333,
+      "en-es": 0.3333333333333333,
+      "en-fr": 0.3333333333333333
+    }
+  },
+  {
+    "privacy": {
+      "adjacency": "replace_one_client_update",
+      "aggregate_l2_sensitivity": 0.6666666666666666,
+      "attack_scope": "record_membership_black_box_diagnostic",
+      "clip_norm": 1.0,
+      "clip_scales": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "delta": 1e-05,
+      "epsilon": 17.756462732485115,
+      "mechanism": "central_client_update_gaussian",
+      "noise_multiplier": 0.5,
+      "protection_scope": "released_weighted_update_only",
+      "trusted_aggregator": true,
+      "unclipped_update_norms": [
+        0.11098399758338928,
+        0.11152099072933197,
+        0.10911782830953598
+      ]
+    },
+    "round": 2,
+    "weights": {
+      "en-de": 0.3333333333333333,
+      "en-es": 0.3333333333333333,
+      "en-fr": 0.3333333333333333
+    }
+  },
+  {
+    "privacy": {
+      "adjacency": "replace_one_client_update",
+      "aggregate_l2_sensitivity": 0.6666666666666666,
+      "attack_scope": "record_membership_black_box_diagnostic",
+      "clip_norm": 1.0,
+      "clip_scales": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "delta": 1e-05,
+      "epsilon": 23.51292546497023,
+      "mechanism": "central_client_update_gaussian",
+      "noise_multiplier": 0.5,
+      "protection_scope": "released_weighted_update_only",
+      "trusted_aggregator": true,
+      "unclipped_update_norms": [
+        0.09895195066928864,
+        0.09992571920156479,
+        0.10446809232234955
+      ]
+    },
+    "round": 3,
+    "weights": {
+      "en-de": 0.3333333333333333,
+      "en-es": 0.3333333333333333,
+      "en-fr": 0.3333333333333333
+    }
+  }
+]

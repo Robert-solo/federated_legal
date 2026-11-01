@@ -64,6 +64,16 @@ The implemented evaluation runner computes citation accuracy, legal consistency,
 hallucination rate, communication cost, and client drift, then writes plots,
 tables, and reports under `outputs/evaluation`. Authentic cross-jurisdiction claims require a common task or an audited output mapping; results from unrelated datasets must not be averaged or placed in a train-jurisdiction/test-jurisdiction accuracy matrix.
 
-## Figures
+## Revision runtime (2026-11-01)
+
+The maintained method is specified in the latest Elsevier CAS source and
+`experiments/revision_v2/README.md`. Independent LoRA branches implement additive
+matrix updates; the old factor-residual path is retained for legacy reproduction.
+The frozen runner executes real PEFT clients and Flower strategies in one process
+and measures logical communication. The agent diagnostic can now load the exported
+shared adapter. Human authority calibration and authentic jurisdiction partitions
+remain separate inputs; automatic prediction disagreement is recorded as a proxy.
+
+## Figure generation
 
 `src/fedlegal/figures` is reserved for reproducible generation of paper figures, including the overall framework, aggregation mechanism, multi-agent workflow, privacy communication pipeline, and conflict-aware aggregation architecture.

@@ -1,0 +1,414 @@
+{
+  "acceptance_failures": [
+    {
+      "condition": "gaussian_0_5",
+      "seed": 41
+    },
+    {
+      "condition": "gaussian_0_5",
+      "seed": 42
+    },
+    {
+      "condition": "gaussian_1_0",
+      "seed": 41
+    },
+    {
+      "condition": "gaussian_1_0",
+      "seed": 42
+    },
+    {
+      "condition": "gaussian_1_0",
+      "seed": 43
+    }
+  ],
+  "acceptance_matrix_complete": false,
+  "accepted_run_count": 4,
+  "claim_scope": "multilingual_eu_law_client_update_privacy",
+  "completed_run_count": 9,
+  "diagnostic_summaries": [
+    {
+      "ci95_high": 0.43988970499705726,
+      "ci95_low": 0.24227149038918752,
+      "condition": "no_privacy",
+      "mean": 0.3410805976931224,
+      "metric": "micro_f1",
+      "n": 3,
+      "standard_deviation": 0.0397728082967558
+    },
+    {
+      "ci95_high": 0.2304218524240824,
+      "ci95_low": 0.14902504809028458,
+      "condition": "no_privacy",
+      "mean": 0.18972345025718348,
+      "metric": "macro_f1",
+      "n": 3,
+      "standard_deviation": 0.016381989388784615
+    },
+    {
+      "ci95_high": 0.8352110424320816,
+      "ci95_low": 0.6243909951566737,
+      "condition": "no_privacy",
+      "mean": 0.7298010187943776,
+      "metric": "loss",
+      "n": 3,
+      "standard_deviation": 0.04242982025738777
+    },
+    {
+      "ci95_high": 0.6748278637533305,
+      "ci95_low": 0.5163928920579954,
+      "condition": "no_privacy",
+      "mean": 0.595610377905663,
+      "metric": "attack_auc",
+      "n": 3,
+      "standard_deviation": 0.031886755829892775
+    },
+    {
+      "ci95_high": 0.6035790872475314,
+      "ci95_low": 0.5325006884287214,
+      "condition": "no_privacy",
+      "mean": 0.5680398878381264,
+      "metric": "attack_balanced_accuracy",
+      "n": 3,
+      "standard_deviation": 0.014305298405161801
+    },
+    {
+      "ci95_high": 0.3260428846682613,
+      "ci95_low": 0.2175461848966737,
+      "condition": "gaussian_0_5",
+      "mean": 0.2717945347824675,
+      "metric": "micro_f1",
+      "n": 3,
+      "standard_deviation": 0.021836137166852936
+    },
+    {
+      "ci95_high": 0.2544658319219238,
+      "ci95_low": 0.19111228473705455,
+      "condition": "gaussian_0_5",
+      "mean": 0.22278905832948917,
+      "metric": "macro_f1",
+      "n": 3,
+      "standard_deviation": 0.012750588259807771
+    },
+    {
+      "ci95_high": 33.72680375194101,
+      "ci95_low": 10.330628005668034,
+      "condition": "gaussian_0_5",
+      "mean": 22.028715878804523,
+      "metric": "loss",
+      "n": 3,
+      "standard_deviation": 4.708734033854926
+    },
+    {
+      "ci95_high": 0.6381123266518149,
+      "ci95_low": 0.46675521349124094,
+      "condition": "gaussian_0_5",
+      "mean": 0.5524337700715279,
+      "metric": "attack_auc",
+      "n": 3,
+      "standard_deviation": 0.03448747690360721
+    },
+    {
+      "ci95_high": 0.5947730567202588,
+      "ci95_low": 0.47806427075320085,
+      "condition": "gaussian_0_5",
+      "mean": 0.5364186637367299,
+      "metric": "attack_balanced_accuracy",
+      "n": 3,
+      "standard_deviation": 0.023488908550386486
+    },
+    {
+      "ci95_high": 0.3188271484464865,
+      "ci95_low": 0.25827561768405327,
+      "condition": "gaussian_1_0",
+      "mean": 0.2885513830652699,
+      "metric": "micro_f1",
+      "n": 3,
+      "standard_deviation": 0.012186652074901725
+    },
+    {
+      "ci95_high": 0.26230765947122964,
+      "ci95_low": 0.20003325642337397,
+      "condition": "gaussian_1_0",
+      "mean": 0.23117045794730182,
+      "metric": "macro_f1",
+      "n": 3,
+      "standard_deviation": 0.012533398801987937
+    },
+    {
+      "ci95_high": 50.220960520444805,
+      "ci95_low": 28.07818779498489,
+      "condition": "gaussian_1_0",
+      "mean": 39.149574157714845,
+      "metric": "loss",
+      "n": 3,
+      "standard_deviation": 4.456473086328951
+    },
+    {
+      "ci95_high": 0.5591388404186497,
+      "ci95_low": 0.5020984404368936,
+      "condition": "gaussian_1_0",
+      "mean": 0.5306186404277716,
+      "metric": "attack_auc",
+      "n": 3,
+      "standard_deviation": 0.011479998937073263
+    },
+    {
+      "ci95_high": 0.5603688013214512,
+      "ci95_low": 0.5021597319125806,
+      "condition": "gaussian_1_0",
+      "mean": 0.5312642666170159,
+      "metric": "attack_balanced_accuracy",
+      "n": 3,
+      "standard_deviation": 0.011715206330172787
+    }
+  ],
+  "matrix_complete": true,
+  "missing_runs": [],
+  "runs": [
+    {
+      "acceptance_status": "blocked",
+      "attack_auc": 0.5850692345440193,
+      "attack_auc_ci95_high": 0.6137905023860493,
+      "attack_auc_ci95_low": 0.5576048208151684,
+      "attack_balanced_accuracy": 0.5573256334942998,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_0_5",
+      "delta": 1e-05,
+      "epsilon": 23.51292546497023,
+      "loss": 24.425494262695313,
+      "macro_f1": 0.2362230587374667,
+      "micro_f1": 0.28833124215809286,
+      "noise_multiplier": 0.5,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_0_5_en-pl_seed41",
+      "seed": 41
+    },
+    {
+      "acceptance_status": "blocked",
+      "attack_auc": 0.516352917960743,
+      "attack_auc_ci95_high": 0.5453838140156693,
+      "attack_auc_ci95_low": 0.4878494450656801,
+      "attack_balanced_accuracy": 0.5110017973365286,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_0_5",
+      "delta": 1e-05,
+      "epsilon": 23.51292546497023,
+      "loss": 16.603771797180176,
+      "macro_f1": 0.2212896462416698,
+      "micro_f1": 0.24704225352112674,
+      "noise_multiplier": 0.5,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_0_5_en-pl_seed42",
+      "seed": 42
+    },
+    {
+      "acceptance_status": "passed",
+      "attack_auc": 0.5558791577098213,
+      "attack_auc_ci95_high": 0.5847636726355261,
+      "attack_auc_ci95_low": 0.5268148391146102,
+      "attack_balanced_accuracy": 0.5409285603793612,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_0_5",
+      "delta": 1e-05,
+      "epsilon": 23.51292546497023,
+      "loss": 25.056881576538085,
+      "macro_f1": 0.210854470009331,
+      "micro_f1": 0.28001010866818293,
+      "noise_multiplier": 0.5,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_0_5_en-pl_seed43",
+      "seed": 43
+    },
+    {
+      "acceptance_status": "blocked",
+      "attack_auc": 0.5218300393289192,
+      "attack_auc_ci95_high": 0.5522143852811698,
+      "attack_auc_ci95_low": 0.49460805318293993,
+      "attack_balanced_accuracy": 0.5447482024621468,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_1_0",
+      "delta": 1e-05,
+      "epsilon": 9.837641821656742,
+      "loss": 40.86357229614258,
+      "macro_f1": 0.2441447132204626,
+      "micro_f1": 0.2945049379589769,
+      "noise_multiplier": 1.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_1_0_en-pl_seed41",
+      "seed": 41
+    },
+    {
+      "acceptance_status": "blocked",
+      "attack_auc": 0.5264187136332686,
+      "attack_auc_ci95_high": 0.5541566296117859,
+      "attack_auc_ci95_low": 0.4966261273353375,
+      "attack_balanced_accuracy": 0.5235822641462473,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_1_0",
+      "delta": 1e-05,
+      "epsilon": 9.837641821656742,
+      "loss": 34.0905743560791,
+      "macro_f1": 0.23023649252785647,
+      "micro_f1": 0.27453237410071946,
+      "noise_multiplier": 1.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_1_0_en-pl_seed42",
+      "seed": 42
+    },
+    {
+      "acceptance_status": "blocked",
+      "attack_auc": 0.5436071683211271,
+      "attack_auc_ci95_high": 0.573518897832399,
+      "attack_auc_ci95_low": 0.5140829612797576,
+      "attack_balanced_accuracy": 0.5254623332426536,
+      "communication_bytes_total": 40284648,
+      "condition": "gaussian_1_0",
+      "delta": 1e-05,
+      "epsilon": 9.837641821656742,
+      "loss": 42.494575820922854,
+      "macro_f1": 0.2191301680935863,
+      "micro_f1": 0.2966168371361133,
+      "noise_multiplier": 1.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_gaussian_1_0_en-pl_seed43",
+      "seed": 43
+    },
+    {
+      "acceptance_status": "passed",
+      "attack_auc": 0.5599143724797132,
+      "attack_auc_ci95_high": 0.5884975357196197,
+      "attack_auc_ci95_low": 0.5310625120013654,
+      "attack_balanced_accuracy": 0.5519134621539161,
+      "communication_bytes_total": 40284648,
+      "condition": "no_privacy",
+      "delta": 1e-05,
+      "epsilon": null,
+      "loss": 0.7661449074745178,
+      "macro_f1": 0.18729089799941315,
+      "micro_f1": 0.2957820277705004,
+      "noise_multiplier": 0.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_no_privacy_en-pl_seed41",
+      "seed": 41
+    },
+    {
+      "acceptance_status": "passed",
+      "attack_auc": 0.6212757711569264,
+      "attack_auc_ci95_high": 0.6502732449302132,
+      "attack_auc_ci95_low": 0.5944541679185208,
+      "attack_balanced_accuracy": 0.5730054631208233,
+      "communication_bytes_total": 40284648,
+      "condition": "no_privacy",
+      "delta": 1e-05,
+      "epsilon": null,
+      "loss": 0.683175059556961,
+      "macro_f1": 0.20718569799349074,
+      "micro_f1": 0.35717961914565105,
+      "noise_multiplier": 0.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_no_privacy_en-pl_seed42",
+      "seed": 42
+    },
+    {
+      "acceptance_status": "passed",
+      "attack_auc": 0.6056409900803493,
+      "attack_auc_ci95_high": 0.6341058890257975,
+      "attack_auc_ci95_low": 0.5762893412206914,
+      "attack_balanced_accuracy": 0.5792007382396398,
+      "communication_bytes_total": 40284648,
+      "condition": "no_privacy",
+      "delta": 1e-05,
+      "epsilon": null,
+      "loss": 0.740083089351654,
+      "macro_f1": 0.1746937547786466,
+      "micro_f1": 0.3702801461632156,
+      "noise_multiplier": 0.0,
+      "path": "outputs/experiments/multieurlex_privacy_strict_no_privacy_en-pl_seed43",
+      "seed": 43
+    }
+  ],
+  "summaries": [
+    {
+      "ci95_high": 0.43988970499705726,
+      "ci95_low": 0.24227149038918752,
+      "condition": "no_privacy",
+      "mean": 0.3410805976931224,
+      "metric": "micro_f1",
+      "n": 3,
+      "standard_deviation": 0.0397728082967558
+    },
+    {
+      "ci95_high": 0.2304218524240824,
+      "ci95_low": 0.14902504809028458,
+      "condition": "no_privacy",
+      "mean": 0.18972345025718348,
+      "metric": "macro_f1",
+      "n": 3,
+      "standard_deviation": 0.016381989388784615
+    },
+    {
+      "ci95_high": 0.8352110424320816,
+      "ci95_low": 0.6243909951566737,
+      "condition": "no_privacy",
+      "mean": 0.7298010187943776,
+      "metric": "loss",
+      "n": 3,
+      "standard_deviation": 0.04242982025738777
+    },
+    {
+      "ci95_high": 0.6748278637533305,
+      "ci95_low": 0.5163928920579954,
+      "condition": "no_privacy",
+      "mean": 0.595610377905663,
+      "metric": "attack_auc",
+      "n": 3,
+      "standard_deviation": 0.031886755829892775
+    },
+    {
+      "ci95_high": 0.6035790872475314,
+      "ci95_low": 0.5325006884287214,
+      "condition": "no_privacy",
+      "mean": 0.5680398878381264,
+      "metric": "attack_balanced_accuracy",
+      "n": 3,
+      "standard_deviation": 0.014305298405161801
+    },
+    {
+      "ci95_high": 0.28001010866818293,
+      "ci95_low": 0.28001010866818293,
+      "condition": "gaussian_0_5",
+      "mean": 0.28001010866818293,
+      "metric": "micro_f1",
+      "n": 1,
+      "standard_deviation": 0.0
+    },
+    {
+      "ci95_high": 0.210854470009331,
+      "ci95_low": 0.210854470009331,
+      "condition": "gaussian_0_5",
+      "mean": 0.210854470009331,
+      "metric": "macro_f1",
+      "n": 1,
+      "standard_deviation": 0.0
+    },
+    {
+      "ci95_high": 25.056881576538085,
+      "ci95_low": 25.056881576538085,
+      "condition": "gaussian_0_5",
+      "mean": 25.056881576538085,
+      "metric": "loss",
+      "n": 1,
+      "standard_deviation": 0.0
+    },
+    {
+      "ci95_high": 0.5558791577098213,
+      "ci95_low": 0.5558791577098213,
+      "condition": "gaussian_0_5",
+      "mean": 0.5558791577098213,
+      "metric": "attack_auc",
+      "n": 1,
+      "standard_deviation": 0.0
+    },
+    {
+      "ci95_high": 0.5409285603793612,
+      "ci95_low": 0.5409285603793612,
+      "condition": "gaussian_0_5",
+      "mean": 0.5409285603793612,
+      "metric": "attack_balanced_accuracy",
+      "n": 1,
+      "standard_deviation": 0.0
+    }
+  ]
+}

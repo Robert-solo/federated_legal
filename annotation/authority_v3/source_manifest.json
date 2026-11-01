@@ -1,0 +1,85 @@
+{
+  "scope": "US federal authority and temporal conflict pilot; not cross-national validation",
+  "sources": [
+    {
+      "id": "chevron1984",
+      "title": "Chevron U. S. A. Inc. v. Natural Resources Defense Council, Inc.",
+      "court": "Supreme Court of the United States",
+      "date": "1984-06-25",
+      "jurisdiction": "US-federal",
+      "url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep467/usrep467837/usrep467837.pdf",
+      "issue": "Judicial deference to agency statutory interpretation",
+      "download_status": "official_pdf_retrieved",
+      "pages": 30
+    },
+    {
+      "id": "johnson2015",
+      "title": "Johnson v. United States",
+      "court": "Supreme Court of the United States",
+      "date": "2015-06-26",
+      "jurisdiction": "US-federal",
+      "url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep576/usrep576591/usrep576591.pdf",
+      "issue": "ACCA residual clause and due process",
+      "download_status": "official_pdf_retrieved",
+      "pages": 53
+    },
+    {
+      "id": "welch2016",
+      "title": "Welch v. United States",
+      "court": "Supreme Court of the United States",
+      "date": "2016-04-18",
+      "jurisdiction": "US-federal",
+      "url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep578/usrep578120/usrep578120.pdf",
+      "issue": "Retroactivity of Johnson on collateral review",
+      "download_status": "official_pdf_retrieved",
+      "pages": 30
+    },
+    {
+      "id": "borden2021",
+      "title": "Borden v. United States",
+      "court": "Supreme Court of the United States",
+      "date": "2021-06-10",
+      "jurisdiction": "US-federal",
+      "url": "https://www.supremecourt.gov/opinions/20pdf/19-5410_8nj9.pdf",
+      "issue": "Recklessness under the ACCA elements clause",
+      "download_status": "official_pdf_retrieved",
+      "pages": 69
+    },
+    {
+      "id": "elonis2015",
+      "title": "Elonis v. United States",
+      "court": "Supreme Court of the United States",
+      "date": "2015-06-01",
+      "jurisdiction": "US-federal",
+      "url": "https://tile.loc.gov/storage-services/service/ll/usrep/usrep575/usrep575723/usrep575723.pdf",
+      "issue": "Mental state for threatening communications under federal statute",
+      "download_status": "official_pdf_retrieved",
+      "pages": 45
+    },
+    {
+      "id": "counterman2023",
+      "title": "Counterman v. Colorado",
+      "court": "Supreme Court of the United States",
+      "date": "2023-06-27",
+      "jurisdiction": "US-federal-constitutional",
+      "url": "https://www.supremecourt.gov/opinions/22pdf/22-138_43j7.pdf",
+      "issue": "First Amendment mental state requirement for true threats",
+      "download_status": "official_pdf_retrieved",
+      "pages": 57
+    },
+    {
+      "id": "loperbright2024",
+      "title": "Loper Bright Enterprises v. Raimondo",
+      "court": "Supreme Court of the United States",
+      "date": "2024-06-28",
+      "jurisdiction": "US-federal",
+      "url": "https://www.supremecourt.gov/opinions/23pdf/22-451_7m58.pdf",
+      "issue": "Judicial review of agency statutory interpretation",
+      "download_status": "official_pdf_retrieved",
+      "pages": 114
+    }
+  ],
+  "unavailable_sources": [],
+  "candidate_pairs": 120,
+  "human_gold_labels": 0
+}

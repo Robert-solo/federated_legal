@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Dataset roles and the empirical claims each source can support. Different task label spaces are never averaged as cross-jurisdiction accuracy.}
+\label{tab:datasets}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llll}
+\toprule
+Dataset & Experiment role & Task / output space & Claim boundary \\
+\midrule
+CaseHOLD & Same-task heterogeneous FL & Five-way holding selection & Proxy non-IID optimization \\
+ECtHR-A/B & ECHR multilabel benchmark & Common ECHR article labels & Country holdout needs verified metadata \\
+MultiEURLEX & Language holdout & Shared multilabel ontology & Multilingual EU-law evaluation \\
+LegalBench / LeCaRDv2 & Conflict and citation probes & Rule, citation, retrieval & Needs audited mappings \\
+Expert comparable probes & Cross-jurisdiction validation & Shared task and target authority & Required for strong transfer claim \\
+CAIL2018 & Licence review & Downloaded, licence unresolved & Excluded from training \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

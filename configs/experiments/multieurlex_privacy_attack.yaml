@@ -1,0 +1,31 @@
+name: multieurlex_client_update_privacy
+claim_scope: multilingual_eu_law_privacy_screening
+backbone: Qwen/Qwen2.5-0.5B-Instruct
+method: fedavg
+holdout: en-pl
+seeds: [41, 42, 43]
+rounds: 3
+train_examples_per_client: 500
+validation_examples_per_language: 500
+test_examples_per_language: 500
+privacy_conditions:
+  - name: no_update_privacy
+    clip_norm: 1.0
+    noise_multiplier: 0.0
+  - name: gaussian_0_5
+    clip_norm: 1.0
+    noise_multiplier: 0.5
+  - name: gaussian_1_0
+    clip_norm: 1.0
+    noise_multiplier: 1.0
+delta: 0.00001
+attack:
+  type: black_box_loss_membership_inference
+  score: negative_binary_cross_entropy
+  threshold_data: calibration_half
+  metrics: [attack_auc, balanced_accuracy, attack_auc_ci95]
+artifacts:
+  retain_raw_text: false
+  features: membership_features.jsonl
+  metrics: metrics.json
+  visualization: membership_roc.svg

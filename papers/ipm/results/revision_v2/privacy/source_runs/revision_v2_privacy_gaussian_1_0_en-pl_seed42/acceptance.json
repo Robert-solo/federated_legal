@@ -1,0 +1,16 @@
+{
+  "claim_scope": "multilingual_eu_law_transfer",
+  "completed_rounds": 3,
+  "expected_rounds": 3,
+  "finite_metrics": true,
+  "flen_claim_permitted": false,
+  "membership_features_written": 3000,
+  "membership_nonmembers_source": "independent_test_split",
+  "national_jurisdiction_claim_permitted": false,
+  "predictions_written": 2000,
+  "probe_source": "reserved_training_split_records",
+  "reference_baseline_boundary_allowed": false,
+  "status": "passed",
+  "threshold_boundary_role": "diagnostic_not_a_validity_test",
+  "threshold_search_interior": false
+}

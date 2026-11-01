@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Artifact status at the time of revision. Status reflects executed mechanisms and accepted run artifacts.}
+\label{tab:experiment-configs}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llll}
+\toprule
+Artifact & Status & Implemented mechanism & Permitted claim \\
+\midrule
+Multi-dataset figure CSVs & Synthetic templates & Fixed-seed layout generator & Layout development \\
+CaseHOLD target-conditioned runs & Measured, three seeds & Proxy conflict and guarded residual & Mechanism evidence \\
+Multi-agent workflow & Measured automatic; human review open & 60 paired CaseHOLD outputs and blinded A/B package & Paired automatic diagnostic \\
+CaseHOLD PEFT runs & Measured, five seeds & FedAvg, four clients, three rounds & Executability and seed reproducibility \\
+MultiEURLEX PEFT runs & Measured, 72 accepted runs & Six methods; four language conditions; three seeds & Multilingual EU-law screening \\
+Client-update DP & Measured, three seeds & Replace-one clipping, Gaussian noise, accountant, membership attack & Privacy--utility failure mode \\
+Secure aggregation & Protocol specified & Weighted secure-sum design & Evaluation protocol \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

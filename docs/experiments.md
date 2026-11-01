@@ -17,6 +17,12 @@ Every experiment must include:
 
 ## Validation
 
+The revised runtime and matched-budget protocol are documented in
+`experiments/revision_v2/README.md`, with the frozen manifest at
+`configs/experiments/revision_v2.yaml`. This runtime executes Flower conflict
+strategies; the legacy `conflict_aware` starter manifest above is not its runner.
+Human annotation instructions are in `docs/experiments/HUMAN_ANNOTATION_GUIDE.md`.
+
 Run:
 
 ```bash

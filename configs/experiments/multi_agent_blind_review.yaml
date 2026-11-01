@@ -1,0 +1,21 @@
+name: casehold_multi_agent_blind_review
+dataset: data/raw/public/CaseHOLD/case_hold/validation.jsonl
+model: Qwen/Qwen2.5-0.5B-Instruct
+conditions: [single_agent, typed_multi_agent]
+sample_size: 60
+seed: 41
+generation:
+  deterministic: true
+  max_new_tokens_per_role: 160
+review:
+  blinded_pair_order: true
+  reviewers: 2
+  adjudication: required
+  rubric:
+    - holistic_legal_soundness
+    - reasoning_coherence
+    - unsupported_claim
+    - pairwise_preference
+metrics:
+  automatic: [label_accuracy, parse_rate]
+  human: [preference_rate, legal_soundness, reasoning_coherence, unsupported_claim_rate]

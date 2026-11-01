@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\caption{Completed 15-run MultiEURLEX privacy revision over seeds 41--43. Held-out English--Polish results are means $\pm$ seed standard deviations. ECE pools binary label probabilities into 15 bins. The trusted-aggregator client-update accountant uses $\delta=10^{-5}$; the attack measures record membership.}
+\label{tab:privacy-attack}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Condition & $\epsilon$ & Micro-$F_1$ $\uparrow$ & Macro-$F_1$ $\uparrow$ & BCE $\downarrow$ & Brier $\downarrow$ & ECE $\downarrow$ & Attack AUC $\downarrow$ \\
+\midrule
+Unclipped & -- & $0.341 \pm 0.039$ & $0.184 \pm 0.026$ & $0.73 \pm 0.04$ & $0.222 \pm 0.012$ & $0.211 \pm 0.050$ & $0.617 \pm 0.021$ \\
+Clipping only & -- & $0.336 \pm 0.039$ & $0.181 \pm 0.026$ & $0.75 \pm 0.04$ & $0.227 \pm 0.013$ & $0.220 \pm 0.051$ & $0.615 \pm 0.021$ \\
+Gaussian $0.25$ & 59.51 & $0.264 \pm 0.058$ & $0.196 \pm 0.051$ & $15.17 \pm 5.71$ & $0.488 \pm 0.060$ & $0.489 \pm 0.060$ & $0.591 \pm 0.039$ \\
+Gaussian $0.5$ & 23.51 & $0.250 \pm 0.046$ & $0.206 \pm 0.048$ & $20.70 \pm 5.65$ & $0.481 \pm 0.041$ & $0.481 \pm 0.041$ & $0.525 \pm 0.040$ \\
+Gaussian $1.0$ & 9.84 & $0.249 \pm 0.051$ & $0.210 \pm 0.041$ & $36.78 \pm 10.68$ & $0.479 \pm 0.060$ & $0.479 \pm 0.059$ & $0.543 \pm 0.053$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

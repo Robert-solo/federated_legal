@@ -1,8 +1,10 @@
 # Federated Legal LLMs for Cross-Jurisdiction Judicial Reasoning
 
-This repository scaffolds the research system described in `paper.md`: a privacy-preserving federated Legal LLM framework for cross-jurisdiction judicial reasoning.
+This repository implements research workflows for federated legal language modeling, authority-scoped conflict analysis, and multi-agent reasoning. `paper.md` records the original project design.
 
-The current state is architecture-only. It defines package boundaries, typed configuration schemas, placeholder experiment configs, and integration points for Flower, HuggingFace PEFT/LoRA, and LangGraph. Full training and production reasoning are intentionally not implemented yet.
+The maintained manuscript is [the Elsevier CAS source](papers/ipm/Federated%20Legal%20elsevier/cas-sc-template.tex), with its [compiled PDF](papers/ipm/Federated%20Legal%20elsevier/cas-sc-template.pdf). Training runners execute real HuggingFace PEFT/LoRA clients and Flower aggregation. The revised method uses independent shared and private LoRA branches and fixed-budget gating comparisons. A completed 15-run privacy study includes clipping-only controls, record-membership attacks, and probability calibration; the 40-run revised CaseHOLD matrix continues on the server.
+
+See [the revision protocol](experiments/revision_v2/README.md), [human annotation instructions](docs/experiments/HUMAN_ANNOTATION_GUIDE.md), and [the handoff](HANDOFF.md) for commands and current evidence. Expert conflict labels, authentic jurisdiction transfer, and independent legal blind reviews remain pending.
 
 ## Architecture Layers
 

@@ -1,0 +1,24 @@
+{
+  "sheets": [
+    {
+      "file": "reviewer_1.csv",
+      "candidate_count": 120,
+      "human_confirmed": 0,
+      "pending": 120,
+      "reviewer_ids": [],
+      "routing_counts": {},
+      "partition_counts": {}
+    },
+    {
+      "file": "reviewer_2.csv",
+      "candidate_count": 120,
+      "human_confirmed": 0,
+      "pending": 120,
+      "reviewer_ids": [],
+      "routing_counts": {},
+      "partition_counts": {}
+    }
+  ],
+  "agreement": null,
+  "status": "awaiting_human_annotations"
+}

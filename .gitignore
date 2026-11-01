@@ -44,6 +44,7 @@ papers/ipm/**/*.tiff
 papers/ipm/**/*.emf
 papers/ipm/**/*.vsdx
 papers/ipm/**/*.aux
+papers/ipm/**/*.abs
 papers/ipm/**/*.bbl
 papers/ipm/**/*.blg
 papers/ipm/**/*.fdb_latexmk

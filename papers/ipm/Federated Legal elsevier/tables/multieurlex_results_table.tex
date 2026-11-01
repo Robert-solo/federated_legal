@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\caption{Three-round MultiEURLEX screening with matched seeds 41--43. Values are mean $\pm$ standard deviation. Local-only uses target-language supervision and serves as a target-data reference; the federated methods train on the other three language clients. All clients share the EU regulatory authority scope.}
+\label{tab:multieurlex-results}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Method & DE micro-$F_1$ & FR micro-$F_1$ & ES micro-$F_1$ & PL micro-$F_1$ & Mean micro-$F_1$ & Mean macro-$F_1$ \\
+\midrule
+FedAvg & $0.2944\pm0.0418$ & $0.4089\pm0.0523$ & $0.2996\pm0.0489$ & $0.3411\pm0.0398$ & $0.3360\pm0.0033$ & $0.1659\pm0.0004$ \\
+FedProx & $0.2937\pm0.0419$ & $0.3967\pm0.0534$ & $0.3076\pm0.0398$ & $0.3399\pm0.0386$ & $0.3345\pm0.0060$ & $0.1648\pm0.0059$ \\
+$\lambda=0$ control & $0.2944\pm0.0418$ & $0.4089\pm0.0523$ & $0.2996\pm0.0489$ & $0.3411\pm0.0398$ & $0.3360\pm0.0033$ & $0.1659\pm0.0004$ \\
+Proxy-FLEN & $0.2990\pm0.0426$ & $0.4014\pm0.0618$ & $0.3065\pm0.0356$ & $0.3425\pm0.0433$ & $0.3373\pm0.0085$ & $\mathbf{0.1695\pm0.0091}$ \\
+\midrule
+Unadapted backbone & $0.2656\pm0.0209$ & $0.3614\pm0.0102$ & $0.2843\pm0.0492$ & $0.3117\pm0.0180$ & $0.3057\pm0.0123$ & $0.1613\pm0.0077$ \\
+Local-only target reference & $\mathbf{0.4686\pm0.0282}$ & $\mathbf{0.4704\pm0.0294}$ & $\mathbf{0.4672\pm0.0254}$ & $\mathbf{0.4337\pm0.0259}$ & $\mathbf{0.4600\pm0.0234}$ & $0.1616\pm0.0073$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

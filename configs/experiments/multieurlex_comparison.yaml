@@ -6,13 +6,17 @@ description: >-
 claim_scope: multilingual_eu_law_transfer
 national_jurisdiction_claim_permitted: false
 methods:
+  - local_only
+  - unadapted
   - fedavg
   - fedprox
   - lambda0
   - proxy_flen
   - flen
 flen_requirement: expert_adjudicated_calibration_manifest
-seeds: [41, 42, 43, 44, 45]
+proxy_flen_evidence_level: automatic_prediction_disagreement_mechanism_only
+development_seeds: [41, 42, 43]
+confirmatory_seeds: [41, 42, 43, 44, 45]
 holdouts: [en-de, en-fr, en-es, en-pl]
 rounds: 3
 local_epochs: 1
