@@ -4,6 +4,15 @@
 
 本轮追加状态见文末「非人工实验扩展，23:43」。该节覆盖下文较早的运行数量和任务号。
 
+2026-11-02 摘要改写：已按背景、三项缺陷、三步方法、实验四段组织最新 CAS Abstract，
+189 个空格分隔词，编译仍为 21 页，首页已渲染检查。汇总确认 CaseHOLD 40/40、
+FedAdam 5/5、MultiEURLEX 120/120、推理 6/6 完成；LegalBench 11/12，Mistral 正式
+作业 168592 显示 DependencyNeverSatisfied，导致 168623 仍等待。新摘要采用完整结果中的
+等预算门控 +2.50/+2.64 点和 MultiEURLEX .336/.337/.310，不声称 FLEN 全面胜过 FedAvg。
+数值与解释见 `docs/experiments/ABSTRACT_REVISION_20261102.md`，完整摘要依据分析存于
+`papers/ipm/results/revision_v2/abstract_revision_20261102/`。本轮聚焦摘要，正文的完整新结果
+整合与 Discussion/Conclusion 更新仍待后续；不得把此前 legacy 数字误当新版结果。
+
 ## 目标与当前判断
 
 本轮要统一方法和代码，完成相同训练预算的门控消融、强基线与独立测试、
