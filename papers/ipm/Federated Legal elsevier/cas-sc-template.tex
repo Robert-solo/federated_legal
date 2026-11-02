@@ -57,13 +57,13 @@
 \affiliation[1]{organization={Independent Research Project}}
 
 \begin{abstract}
-Recent advances in legal large language models and federated adaptation have enabled collaborative legal information processing while keeping institutional case records local.
+Recent advances in legal large language models and federated adaptation support collaborative legal information processing while keeping institutional case records local.
 
-However, existing pipelines often (1) conflate predictive disagreement with authority-dependent legal differences, (2) transfer shared knowledge without adequately controlling harmful local adaptation, and (3) lack explicit coordination between argument generation, evidence verification, and final judgement.
+However, existing pipelines often interpret predictive disagreement as legal conflict without considering differences in applicable authority. They also provide limited control over local adaptation that can degrade model performance. Moreover, they often lack a coordinated process for verifying generated arguments before reaching a final judgement.
 
-To address these limitations, we propose the Federated Legal Expertise Network (FLEN): first, an authority-aware comparability gate and target-conditioned conflict weighting select compatible client contributions; second, independent shared and private LoRA branches with train-internal gating retain beneficial local updates; third, typed multi-agent deliberation connects legal analysis, adversarial challenge, evidence verification, and final judgement through structured messages.
+To address these limitations, we propose the Federated Legal Expertise Network (FLEN). First, FLEN checks whether client outputs are comparable under the target authority and weights compatible contributions according to their conflict exposure. Second, it separates shared and private adaptation into independent LoRA branches and uses held-out local records to select private updates. Third, distinct agents develop and challenge legal arguments, verify the supporting evidence, and synthesize a final judgement.
 
-Experiments on CaseHOLD and MultiEURLEX compare FLEN components with FedAvg, FedProx, FedAdam, Ditto, and unadapted and local-only references under matched protocols. Across five seeds, gating improves CaseHOLD test accuracy over unguarded personalization by 2.50 and 2.64 percentage points at two fixed training budgets. On MultiEURLEX, proxy-FLEN achieves mean micro-$F_1$ of 0.336, compared with 0.337 for FedAvg and 0.310 for the frozen-backbone reference. These results demonstrate the benefit of guarded personalization and comparable multilingual transfer to FedAvg.
+Experiments on CaseHOLD compare FLEN components with FedAvg, FedProx, FedAdam, and Ditto under matched protocols. Across five seeds, gating improves test accuracy over unguarded personalization by 2.50 and 2.64 percentage points at two fixed training budgets. MultiEURLEX experiments additionally include unadapted and local-only references. Proxy-FLEN achieves mean micro-$F_1$ of 0.336, compared with 0.337 for FedAvg and 0.310 for the frozen-backbone reference. These results show that gating improves personalization while proxy-FLEN maintains multilingual performance close to FedAvg.
 \end{abstract}
 
 \begin{keywords}
