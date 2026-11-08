@@ -17,6 +17,9 @@
 - LegalBench逐条重建五项指标通过；加入类别/截断计数和FLEN-vs-FedAvg配对结果。
   UCC/common-law为单类预测；引用支持适配后下降。正文据实反映。
 - 最新远端测试：84 passed，1条PEFT词表配置提示。新增测试覆盖统一最差分片和新确认集排除。
+- 本轮完整证据、分析、CAS源稿与22页PDF已提交并推送GitHub main，源码归档已部署远端，
+  同步后84项测试再次通过；旧稿和已有未提交标注/SVG未混入提交。独立确认冻结ID协议
+  备份在 `papers/ipm/results/revision_v2/reasoning_confirmation/protocol.json`。
 
 ### 当前远端作业
 
