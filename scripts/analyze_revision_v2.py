@@ -27,6 +27,15 @@ def read_lines(path: Path):
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def fixed_test_shard_accuracy(predictions):
+    """Use the frozen round-robin test assignment, including early shared-only runs."""
+    shards = [[] for _ in range(4)]
+    for row in predictions:
+        shard = int(row["example_id"].rsplit("-", 1)[1]) % 4
+        shards[shard].append(row["gold"] == row["prediction"])
+    return min(statistics.fmean(values) for values in shards)
+
+
 def load_casehold(root: Path) -> list[dict]:
     rows = []
     for path in sorted(root.glob("*/test_metrics.json")):
@@ -55,6 +64,8 @@ def load_casehold(root: Path) -> list[dict]:
         rows.append({key: result[key] for key in (
             "spec", "seed", "accuracy", "worst_client_accuracy", "elapsed_seconds"
         )} | {
+            "original_worst_client_accuracy": result["worst_client_accuracy"],
+            "worst_client_accuracy": fixed_test_shard_accuracy(predictions),
             "condition": result["spec"], "path": str(path.parent),
             "communication_bytes": sum(event["num_bytes"] for event in events),
             "mean_client_drift_l2": statistics.fmean(event["metrics"]["client_drift_l2"] for event in events),
@@ -226,6 +237,12 @@ def main():
             rows += load_casehold(args.fedadam_input)
             conditions = CASEHOLD + ["fedadam_10"]
             contrasts += [("fedadam_10","fedavg_10"),("flen_guarded_8_2","fedadam_10")]
+        reference = None
+        for row in rows:
+            gold = {p["example_id"]: p["gold"] for p in read_lines(Path(row["path"])/"test_predictions.jsonl")}
+            if reference is not None and gold != reference:
+                raise ValueError(f"Fixed test records differ: {row['path']}")
+            reference = gold
     else:
         rows, conditions, seeds = load_privacy(args.input), PRIVACY, [41,42,43]
         metrics = ["micro_f1", "macro_f1", "worst_language_micro_f1", "loss", "brier", "ece_15", "attack_auc", "attack_balanced_accuracy"]

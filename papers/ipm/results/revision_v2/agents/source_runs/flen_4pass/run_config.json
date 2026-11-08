@@ -1,0 +1,11 @@
+{
+  "dataset": "data/raw/public/CaseHOLD/case_hold/test.jsonl",
+  "model": "/remote_dir/home/junluo/IPM/.hf_cache/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "adapter": "outputs/revision_v2/casehold/flen_guarded_8_2_seed41/shared_adapter",
+  "single_passes": 4,
+  "output": "outputs/revision_v2/human_review/flen_4pass",
+  "limit": 60,
+  "seed": 41,
+  "max_new_tokens": 160,
+  "require_cuda": true
+}

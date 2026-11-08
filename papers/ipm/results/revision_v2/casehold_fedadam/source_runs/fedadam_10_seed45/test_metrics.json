@@ -1,0 +1,57 @@
+{
+  "accuracy": 0.212,
+  "clients": [
+    {
+      "accuracy": 0.2,
+      "client": 0,
+      "correct": 50.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.43585205078125,
+      "eval_loss": 0.4588575089070946,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.204,
+      "client": 1,
+      "correct": 51.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.05031657218933,
+      "eval_loss": 0.43829429537430403,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.216,
+      "client": 2,
+      "correct": 54.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.09065294265747,
+      "eval_loss": 0.4389363326765597,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    },
+    {
+      "accuracy": 0.228,
+      "client": 3,
+      "correct": 57.0,
+      "downlink_bytes": 2162688.0,
+      "elapsed_sec": 34.92473244667053,
+      "eval_loss": 0.4251421094406396,
+      "examples": 250,
+      "num_examples": 250.0,
+      "server_round": 20.0
+    }
+  ],
+  "completed_rounds": 20,
+  "elapsed_seconds": 791.7666983604431,
+  "protocol": "revision_v2_dual_lora",
+  "seed": 45,
+  "spec": "fedadam_10",
+  "test_examples": 1000,
+  "test_split": "test",
+  "worst_client_accuracy": 0.2
+}

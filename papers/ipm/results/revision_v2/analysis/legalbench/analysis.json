@@ -1,10 +1,7 @@
 {
   "matrix_complete": false,
   "completed_conditions": [
-    "qwen_base"
-  ],
-  "missing_conditions": [
-    "mistral_7b_base",
+    "qwen_base",
     "qwen_fedavg_seed41",
     "qwen_fedavg_seed42",
     "qwen_fedavg_seed43",
@@ -15,6 +12,9 @@
     "qwen_flen_seed43",
     "qwen_flen_seed44",
     "qwen_flen_seed45"
+  ],
+  "missing_conditions": [
+    "mistral_7b_base"
   ],
   "summaries": [
     {
@@ -73,6 +73,116 @@
       "ci95_high": 0.2204805602544339
     },
     {
+      "condition": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5233333333333333,
+      "standard_deviation": 0.044351030302450564,
+      "ci95_low": 0.4682730841108276,
+      "ci95_high": 0.5783935825558391
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.45427403862028004,
+      "standard_deviation": 0.10810931095358825,
+      "ci95_low": 0.32006011926406974,
+      "ci95_high": 0.5884879579764903
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5418526785714286,
+      "standard_deviation": 0.02835842845373193,
+      "ci95_low": 0.5066466838612042,
+      "ci95_high": 0.5770586732816531
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.7310029538386356,
+      "standard_deviation": 0.16865723082798317,
+      "ci95_low": 0.5216209147013549,
+      "ci95_high": 0.9403849929759163
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.3060853869927389,
+      "standard_deviation": 0.1544002968461199,
+      "ci95_low": 0.11440283156163103,
+      "ci95_high": 0.4977679424238468
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "overruling",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5183333333333333,
+      "standard_deviation": 0.0383695481107378,
+      "ci95_low": 0.47069888454770015,
+      "ci95_high": 0.5659677821189665
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4490865238612963,
+      "standard_deviation": 0.1000144268720539,
+      "ci95_low": 0.32492211929464326,
+      "ci95_high": 0.5732509284279494
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5350446428571429,
+      "standard_deviation": 0.027664729581812677,
+      "ci95_low": 0.5006998509760924,
+      "ci95_high": 0.5693894347381935
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.7149247226055839,
+      "standard_deviation": 0.16380396730382174,
+      "ci95_low": 0.5115678399835073,
+      "ci95_high": 0.9182816052276606
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "overruling",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.3060599964770179,
+      "standard_deviation": 0.14855858940378874,
+      "ci95_low": 0.12162971603177317,
+      "ci95_high": 0.49049027692226266
+    },
+    {
       "condition": "qwen_base",
       "task": "ucc_v_common_law",
       "metric": "accuracy",
@@ -126,6 +236,116 @@
       "standard_deviation": 0.0,
       "ci95_low": 0.3804101082451891,
       "ci95_high": 0.3804101082451891
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.574468085106383,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.574468085106383,
+      "ci95_high": 0.574468085106383
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.36486486486486486,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.36486486486486486,
+      "ci95_high": 0.36486486486486486
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5,
+      "ci95_high": 0.5
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.8155278039428084,
+      "standard_deviation": 0.018249316314068977,
+      "ci95_low": 0.7928719175397037,
+      "ci95_high": 0.8381836903459132
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.40398408675326064,
+      "standard_deviation": 0.011220385478579523,
+      "ci95_low": 0.3900543715558882,
+      "ci95_high": 0.4179138019506331
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.574468085106383,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.574468085106383,
+      "ci95_high": 0.574468085106383
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.36486486486486486,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.36486486486486486,
+      "ci95_high": 0.36486486486486486
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.5,
+      "ci95_high": 0.5
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.8171255359645808,
+      "standard_deviation": 0.016727375117023498,
+      "ci95_low": 0.7963590862000358,
+      "ci95_high": 0.8378919857291258
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4045827930018195,
+      "standard_deviation": 0.01051830124382133,
+      "ci95_low": 0.3915246907676039,
+      "ci95_high": 0.4176408952360351
     },
     {
       "condition": "qwen_base",
@@ -183,6 +403,116 @@
       "ci95_high": 0.14729586556718302
     },
     {
+      "condition": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4925925925925926,
+      "standard_deviation": 0.02396699834360144,
+      "ci95_low": 0.4628384044054207,
+      "ci95_high": 0.5223467807797645
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.41196108028528045,
+      "standard_deviation": 0.07452926301104175,
+      "ci95_low": 0.31943561317046354,
+      "ci95_high": 0.5044865474000974
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4925925925925926,
+      "standard_deviation": 0.02396699834360144,
+      "ci95_low": 0.4628384044054207,
+      "ci95_high": 0.5223467807797645
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.6763672168183588,
+      "standard_deviation": 0.16120402018015337,
+      "ci95_low": 0.47623807739905066,
+      "ci95_high": 0.8764963562376669
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.2652659065503221,
+      "standard_deviation": 0.12755832694922964,
+      "ci95_low": 0.10690671569647664,
+      "ci95_high": 0.4236250974041676
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.49074074074074076,
+      "standard_deviation": 0.021714887776960325,
+      "ci95_low": 0.4637824688655524,
+      "ci95_high": 0.5176990126159291
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4237953904046325,
+      "standard_deviation": 0.060950006319529,
+      "ci95_low": 0.3481280943986333,
+      "ci95_high": 0.4994626864106317
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.49074074074074076,
+      "standard_deviation": 0.021714887776960325,
+      "ci95_low": 0.4637824688655524,
+      "ci95_high": 0.5176990126159291
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.6565510368842044,
+      "standard_deviation": 0.16137287874505093,
+      "ci95_low": 0.4562122654765701,
+      "ci95_high": 0.8568898082918386
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.2539258692736726,
+      "standard_deviation": 0.12528829534487657,
+      "ci95_low": 0.09838484307183837,
+      "ci95_high": 0.40946689547550685
+    },
+    {
       "condition": "qwen_base",
       "task": "personal_jurisdiction",
       "metric": "accuracy",
@@ -236,10 +566,1253 @@
       "standard_deviation": 0.0,
       "ci95_low": 0.28976735599166636,
       "ci95_high": 0.28976735599166636
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.544,
+      "standard_deviation": 0.10334408546211052,
+      "ci95_low": 0.415701941027933,
+      "ci95_high": 0.6722980589720671
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.46253033558099793,
+      "standard_deviation": 0.10187237293816054,
+      "ci95_low": 0.3360593561108042,
+      "ci95_high": 0.5890013150511917
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5596059113300493,
+      "standard_deviation": 0.04357046242960731,
+      "ci95_low": 0.5055147097558337,
+      "ci95_high": 0.613697112904265
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5582937919991255,
+      "standard_deviation": 0.09135682690782287,
+      "ci95_low": 0.44487749426220213,
+      "ci95_high": 0.671710089736049
+    },
+    {
+      "condition": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.1808560407636559,
+      "standard_deviation": 0.07691823013596949,
+      "ci95_low": 0.08536475471778195,
+      "ci95_high": 0.2763473268095299
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.552,
+      "standard_deviation": 0.05403702434442517,
+      "ci95_low": 0.484914928754603,
+      "ci95_high": 0.619085071245397
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.4638440666638791,
+      "standard_deviation": 0.08031832682971825,
+      "ci95_low": 0.36413167977633926,
+      "ci95_high": 0.563556453551419
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5520525451559933,
+      "standard_deviation": 0.04179377104430398,
+      "ci95_low": 0.5001670436478002,
+      "ci95_high": 0.6039380466641865
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.5494306723129002,
+      "standard_deviation": 0.09104034801751378,
+      "ci95_low": 0.4364072720228963,
+      "ci95_high": 0.6624540726029041
+    },
+    {
+      "condition": "qwen_flen",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "replication": "training_seed",
+      "n": 5,
+      "mean": 0.14599691583194907,
+      "standard_deviation": 0.1085459240791044,
+      "ci95_low": 0.011240956587582979,
+      "ci95_high": 0.2807528750763152
     }
   ],
-  "adapter_seed_contrasts": [],
+  "adapter_seed_contrasts": [
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.03166666666666669,
+      "standard_deviation": 0.044351030302450564,
+      "ci95_low": -0.023393582555839038,
+      "ci95_high": 0.08672691588917242
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.016011434061919193,
+      "standard_deviation": 0.10810931095358825,
+      "ci95_low": -0.11820248529429107,
+      "ci95_high": 0.15022535341812945
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.027343749999999955,
+      "standard_deviation": 0.02835842845373193,
+      "ci95_low": -0.00786224471022447,
+      "ci95_high": 0.06254974471022438
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.10120327088272796,
+      "standard_deviation": 0.16865723082798317,
+      "ci95_low": -0.1081787682545528,
+      "ci95_high": 0.3105853100200087
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.08560482673830498,
+      "standard_deviation": 0.1544002968461199,
+      "ci95_low": -0.1060777286928029,
+      "ci95_high": 0.27728738216941284
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.026666666666666682,
+      "standard_deviation": 0.0383695481107378,
+      "ci95_low": -0.020967782118966504,
+      "ci95_high": 0.07430111545229987
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.010823919302935447,
+      "standard_deviation": 0.1000144268720539,
+      "ci95_low": -0.11334048526371764,
+      "ci95_high": 0.13498832386958853
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.020535714285714258,
+      "standard_deviation": 0.027664729581812677,
+      "ci95_low": -0.013809077595336328,
+      "ci95_high": 0.05488050616676485
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.08512503964967641,
+      "standard_deviation": 0.16380396730382174,
+      "ci95_low": -0.11823184297240025,
+      "ci95_high": 0.28848192227175307
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "overruling",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.08557943622258399,
+      "standard_deviation": 0.14855858940378874,
+      "ci95_low": -0.09885084422266077,
+      "ci95_high": 0.27000971666782875
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": -0.0050000000000000044,
+      "standard_deviation": 0.021929495611567915,
+      "ci95_low": -0.03222469997794075,
+      "ci95_high": 0.02222469997794074
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": -0.005187514758983746,
+      "standard_deviation": 0.026496151602441443,
+      "ci95_low": -0.03808155804769426,
+      "ci95_high": 0.027706528529726764
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": -0.006808035714285699,
+      "standard_deviation": 0.022982672269543272,
+      "ci95_low": -0.035340217589896014,
+      "ci95_high": 0.021724146161324613
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": -0.01607823123305154,
+      "standard_deviation": 0.029374520006722568,
+      "ci95_low": -0.052545667983269706,
+      "ci95_high": 0.020389205517166623
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "overruling",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": -2.5390515720993823e-05,
+      "standard_deviation": 0.03438302484740154,
+      "ci95_low": -0.04271071043301123,
+      "ci95_high": 0.04265992940156924
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.04234868793385047,
+      "standard_deviation": 0.018249316314068977,
+      "ci95_low": 0.0196928015307457,
+      "ci95_high": 0.06500457433695525
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.023573978508071514,
+      "standard_deviation": 0.011220385478579523,
+      "ci95_low": 0.009644263310699041,
+      "ci95_high": 0.037503693705443986
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.043946419955622984,
+      "standard_deviation": 0.016727375117023498,
+      "ci95_low": 0.02317997019107794,
+      "ci95_high": 0.06471286972016803
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.02417268475663038,
+      "standard_deviation": 0.01051830124382133,
+      "ci95_low": 0.011114582522414759,
+      "ci95_high": 0.037230786990846004
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.0,
+      "standard_deviation": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.0015977320217725132,
+      "standard_deviation": 0.005948748188825879,
+      "ci95_low": -0.005787430298133833,
+      "ci95_high": 0.008982894341678859
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "ucc_v_common_law",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.0005987062485588668,
+      "standard_deviation": 0.0040597157362798645,
+      "ci95_low": -0.004441288508896561,
+      "ci95_high": 0.005638701006014295
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": -0.044444444444444495,
+      "standard_deviation": 0.02396699834360144,
+      "ci95_low": -0.07419863263161638,
+      "ci95_high": -0.014690256257272601
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": -0.06720558638138625,
+      "standard_deviation": 0.07452926301104175,
+      "ci95_low": -0.15973105349620315,
+      "ci95_high": 0.025319880733430625
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": -0.0444444444444444,
+      "standard_deviation": 0.02396699834360144,
+      "ci95_low": -0.07419863263161629,
+      "ci95_high": -0.014690256257272504
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.10406126508834246,
+      "standard_deviation": 0.16120402018015337,
+      "ci95_low": -0.09606787433096564,
+      "ci95_high": 0.30419040450765056
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.1179700409831391,
+      "standard_deviation": 0.1275583269492296,
+      "ci95_low": -0.040389149870706326,
+      "ci95_high": 0.27632923183698455
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": -0.046296296296296335,
+      "standard_deviation": 0.021714887776960325,
+      "ci95_low": -0.07325456817148468,
+      "ci95_high": -0.019338024421107998
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": -0.055371276262034155,
+      "standard_deviation": 0.060950006319529,
+      "ci95_low": -0.13103857226803334,
+      "ci95_high": 0.020296019743965027
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": -0.04629629629629624,
+      "standard_deviation": 0.021714887776960325,
+      "ci95_low": -0.07325456817148457,
+      "ci95_high": -0.0193380244211079
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": 0.08424508515418808,
+      "standard_deviation": 0.16137287874505093,
+      "ci95_low": -0.11609368625344615,
+      "ci95_high": 0.2845838565618223
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": 0.10663000370648956,
+      "standard_deviation": 0.12528829534487657,
+      "ci95_low": -0.04891102249534468,
+      "ci95_high": 0.2621710299083238
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": -0.0018518518518518378,
+      "standard_deviation": 0.037267799624996496,
+      "ci95_low": -0.048118518518518505,
+      "ci95_high": 0.044414814814814824
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.011834310119352098,
+      "standard_deviation": 0.04133734447217046,
+      "ci95_low": -0.03948455380134728,
+      "ci95_high": 0.06315317404005147
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": -0.0018518518518518378,
+      "standard_deviation": 0.037267799624996496,
+      "ci95_low": -0.048118518518518505,
+      "ci95_high": 0.044414814814814824
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": -0.01981617993415439,
+      "standard_deviation": 0.026946948944348504,
+      "ci95_low": -0.05326987231838714,
+      "ci95_high": 0.013637512450078361
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "citation_prediction_classification",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": -0.011340037276649551,
+      "standard_deviation": 0.03705134104692411,
+      "ci95_low": -0.05733797820743729,
+      "ci95_high": 0.03465790365413819
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.12400000000000003,
+      "standard_deviation": 0.10334408546211052,
+      "ci95_low": -0.0042980589720670315,
+      "ci95_high": 0.2522980589720671
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.16675568769367405,
+      "standard_deviation": 0.10187237293816054,
+      "ci95_low": 0.040284708223480264,
+      "ci95_high": 0.2932266671638678
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.05960591133004924,
+      "standard_deviation": 0.04357046242960731,
+      "ci95_low": 0.005514709755833569,
+      "ci95_high": 0.11369711290426492
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": -0.09827178828849262,
+      "standard_deviation": 0.09135682690782287,
+      "ci95_low": -0.211688086025416,
+      "ci95_high": 0.015144509448430779
+    },
+    {
+      "treatment": "qwen_fedavg",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": -0.10891131522801048,
+      "standard_deviation": 0.07691823013596949,
+      "ci95_low": -0.20440260127388443,
+      "ci95_high": -0.013420029182136514
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.13200000000000003,
+      "standard_deviation": 0.05403702434442517,
+      "ci95_low": 0.064914928754603,
+      "ci95_high": 0.19908507124539707
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.16806941877655523,
+      "standard_deviation": 0.08031832682971825,
+      "ci95_low": 0.06835703188901536,
+      "ci95_high": 0.2677818056640951
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": 0.052052545155993404,
+      "standard_deviation": 0.04179377104430398,
+      "ci95_low": 0.0001670436478002149,
+      "ci95_high": 0.1039380466641866
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": -0.1071349079747181,
+      "standard_deviation": 0.09104034801751378,
+      "ci95_low": -0.22015830826472202,
+      "ci95_high": 0.00588849231528582
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_base",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": -0.1437704401597173,
+      "standard_deviation": 0.1085459240791044,
+      "ci95_low": -0.2785263994040834,
+      "ci95_high": -0.009014480915351203
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "accuracy",
+      "n": 5,
+      "mean": 0.007999999999999997,
+      "standard_deviation": 0.07694153624668543,
+      "ci95_low": -0.08752021976524138,
+      "ci95_high": 0.10352021976524137
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "macro_f1",
+      "n": 5,
+      "mean": 0.0013137310828811976,
+      "standard_deviation": 0.14192421757640408,
+      "ci95_low": -0.17488020933239168,
+      "ci95_high": 0.17750767149815405
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "balanced_accuracy",
+      "n": 5,
+      "mean": -0.007553366174055842,
+      "standard_deviation": 0.06623941977515041,
+      "ci95_low": -0.08978728354423329,
+      "ci95_high": 0.0746805511961216
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "brier_multiclass",
+      "n": 5,
+      "mean": -0.008863119686225473,
+      "standard_deviation": 0.04605115944973365,
+      "ci95_low": -0.0660340196404388,
+      "ci95_high": 0.04830778026798785
+    },
+    {
+      "treatment": "qwen_flen",
+      "control": "qwen_fedavg",
+      "task": "personal_jurisdiction",
+      "metric": "ece_10",
+      "n": 5,
+      "mean": -0.03485912493170684,
+      "standard_deviation": 0.07491452480468015,
+      "ci95_low": -0.12786288105647414,
+      "ci95_high": 0.058144631193060445
+    }
+  ],
   "pretrained_case_contrasts": [],
+  "prediction_diagnostics": [
+    {
+      "condition": "qwen_base",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 202,
+        "No": 38
+      }
+    },
+    {
+      "condition": "qwen_base",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_base",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "Yes": 90,
+        "No": 18
+      }
+    },
+    {
+      "condition": "qwen_base",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 50
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed41",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "No": 144,
+        "Yes": 96
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed41",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed41",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 95,
+        "Yes": 13
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed41",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 41,
+        "No": 9
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed42",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 212,
+        "No": 28
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed42",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed42",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 42,
+        "Yes": 66
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed42",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 48,
+        "No": 2
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed43",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 238,
+        "No": 2
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed43",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed43",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "Yes": 108
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed43",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "No": 46,
+        "Yes": 4
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed44",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "No": 91,
+        "Yes": 149
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed44",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed44",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 24,
+        "Yes": 84
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed44",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "No": 43,
+        "Yes": 7
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed45",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 235,
+        "No": 5
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed45",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed45",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "Yes": 97,
+        "No": 11
+      }
+    },
+    {
+      "condition": "qwen_fedavg_seed45",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 47,
+        "No": 3
+      }
+    },
+    {
+      "condition": "qwen_flen_seed41",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "No": 156,
+        "Yes": 84
+      }
+    },
+    {
+      "condition": "qwen_flen_seed41",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_flen_seed41",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 95,
+        "Yes": 13
+      }
+    },
+    {
+      "condition": "qwen_flen_seed41",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 41,
+        "No": 9
+      }
+    },
+    {
+      "condition": "qwen_flen_seed42",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 212,
+        "No": 28
+      }
+    },
+    {
+      "condition": "qwen_flen_seed42",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_flen_seed42",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 50,
+        "Yes": 58
+      }
+    },
+    {
+      "condition": "qwen_flen_seed42",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 48,
+        "No": 2
+      }
+    },
+    {
+      "condition": "qwen_flen_seed43",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 238,
+        "No": 2
+      }
+    },
+    {
+      "condition": "qwen_flen_seed43",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_flen_seed43",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "Yes": 108
+      }
+    },
+    {
+      "condition": "qwen_flen_seed43",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "No": 46,
+        "Yes": 4
+      }
+    },
+    {
+      "condition": "qwen_flen_seed44",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 130,
+        "No": 110
+      }
+    },
+    {
+      "condition": "qwen_flen_seed44",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_flen_seed44",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "No": 41,
+        "Yes": 67
+      }
+    },
+    {
+      "condition": "qwen_flen_seed44",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "No": 49,
+        "Yes": 1
+      }
+    },
+    {
+      "condition": "qwen_flen_seed45",
+      "task": "overruling",
+      "cases": 240,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5333333333333333,
+      "prediction_counts": {
+        "Yes": 234,
+        "No": 6
+      }
+    },
+    {
+      "condition": "qwen_flen_seed45",
+      "task": "ucc_v_common_law",
+      "cases": 94,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.574468085106383,
+      "prediction_counts": {
+        "Common Law": 94
+      }
+    },
+    {
+      "condition": "qwen_flen_seed45",
+      "task": "citation_prediction_classification",
+      "cases": 108,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.5,
+      "prediction_counts": {
+        "Yes": 93,
+        "No": 15
+      }
+    },
+    {
+      "condition": "qwen_flen_seed45",
+      "task": "personal_jurisdiction",
+      "cases": 50,
+      "prompt_truncated_cases": 0,
+      "majority_class_rate": 0.58,
+      "prediction_counts": {
+        "Yes": 29,
+        "No": 21
+      }
+    }
+  ],
   "scope": "published_benchmark_component_diagnostics",
   "expert_conflict_annotation_replaced": false,
   "larger_model_reference": "Mistral 7B pretrained; different model family and parameter budget"

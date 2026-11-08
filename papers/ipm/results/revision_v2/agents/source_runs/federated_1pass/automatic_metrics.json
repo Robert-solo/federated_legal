@@ -1,0 +1,12 @@
+{
+  "adapter_loaded": true,
+  "cases": 60,
+  "human_review_status": "awaiting_two_blinded_reviewers",
+  "multi_accuracy": 0.2,
+  "multi_analysis_calls": 4,
+  "multi_parse_rate": 1.0,
+  "presentation_protocol": "shared_deterministic_two_sentence_renderer",
+  "single_accuracy": 0.05,
+  "single_analysis_calls": 1,
+  "single_parse_rate": 0.23333333333333334
+}

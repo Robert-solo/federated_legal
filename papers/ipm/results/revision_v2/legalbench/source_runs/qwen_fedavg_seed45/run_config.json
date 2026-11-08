@@ -1,0 +1,16 @@
+{
+  "raw_root": "data/raw/public_extended/LegalBench",
+  "model": "/remote_dir/home/junluo/IPM/.hf_cache/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "adapter": "outputs/revision_v2/casehold/fedavg_10_seed45/shared_adapter",
+  "training_seed": 45,
+  "condition": "qwen_fedavg_seed45",
+  "output": "outputs/revision_v2/legalbench/qwen_fedavg_seed45",
+  "limit": 240,
+  "sample_seed": 20261101,
+  "max_length": 1024,
+  "label_source": "published_legalbench_test_labels",
+  "adapter_loaded": true,
+  "scoring": "mean_answer_token_nll_then_label_softmax",
+  "truncation": "first_128_and_suffix",
+  "backbone_parameters": 494573440
+}

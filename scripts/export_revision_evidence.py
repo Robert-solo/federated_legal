@@ -33,9 +33,15 @@ def main():
                     if path.exists():
                         archive.add(path,arcname=f"{prefix}/{marker.parent.name}/{name}")
                         count+=1
-        agents=args.root/"outputs/revision_v2/human_review"
-        for marker in sorted(agents.glob("*/automatic_metrics.json")):
-            prefix=f"agents/source_runs/{marker.parent.name}"
+        agent_markers=[(marker,f"agents/source_runs/{marker.parent.name}")
+                       for marker in sorted((args.root/"outputs/revision_v2/human_review").glob("*/automatic_metrics.json"))]
+        confirmation=args.root/"outputs/revision_v2/reasoning_confirmation"
+        if (confirmation/"protocol.json").exists():
+            archive.add(confirmation/"protocol.json",arcname="reasoning_confirmation/protocol.json")
+            count+=1
+        agent_markers += [(marker,f"reasoning_confirmation/runs/{marker.parent.name}")
+                         for marker in sorted((confirmation/"runs").glob("*/automatic_metrics.json"))]
+        for marker,prefix in agent_markers:
             for name in ("run_config.json","automatic_metrics.json","automatic_analysis.json"):
                 path=marker.parent/name
                 if path.exists():

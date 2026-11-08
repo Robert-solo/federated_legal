@@ -1,0 +1,13 @@
+\subsection{Published-label legal component results}
+Eleven of twelve checkpoint conditions have completed the four-task diagnostic; the Mistral 7B reference remains pending model-weight recovery. Table~\ref{tab:revision-legalbench} separates accuracy from class-balanced outcomes. The larger pretrained checkpoint differs in both model family and size; it provides a reference for component difficulty. The released seed and case contrasts include uncertainty, and probability metrics accompany each task.
+
+\input{tables/revision_legalbench_table}
+
+Shared adaptation has task-dependent effects. FedAvg and FLEN reach 52.3\% and 51.8\% on overruling, compared with 49.2\% for the base checkpoint. On citation support, their means fall to 49.3\% and 49.1\% from 53.7\%. All three conditions produce the same UCC/common-law accuracy of 57.4\% with balanced accuracy 50.0\%, revealing a single-class solution. Personal-jurisdiction accuracy increases from 42.0\% to 54.4\% and 55.2\%, while balanced accuracy remains below 56\%. These outcomes identify limited component transfer and motivate expert authority annotation and independently verified citation retrieval.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{revision_legalbench.pdf}
+\caption{Fixed-case component diagnostics; adapted values average five training seeds. Tasks retain their published label spaces.}
+\label{fig:revision-legalbench}
+\end{figure}

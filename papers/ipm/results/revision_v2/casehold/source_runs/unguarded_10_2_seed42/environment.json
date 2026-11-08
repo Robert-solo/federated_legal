@@ -1,0 +1,18 @@
+{
+  "cuda_available": true,
+  "cuda_version": "12.1",
+  "gpu_names": [
+    "NVIDIA A800-SXM4-80GB"
+  ],
+  "packages": {
+    "accelerate": "1.1.1",
+    "datasets": "3.1.0",
+    "flwr": "1.13.1",
+    "numpy": "1.26.4",
+    "peft": "0.13.2",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3"
+  },
+  "platform": "Linux-5.15.0-153-generic-x86_64-with-glibc2.35",
+  "python": "3.11.15 | packaged by conda-forge | (main, Mar  5 2026, 16:45:40) [GCC 14.3.0]"
+}

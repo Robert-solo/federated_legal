@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Sixty paired reasoning cases per checkpoint. Differences are four-stage minus single-agent accuracy in points; intervals use paired case bootstrap. The four-stage comparator is regenerated deterministically across call-budget packages and counted once.}
+\label{tab:revision-agents}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Checkpoint & Single calls & Single (\%) & Four-stage (\%) & Difference & 95\% CI & McNemar $p$ \\
+\midrule
+base & 1 & 21.7 & 15.0 & $-6.7$ & $[-16.7,3.3]$ & 0.344 \\
+base & 4 & 18.3 & 15.0 & $-3.3$ & $[-13.3,6.7]$ & 0.754 \\
+federated & 1 & 5.0 & 20.0 & $+15.0$ & $[5.0,25.0]$ & 0.012 \\
+federated & 4 & 20.0 & 20.0 & $+0.0$ & $[-5.0,5.0]$ & 1.000 \\
+flen & 1 & 1.7 & 25.0 & $+23.3$ & $[13.3,35.0]$ & $<0.001$ \\
+flen & 4 & 18.3 & 25.0 & $+6.7$ & $[0.0,15.0]$ & 0.219 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,5 +1,11 @@
 # Experiments
 
+Latest full audit: `docs/experiments/REVIEW_20261108.md`. Completed revision
+matrices and the maintained CAS now use the same analyses. New-case multi-seed
+reasoning confirmation is specified in
+`configs/experiments/reasoning_confirmation_20261108.yaml` and
+`experiments/revision_v2/REASONING_CONFIRMATION.md`.
+
 Every experiment must include:
 
 - YAML configuration under `configs/experiments`

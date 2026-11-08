@@ -4,9 +4,12 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from collections import Counter
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
+sys.path.insert(0,str(ROOT/"src"))
+from fedlegal.evaluation.legalbench_diagnostic import classification_metrics
 from scripts.analyze_revision_v2 import read_json, read_lines, write_csv
 from scripts.analyze_multieurlex_comparison import interval
 from scripts.analyze_multi_agent_blind_eval import analyze
@@ -25,6 +28,7 @@ def main():
     runs={}
     predictions={}
     gold_reference=None
+    diagnostics=[]
     for condition in expected:
         path=args.input/condition
         if not (path/"metrics.json").exists():
@@ -39,6 +43,16 @@ def main():
         gold_reference=gold
         predictions[condition]={(r["task"],r["id"]):r for r in rows}
         runs[condition]=read_json(path/"metrics.json")
+        for task in TASKS:
+            cohort=[row for row in rows if row["task"]==task]
+            reconstructed=classification_metrics(cohort,tuple(cohort[0]["labels"]))
+            for metric in METRICS:
+                if abs(reconstructed[metric]-runs[condition]["tasks"][task][metric])>1e-8:
+                    raise ValueError(f"Prediction-derived {metric} differs: {condition}/{task}")
+            diagnostics.append({"condition":condition,"task":task,"cases":len(cohort),
+                "prompt_truncated_cases":sum(row["prompt_truncated"] for row in cohort),
+                "majority_class_rate":reconstructed["majority_class_rate"],
+                "prediction_counts":dict(Counter(row["prediction"] for row in cohort))})
     summaries=[]
     seed_contrasts=[]
     case_contrasts=[]
@@ -61,14 +75,20 @@ def main():
             paired=[{"single_correct":predictions["qwen_base"][key]["prediction"]==predictions["qwen_base"][key]["gold"],
                      "multi_correct":predictions["mistral_7b_base"][key]["prediction"]==predictions["mistral_7b_base"][key]["gold"]} for key in keys]
             case_contrasts.append({"treatment":"mistral_7b_base","control":"qwen_base","task":task,**analyze(paired)})
+        seeds=[s for s in range(41,46) if f"qwen_flen_seed{s}" in runs and f"qwen_fedavg_seed{s}" in runs]
+        for metric in METRICS:
+            if seeds:
+                seed_contrasts.append({"treatment":"qwen_flen","control":"qwen_fedavg","task":task,"metric":metric,
+                    **interval([runs[f"qwen_flen_seed{s}"]["tasks"][task][metric]-runs[f"qwen_fedavg_seed{s}"]["tasks"][task][metric] for s in seeds])})
     result={"matrix_complete":len(runs)==len(expected),"completed_conditions":list(runs),
             "missing_conditions":[c for c in expected if c not in runs],"summaries":summaries,
             "adapter_seed_contrasts":seed_contrasts,"pretrained_case_contrasts":case_contrasts,
+            "prediction_diagnostics":diagnostics,
             "scope":"published_benchmark_component_diagnostics",
             "expert_conflict_annotation_replaced":False,
             "larger_model_reference":"Mistral 7B pretrained; different model family and parameter budget"}
     (args.output/"analysis.json").write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
-    for name,data in (("summary",summaries),("adapter_seed_contrasts",seed_contrasts),("pretrained_case_contrasts",case_contrasts)):
+    for name,data in (("summary",summaries),("adapter_seed_contrasts",seed_contrasts),("pretrained_case_contrasts",case_contrasts),("prediction_diagnostics",diagnostics)):
         write_csv(args.output/f"{name}.csv",data)
     if summaries:
         import matplotlib

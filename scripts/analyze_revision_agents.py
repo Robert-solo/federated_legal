@@ -45,6 +45,12 @@ def main():
             result.update({"backbone":backbone,"single_calls":passes,"multi_calls":4,
                            "single_parse_rate":sum(r["single_label"] is not None for r in rows)/len(rows),
                            "multi_parse_rate":sum(r["multi_label"] is not None for r in rows)/len(rows)})
+            both_parsed=[r for r in rows if r["single_label"] is not None and r["multi_label"] is not None]
+            result["both_parsed_cases"]=len(both_parsed)
+            for role in ("single","multi"):
+                result[f"{role}_parsed_cases"]=sum(r[f"{role}_label"] is not None for r in rows)
+                result[f"{role}_accuracy_on_both_parsed"]=(
+                    float(np.mean([r[f"{role}_correct"] for r in both_parsed])) if both_parsed else None)
             for role in ("single","multi"):
                 for metric in ("prompt_tokens","generated_tokens","elapsed_seconds"):
                     if all(f"{role}_analysis_usage" in r for r in rows):
@@ -69,6 +75,7 @@ def main():
     result={"matrix_complete":not missing,"missing_cells":missing,"summaries":summaries,"contrasts":contrasts,
             "inference_unit":"paired_case_with_one_training_checkpoint_per_backbone",
             "human_review_status":"pending_actual_independent_reviewers",
+            "conditional_accuracy_scope":"descriptive_subset_selected_by_both_outputs_parsing; primary_accuracy_retains_all_cases",
             "repeated_multi_agent_generations_pooled":False,
             "cost_scope":"analysis_only; shared_presentation_step_excluded"}
     (args.output/"analysis.json").write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")

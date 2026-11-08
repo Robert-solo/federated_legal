@@ -1,0 +1,60 @@
+{
+  "condition": "qwen_flen_seed44",
+  "tasks": {
+    "overruling": {
+      "examples": 240,
+      "accuracy": 0.5666666666666667,
+      "macro_f1": 0.5666365719841655,
+      "balanced_accuracy": 0.5697544642857143,
+      "brier_multiclass": 0.5358143951687971,
+      "ece_10": 0.10869828053364546,
+      "majority_class_rate": 0.5333333333333333,
+      "label_counts": {
+        "No": 128,
+        "Yes": 112
+      }
+    },
+    "ucc_v_common_law": {
+      "examples": 94,
+      "accuracy": 0.574468085106383,
+      "macro_f1": 0.36486486486486486,
+      "balanced_accuracy": 0.5,
+      "brier_multiclass": 0.8432404328205745,
+      "ece_10": 0.42080570055591304,
+      "majority_class_rate": 0.574468085106383,
+      "label_counts": {
+        "Common Law": 54,
+        "UCC": 40
+      }
+    },
+    "citation_prediction_classification": {
+      "examples": 108,
+      "accuracy": 0.4537037037037037,
+      "macro_f1": 0.4456720313179643,
+      "balanced_accuracy": 0.4537037037037037,
+      "brier_multiclass": 0.5829044093103106,
+      "ece_10": 0.21280656672619425,
+      "majority_class_rate": 0.5,
+      "label_counts": {
+        "No": 54,
+        "Yes": 54
+      }
+    },
+    "personal_jurisdiction": {
+      "examples": 50,
+      "accuracy": 0.6,
+      "macro_f1": 0.4172494172494173,
+      "balanced_accuracy": 0.5238095238095238,
+      "brier_multiclass": 0.5102120525317666,
+      "ece_10": 0.08995247404916769,
+      "majority_class_rate": 0.58,
+      "label_counts": {
+        "No": 29,
+        "Yes": 21
+      }
+    }
+  },
+  "elapsed_seconds": 22.53876566886902,
+  "expert_conflict_construct_validated": false,
+  "cross_jurisdiction_transfer_evaluated": false
+}

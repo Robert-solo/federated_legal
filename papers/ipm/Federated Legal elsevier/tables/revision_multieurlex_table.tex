@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Completed 120-run language-transfer revision. Each seed contributes a mean and minimum across four independently held-out target languages; entries report mean and seed SD.}
+\label{tab:revision-multieurlex}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Method & Mean micro F1 & Worst micro F1 & Macro F1 & Brier \\
+\midrule
+FedAvg & 0.337 $\pm$ 0.015 & 0.273 $\pm$ 0.037 & 0.168 $\pm$ 0.010 & 0.184 $\pm$ 0.006 \\
+FedProx & 0.335 $\pm$ 0.014 & 0.272 $\pm$ 0.037 & 0.167 $\pm$ 0.010 & 0.185 $\pm$ 0.006 \\
+$\lambda=0$ & 0.337 $\pm$ 0.015 & 0.273 $\pm$ 0.037 & 0.168 $\pm$ 0.010 & 0.184 $\pm$ 0.006 \\
+Proxy-FLEN & 0.336 $\pm$ 0.017 & 0.276 $\pm$ 0.036 & 0.169 $\pm$ 0.009 & 0.185 $\pm$ 0.006 \\
+Local only (target labels) & 0.468 $\pm$ 0.011 & 0.449 $\pm$ 0.013 & 0.163 $\pm$ 0.011 & 0.121 $\pm$ 0.001 \\
+Frozen backbone + head & 0.310 $\pm$ 0.013 & 0.256 $\pm$ 0.037 & 0.163 $\pm$ 0.009 & 0.214 $\pm$ 0.016 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,19 @@
+\subsection{Matched-budget dual-branch revision}
+The completed revision evaluates forty original configurations and five additional FedAdam runs. All runs use independent final-test predictions and the frozen training schedule. Worst-client accuracy is reconstructed from saved predictions using the same four round-robin test shards for every run; early shared-only runs originally logged a different grouping. Table~\ref{tab:revision-casehold} reports aggregate and worst-client outcomes.
+
+\input{tables/revision_casehold_table}
+
+At the $8+2$ budget, gating changes accuracy by $+2.50$ points (95\% paired interval $[1.63,3.37]$). At $10+2$, its effect is $+2.64$ points (95\% paired interval $[1.60,3.68]$). Adding proxy conflict weights to guarded $8+2$ changes accuracy by $+0.06$ points (95\% paired interval $[-0.42,0.54]$). These fixed-budget contrasts separate private selection from additional shared optimization.
+
+The two gate effects are positive across all five seed pairs. Their exact two-sided sign-flip $p$-values are 0.0625, with Holm-adjusted $p=0.4375$ across seven planned accuracy contrasts. The intervals quantify recovery relative to unguarded adaptation; the small seed count limits exact-test resolution. Guarded $8+2$ accuracy is 27.78\%, compared with 28.28\% for FedAvg and 28.34\% for FedProx. FedAdam reaches 21.28\% at the fixed server setting; its hyperparameters were not optimized on these test outcomes.
+
+\input{tables/revision_gate_diagnostics}
+
+The gate retains 39.75\% and 35.50\% of client-round candidates at the two budgets. The selected private branch changes final accuracy relative to its shared branch by 0.00 and 0.16 points, respectively; unguarded private branches reduce it by 2.30 and 2.74 points. Thus the main observed benefit is removal of harmful private updates, while the retained private branch contributes little additional test utility.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{revision_casehold.pdf}
+\caption{Completed dual-branch revision. Bars show five-seed means and seed SD on fixed test records. Worst client denotes a fixed test shard.}
+\label{fig:revision-casehold}
+\end{figure}

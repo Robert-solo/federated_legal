@@ -1,0 +1,27 @@
+study: independent_case_call_matched_reasoning_confirmation
+dataset: CaseHOLD
+source_split: test
+sample_seed: 20261108
+cases: 200
+exclude:
+  - frozen_training_test_1000_seed20261101
+  - earlier_reasoning_60_seed41
+checkpoint_groups: [base, fedavg_shared, flen_shared]
+training_seeds: [41, 42, 43, 44, 45]
+base_checkpoint_repetitions: 1
+single_agent_calls: 4
+four_stage_calls: 4
+max_new_tokens_per_call: 160
+generation: deterministic
+prompts_and_parser: frozen_existing_run_multi_agent_blind_eval
+primary_contrast: four_stage_minus_four_call_self_refinement
+primary_replication_unit: training_seed
+paired_case_intervals: descriptive_conditional_on_checkpoint
+secondary_outcomes:
+  - parse_rate
+  - accuracy_on_both_parsed
+  - prompt_tokens
+  - generated_tokens
+  - elapsed_seconds
+human_review: separate_pending_study
+protocol_output: outputs/revision_v2/reasoning_confirmation/protocol.json

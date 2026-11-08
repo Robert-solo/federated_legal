@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Mean analysis cost per case with four calls in both conditions. The common presentation step is excluded; call matching does not match token consumption.}
+\label{tab:revision-agents-cost}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Checkpoint & Protocol & Prompt tokens & Generated tokens & Seconds \\
+\midrule
+base & Self-refinement & 1942.7 & 96.7 & 1.68 \\
+base & Four-stage & 2711.1 & 447.5 & 7.69 \\
+federated & Self-refinement & 2074.6 & 251.0 & 5.70 \\
+federated & Four-stage & 2635.5 & 375.6 & 8.51 \\
+flen & Self-refinement & 2081.5 & 256.4 & 6.43 \\
+flen & Four-stage & 2601.0 & 360.2 & 8.93 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

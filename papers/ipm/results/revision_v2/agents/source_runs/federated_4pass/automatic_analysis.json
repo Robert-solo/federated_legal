@@ -1,0 +1,16 @@
+{
+  "both_correct": 11,
+  "both_incorrect": 47,
+  "cases": 60,
+  "human_review_status": "awaiting_two_blinded_reviewers",
+  "mcnemar_exact_pvalue": 1.0,
+  "multi_accuracy": 0.2,
+  "multi_only_correct": 1,
+  "paired_accuracy_difference": 0.0,
+  "paired_bootstrap_ci95": [
+    -0.05,
+    0.05
+  ],
+  "single_accuracy": 0.2,
+  "single_only_correct": 1
+}

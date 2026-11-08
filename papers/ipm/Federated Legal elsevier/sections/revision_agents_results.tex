@@ -1,0 +1,19 @@
+\subsection{Connected shared-adapter reasoning results}
+The completed automatic comparison links exported FedAvg and FLEN shared adapters to the same inference protocol as the base checkpoint. Table~\ref{tab:revision-agents} compares role prompting with one-call prediction and four-call self-refinement. These are paired case outcomes for seed-41 checkpoints. Legal soundness, coherence, preference and unsupported-claim rates await completed independent blinded review sheets.
+
+\input{tables/revision_agents_table}
+
+The one-call FedAvg and FLEN controls parse successfully on only 14 and 10 of 60 cases, respectively. Their large four-stage gains therefore combine task accuracy and output-format compliance. Four-call self-refinement raises successful parsing to 58 and 59 cases. Against that control, four-stage accuracy changes by 0.00 points for FedAvg and 6.67 points for FLEN (95\% paired bootstrap interval $[0.00,15.00]$; exact McNemar $p=0.219$). The base checkpoint decreases by 3.33 points. These call-matched results leave the reasoning advantage uncertain.
+
+\input{tables/revision_agents_parse}
+
+\input{tables/revision_agents_cost}
+
+For the FLEN checkpoint, four-stage analysis consumes 360.3 generated tokens and 8.93 seconds per case, compared with 256.4 tokens and 6.43 seconds for self-refinement. The extra deliberation therefore increases generated tokens by about 41\% and observed elapsed time by about 39\%.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{revision_agents.pdf}
+\caption{Automatic paired accuracy with base, FedAvg shared and FLEN shared checkpoints; call budgets label the single-agent controls.}
+\label{fig:revision-agents}
+\end{figure}

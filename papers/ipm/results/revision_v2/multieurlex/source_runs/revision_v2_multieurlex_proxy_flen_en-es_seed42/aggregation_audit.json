@@ -1,0 +1,71 @@
+[
+  {
+    "calibration_level": "automatic_prediction_disagreement",
+    "conflict_exposures": {
+      "en-de": 1.0,
+      "en-fr": 0.2290094520894675,
+      "en-pl": 0.0
+    },
+    "evidence_level": "automatic_prediction_disagreement",
+    "excluded_clients": {},
+    "exposure_calibration": "within_round_min_max",
+    "formal_legal_claims_allowed": false,
+    "raw_prediction_disagreement": {
+      "en-de": 0.13836100697517395,
+      "en-fr": 0.12408601492643356,
+      "en-pl": 0.11984587460756302
+    },
+    "round": 1,
+    "weights": {
+      "en-de": 0.29896699901139034,
+      "en-fr": 0.34325397573590105,
+      "en-pl": 0.35777902525270866
+    }
+  },
+  {
+    "calibration_level": "automatic_prediction_disagreement",
+    "conflict_exposures": {
+      "en-de": 0.38519621849042485,
+      "en-fr": 0.0,
+      "en-pl": 1.0
+    },
+    "evidence_level": "automatic_prediction_disagreement",
+    "excluded_clients": {},
+    "exposure_calibration": "within_round_min_max",
+    "formal_legal_claims_allowed": false,
+    "raw_prediction_disagreement": {
+      "en-de": 0.08523590490221977,
+      "en-fr": 0.08344496041536331,
+      "en-pl": 0.08809439465403557
+    },
+    "round": 2,
+    "weights": {
+      "en-de": 0.33693784479391337,
+      "en-fr": 0.36125184877609073,
+      "en-pl": 0.3018103064299959
+    }
+  },
+  {
+    "calibration_level": "automatic_prediction_disagreement",
+    "conflict_exposures": {
+      "en-de": 0.9856932964242787,
+      "en-fr": 0.0,
+      "en-pl": 1.0
+    },
+    "evidence_level": "automatic_prediction_disagreement",
+    "excluded_clients": {},
+    "exposure_calibration": "within_round_min_max",
+    "formal_legal_claims_allowed": false,
+    "raw_prediction_disagreement": {
+      "en-de": 0.051808927208185196,
+      "en-fr": 0.04575079493224621,
+      "en-pl": 0.05189685709774494
+    },
+    "round": 3,
+    "weights": {
+      "en-de": 0.31326627918278016,
+      "en-fr": 0.37426728031870465,
+      "en-pl": 0.31246644049851513
+    }
+  }
+]

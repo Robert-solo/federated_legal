@@ -1,0 +1,13 @@
+\subsection{Disjoint-probe multilingual revision}
+The completed six-method, four-holdout, five-seed revision uses fixed test records and separate training probes and threshold-validation examples. Table~\ref{tab:revision-multieurlex} reports language-average and worst-language outcomes.
+
+\input{tables/revision_multieurlex_table}
+
+Relative to FedAvg, proxy-FLEN changes average micro-$F_1$ by $-0.11$ points (95\% paired interval $[-0.64,0.43]$) and worst-language micro-$F_1$ by $+0.30$ points (95\% paired interval $[-0.13,0.73]$). The frozen-backbone reference changes average micro-$F_1$ by $-2.68$ points (95\% paired interval $[-3.96,-1.41]$); target-supervised local-only adaptation changes it by $+13.06$ points (95\% paired interval $[11.91,14.21]$). The zero-conflict control reproduces FedAvg. Proxy-FLEN's average contrast spans zero, so the study provides no stable incremental benefit from proxy conflict weighting. Target-language supervision remains substantially stronger than three-round source-language transfer. The frozen-backbone reference trains a classification head and therefore measures the contribution of backbone adaptation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{revision_multieurlex.pdf}
+\caption{Mean and worst held-out-language performance in the completed revision; error bars show five-seed SD.}
+\label{fig:revision-multieurlex}
+\end{figure}

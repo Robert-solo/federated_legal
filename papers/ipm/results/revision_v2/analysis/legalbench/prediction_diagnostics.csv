@@ -1,0 +1,45 @@
+cases,condition,majority_class_rate,prediction_counts,prompt_truncated_cases,task
+240,qwen_base,0.5333333333333333,"{'Yes': 202, 'No': 38}",0,overruling
+94,qwen_base,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_base,0.5,"{'Yes': 90, 'No': 18}",0,citation_prediction_classification
+50,qwen_base,0.58,{'Yes': 50},0,personal_jurisdiction
+240,qwen_fedavg_seed41,0.5333333333333333,"{'No': 144, 'Yes': 96}",0,overruling
+94,qwen_fedavg_seed41,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_fedavg_seed41,0.5,"{'No': 95, 'Yes': 13}",0,citation_prediction_classification
+50,qwen_fedavg_seed41,0.58,"{'Yes': 41, 'No': 9}",0,personal_jurisdiction
+240,qwen_fedavg_seed42,0.5333333333333333,"{'Yes': 212, 'No': 28}",0,overruling
+94,qwen_fedavg_seed42,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_fedavg_seed42,0.5,"{'No': 42, 'Yes': 66}",0,citation_prediction_classification
+50,qwen_fedavg_seed42,0.58,"{'Yes': 48, 'No': 2}",0,personal_jurisdiction
+240,qwen_fedavg_seed43,0.5333333333333333,"{'Yes': 238, 'No': 2}",0,overruling
+94,qwen_fedavg_seed43,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_fedavg_seed43,0.5,{'Yes': 108},0,citation_prediction_classification
+50,qwen_fedavg_seed43,0.58,"{'No': 46, 'Yes': 4}",0,personal_jurisdiction
+240,qwen_fedavg_seed44,0.5333333333333333,"{'No': 91, 'Yes': 149}",0,overruling
+94,qwen_fedavg_seed44,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_fedavg_seed44,0.5,"{'No': 24, 'Yes': 84}",0,citation_prediction_classification
+50,qwen_fedavg_seed44,0.58,"{'No': 43, 'Yes': 7}",0,personal_jurisdiction
+240,qwen_fedavg_seed45,0.5333333333333333,"{'Yes': 235, 'No': 5}",0,overruling
+94,qwen_fedavg_seed45,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_fedavg_seed45,0.5,"{'Yes': 97, 'No': 11}",0,citation_prediction_classification
+50,qwen_fedavg_seed45,0.58,"{'Yes': 47, 'No': 3}",0,personal_jurisdiction
+240,qwen_flen_seed41,0.5333333333333333,"{'No': 156, 'Yes': 84}",0,overruling
+94,qwen_flen_seed41,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_flen_seed41,0.5,"{'No': 95, 'Yes': 13}",0,citation_prediction_classification
+50,qwen_flen_seed41,0.58,"{'Yes': 41, 'No': 9}",0,personal_jurisdiction
+240,qwen_flen_seed42,0.5333333333333333,"{'Yes': 212, 'No': 28}",0,overruling
+94,qwen_flen_seed42,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_flen_seed42,0.5,"{'No': 50, 'Yes': 58}",0,citation_prediction_classification
+50,qwen_flen_seed42,0.58,"{'Yes': 48, 'No': 2}",0,personal_jurisdiction
+240,qwen_flen_seed43,0.5333333333333333,"{'Yes': 238, 'No': 2}",0,overruling
+94,qwen_flen_seed43,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_flen_seed43,0.5,{'Yes': 108},0,citation_prediction_classification
+50,qwen_flen_seed43,0.58,"{'No': 46, 'Yes': 4}",0,personal_jurisdiction
+240,qwen_flen_seed44,0.5333333333333333,"{'Yes': 130, 'No': 110}",0,overruling
+94,qwen_flen_seed44,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_flen_seed44,0.5,"{'No': 41, 'Yes': 67}",0,citation_prediction_classification
+50,qwen_flen_seed44,0.58,"{'No': 49, 'Yes': 1}",0,personal_jurisdiction
+240,qwen_flen_seed45,0.5333333333333333,"{'Yes': 234, 'No': 6}",0,overruling
+94,qwen_flen_seed45,0.574468085106383,{'Common Law': 94},0,ucc_v_common_law
+108,qwen_flen_seed45,0.5,"{'Yes': 93, 'No': 15}",0,citation_prediction_classification
+50,qwen_flen_seed45,0.58,"{'Yes': 29, 'No': 21}",0,personal_jurisdiction

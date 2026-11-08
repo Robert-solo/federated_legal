@@ -1,0 +1,26 @@
+\begin{table}[t]
+\caption{Published-label LegalBench component diagnostics on 492 fixed cases. Entries are percent; adapted rows average five shared checkpoints, pretrained rows evaluate one checkpoint.}
+\label{tab:revision-legalbench}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Task & Checkpoint & Accuracy & Macro F1 & Balanced accuracy \\
+\midrule
+Overruling & Qwen base & 49.2 & 43.8 & 51.5 \\
+Overruling & FedAvg shared & 52.3 & 45.4 & 54.2 \\
+Overruling & FLEN shared & 51.8 & 44.9 & 53.5 \\
+UCC/common law & Qwen base & 57.4 & 36.5 & 50.0 \\
+UCC/common law & FedAvg shared & 57.4 & 36.5 & 50.0 \\
+UCC/common law & FLEN shared & 57.4 & 36.5 & 50.0 \\
+Citation support & Qwen base & 53.7 & 47.9 & 53.7 \\
+Citation support & FedAvg shared & 49.3 & 41.2 & 49.3 \\
+Citation support & FLEN shared & 49.1 & 42.4 & 49.1 \\
+Personal jurisdiction & Qwen base & 42.0 & 29.6 & 50.0 \\
+Personal jurisdiction & FedAvg shared & 54.4 & 46.3 & 56.0 \\
+Personal jurisdiction & FLEN shared & 55.2 & 46.4 & 55.2 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

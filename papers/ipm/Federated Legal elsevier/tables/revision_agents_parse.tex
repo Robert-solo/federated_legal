@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Output-format diagnostics on 60 cases. S denotes single-agent prediction and D four-stage deliberation. Conditional accuracy (percent) uses only cases parsed in both conditions and is descriptive; primary accuracy retains all cases and counts parsing failures as errors.}
+\label{tab:revision-agents-parse}
+\centering
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Checkpoint & Single calls & Parsed S & Parsed D & Both & Cond. acc. S & Cond. acc. D \\
+\midrule
+base & 1 & 58 & 55 & 53 & 18.9 & 17.0 \\
+base & 4 & 58 & 55 & 54 & 16.7 & 16.7 \\
+federated & 1 & 14 & 60 & 14 & 21.4 & 14.3 \\
+federated & 4 & 58 & 60 & 58 & 20.7 & 19.0 \\
+flen & 1 & 10 & 59 & 10 & 10.0 & 10.0 \\
+flen & 4 & 59 & 59 & 58 & 19.0 & 24.1 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -74,6 +74,13 @@ and measures logical communication. The agent diagnostic can now load the export
 shared adapter. Human authority calibration and authentic jurisdiction partitions
 remain separate inputs; automatic prediction disagreement is recorded as a proxy.
 
+The measured inference path makes four sequential calls to one base or shared
+checkpoint for primary analysis, challenge, evidence review and judgement. Its
+evidence review uses supplied benchmark material. The full graph's external
+authority retrieval and independent legal verification remain distinct from this
+automatic diagnostic. The November 8 confirmation reuses this path on new cases
+and five training seeds without changing prompts or parser.
+
 `federated/adaptive_strategy.py` wraps Flower FedAdam with persistent server
 moments, checkpoints and the same evaluation logs as shared baselines.
 `evaluation/legalbench_diagnostic.py` defines published-label component prompts

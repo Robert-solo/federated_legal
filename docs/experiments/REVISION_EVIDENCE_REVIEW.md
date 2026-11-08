@@ -1,5 +1,10 @@
 # Evidence review for the frozen revision
 
+Superseded status and full-paper review: `docs/experiments/REVIEW_20261108.md`.
+The completed matrices are now integrated in the CAS manuscript; the Mistral
+reference and new-case reasoning confirmation remain running. Historical
+planned-work descriptions below should be read with that update.
+
 Maintained manuscript: `papers/ipm/Federated Legal elsevier/cas-sc-template.tex`.
 This review separates completed evidence from studies that are still executing.
 
